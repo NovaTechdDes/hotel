@@ -53,22 +53,24 @@ export const DetallesReserva = () => {
             <div className="bg-white rounded-lg shadow-lg w-2xl h-[50vh] p-8 text-black">
                 <div>
 
-                    <div className="flex justify-between items-center">
+                    <div className="flex flex-col justify-between items-center">
                         <div className="w-full">
                             <div className="flex justify-between w-full mb-10">
                                 <h3 className="text-xl font-semibold">Detalles Reserva</h3>
                                 <CgClose size={20} className="cursor-pointer hover:bg-gray-300 rounded-lg" onClick={handleCancel} />
                             </div>
-                            <span className="text-gray-500">Informacion de la reserva actual</span>
                         </div>
 
-                        <div className="flex gap-4 items-center">
-                            <HiOutlinePencil size={20} className="cursor-pointer hover:bg-gray-200 rounded-lg" onClick={handleUpdate} />
-                            {isPending ? (
-                                <span className="text-red-500 text-sm">Eliminando...</span>
-                            ) : (
-                                user && user.rol === 'admin' && (<MdDeleteOutline onClick={handleDelete} className="cursor-pointer hover:bg-red-200 rounded-lg" color="red" size={20} />)
-                            )}
+                        <div className="flex gap-4 items-center justify-between w-full mb-5">
+                            <span className="text-gray-500">Informacion de la reserva actual</span>
+                            <div className="flex gap-3">
+                                <HiOutlinePencil size={20} className="cursor-pointer hover:bg-gray-200 rounded-lg" onClick={handleUpdate} />
+                                {isPending ? (
+                                    <span className="text-red-500 text-sm">Eliminando...</span>
+                                ) : (
+                                    user && user.rol === 'admin' && (<MdDeleteOutline onClick={handleDelete} className="cursor-pointer hover:bg-red-200 rounded-lg" color="red" size={20} />)
+                                )}
+                            </div>
                         </div>
                     </div>
 

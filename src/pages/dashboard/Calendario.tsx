@@ -1,5 +1,5 @@
 // CalendarioHotel.tsx
-import { addDays, format } from "date-fns";
+import { format, setMonth } from "date-fns";
 import { useClientes, useHabitaciones } from "../../hooks";
 
 import { useReservaStore } from "../../store/reserva.store";
@@ -9,16 +9,16 @@ import { useReservas } from "../../hooks/reserva/useReservas";
 import { formatearAString } from "../../helpers/formatearFecha";
 import type { Cliente, Habitacion, Reserva } from "../../interface";
 import { DetallesReserva, HeaderCalendario, ModalCalendario } from "../../components";
+import { useEffect, useState } from "react";
+import { traerDiasDelMes } from "../../helpers/traerDiasDelMes";
+import { useCalendarioStore } from "../../store/calendario.store";
 
-const start = new Date();
-const days = Array.from({ length: 30 }, (_, i) => addDays(start, i));
 
 const devolverReserva = (reservas: Reserva[], day: Date, hab: Habitacion, clientes: Cliente[] = []) => {
     const reserva = reservas?.find(elem => {
         if (elem.checkin.slice(0, 10) <= formatearAString(day).slice(0, 10) &&
             elem.checkout.slice(0, 10) >= formatearAString(day).slice(0, 10) && elem.habitacionid === hab.id) return elem
     });
-
     if (reserva) {
         return {
             id: reserva.id,
@@ -35,24 +35,33 @@ const devolverReserva = (reservas: Reserva[], day: Date, hab: Habitacion, client
 
 
 export const Calendario = () => {
-    const { isModalOpen, openDetalle, openModal } = useReservaStore();
+
+    const { mesSeleccionado } = useCalendarioStore();
+
+    const [days, setDays] = useState(traerDiasDelMes(new Date()));
+    const { isModalOpen, openDetalle, openModal, isDetalleOpen } = useReservaStore();
     const { data: reservas } = useReservas();
     const { data: habitaciones } = useHabitaciones();
     const { data: clientes } = useClientes();
 
     const handleReserva = (e: React.MouseEvent<HTMLTableCellElement>) => {
-        const target = e.target as HTMLTableCellElement;
+        const target = e.currentTarget as HTMLTableCellElement;
         if (target.id === '') {
             openModal();
         } else {
-            openDetalle();
+            openDetalle(reservas?.find(reserva => reserva.id === target.id));
         }
     };
+
+    useEffect(() => {
+        const date = setMonth(new Date(), mesSeleccionado);
+        setDays(traerDiasDelMes(date))
+    }, [mesSeleccionado])
 
     return (
         <>
             <HeaderCalendario />
-            <div className="overflow-x-auto border rounded-md text-black h-[calc(100vh-128px)] bg-white">
+            <div className="overflow-x-auto border mx-2 rounded-md text-black h-[calc(100vh-128px)] bg-white">
                 <table className="min-w-max border-collapse">
                     <thead>
                         <tr>
@@ -88,7 +97,7 @@ export const Calendario = () => {
                     </tbody>
                 </table>
             </div>
-            {false && <DetallesReserva />}
+            {isDetalleOpen && <DetallesReserva />}
             {isModalOpen && <ModalCalendario />}
         </>
     );
