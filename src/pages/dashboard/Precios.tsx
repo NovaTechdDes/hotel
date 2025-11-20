@@ -111,14 +111,14 @@ export const Precios = () => {
                             <BsPerson />
                             <p>5 Personas</p>
                         </div>
-                        <p>${base + (aumento * 5)}</p>
+                        <p>${base + (aumento * 3)}</p>
                     </div>
                     <div className="flex justify-between text-lg mt-5">
                         <div className="flex gap-2 items-center">
                             <BsPerson />
                             <p>6 Personas</p>
                         </div>
-                        <p>${base + (aumento * 6)}</p>
+                        <p>${base + (aumento * 4)}</p>
                     </div>
 
                     <ul className="text-xs text-gray-500 mt-5">

@@ -3,10 +3,11 @@ import type { Reserva } from "../interface/Reserva";
 
 interface ReservaState {
     reservaSeleccionado: Reserva | null;
+    fechaSeleccionada: string | null;
     isModalOpen: boolean;
     isDetalleOpen: boolean;
 
-    openModal: (reserva?: Reserva) => void;
+    openModal: (reserva?: Reserva | string) => void;
     openDetalle: (reserva?: Reserva) => void;
     closeDetalle: () => void;
     closeModal: () => void;
@@ -16,11 +17,13 @@ interface ReservaState {
 export const useReservaStore = create<ReservaState>((set) => ({
 
     reservaSeleccionado: null,
+    fechaSeleccionada: '',
     isModalOpen: false,
     isDetalleOpen: false,
 
     openModal: (reserva) => set({
-        reservaSeleccionado: reserva,
+        reservaSeleccionado: typeof reserva === 'string' ? null : reserva,
+        fechaSeleccionada: typeof reserva === 'string' ? reserva : '',
         isModalOpen: true
     }),
     openDetalle: (reserva) => set({
@@ -29,6 +32,7 @@ export const useReservaStore = create<ReservaState>((set) => ({
     }),
     closeDetalle: () => set({
         reservaSeleccionado: null,
+        fechaSeleccionada: null,
         isDetalleOpen: false
     }),
     closeModal: () => set({

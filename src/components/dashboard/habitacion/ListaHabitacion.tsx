@@ -11,13 +11,12 @@ const ListaHabitacion = () => {
     }
 
     return (
-        <div className="bg-white mx-5">
-            <table className="w-full text-black">
+        <div className="bg-white h-[80vh] border border-gray-300 shadow-2xl rounded-lg mx-5">
+            <table className="w-full text-black rounded-lg">
                 <thead className="border border-gray-300 rounded-lg">
                     <tr>
                         <th className="py-2">Nombre</th>
                         <th>Tipo</th>
-                        <th>Precio </th>
                         <th>Cantidad</th>
                         <th>Acciones</th>
                     </tr>

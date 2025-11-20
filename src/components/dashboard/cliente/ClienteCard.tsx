@@ -13,10 +13,13 @@ interface Props {
 };
 
 const ClienteCard = ({ cliente }: Props) => {
-    const { openModal } = useClienteStore()
+    const { openModal } = useClienteStore();
     const { removeCliente } = useMutateCliente();
-    const { mutateAsync, isPending } = removeCliente;
     const { data: user } = useRolAuth();
+    const { filtro } = useClienteStore();
+
+    const { mutateAsync, isPending } = removeCliente;
+    const { nombre, dni, id, domicilio, localidad, telefono } = cliente;
 
 
     const handleDeleteCliente = async () => {
@@ -35,7 +38,8 @@ const ClienteCard = ({ cliente }: Props) => {
         openModal(cliente);
     };
 
-    const { nombre, dni, id, domicilio, localidad, telefono } = cliente;
+    if(!nombre.toUpperCase().startsWith(filtro?.toUpperCase() || '') && !dni.toUpperCase().startsWith(filtro?.toUpperCase() || '')) return null;
+
     return (
         <tr className='text-center border border-gray-300 text-lg'>
             <td className='py-2'>{nombre}</td>

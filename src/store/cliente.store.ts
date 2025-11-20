@@ -5,6 +5,9 @@ interface ClienteState {
     clienteSeleccionado: Cliente | null;
     isModalOpen: boolean;
 
+    filtro: string | null,
+    setFiltro: (filtro: string | null) => void,
+
     openModal: (cliente?: Cliente) => void;
     closeModal: () => void;
 };
@@ -13,6 +16,9 @@ interface ClienteState {
 export const useClienteStore = create<ClienteState>((set) => ({
     clienteSeleccionado: null,
     isModalOpen: false,
+
+    filtro: '',
+    setFiltro: (filtro) => set({ filtro }),
 
     openModal: (cliente) => set({
         clienteSeleccionado: cliente,

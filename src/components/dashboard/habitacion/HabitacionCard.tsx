@@ -12,7 +12,7 @@ interface Props {
 };
 
 const HabitacionCard = ({ habitacion }: Props) => {
-    const { id, capacidad, nombre, precio, tipo } = habitacion;
+    const { id, capacidad, nombre, tipo } = habitacion;
     const { openModal } = useHabitacionStore()
     const { data: user } = useRolAuth();
 
@@ -48,7 +48,6 @@ const HabitacionCard = ({ habitacion }: Props) => {
         >
             <td>{nombre[0].toUpperCase() + nombre.slice(1)}</td>
             <td>{tipo[0].toUpperCase() + tipo.slice(1)}</td>
-            <td>${precio.toFixed(2)}</td>
             <td>{capacidad.toFixed(2)}</td>
             <td>
                 <div className='flex items-center gap-2 justify-center min-h-[24px]'>

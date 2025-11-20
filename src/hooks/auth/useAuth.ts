@@ -20,8 +20,7 @@ export const useAuth = () => {
     const logout = () => {
         Cookies.remove('session')
     };
-
-
+    
     const estaAutenticado = !!session;
 
     return {

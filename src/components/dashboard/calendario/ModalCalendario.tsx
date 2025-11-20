@@ -8,6 +8,7 @@ import { usePrecio } from '../../../hooks/precio/usePrecio';
 import { useReservaStore } from '../../../store/reserva.store';
 import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti';
 import { useMutateReserva } from '../../../hooks/reserva/useMutateReserva';
+import { calcularPrecios } from '../../../helpers/calcularPrecio';
 
 const initialState: Reserva = {
     cant_personas: 0,
@@ -20,7 +21,7 @@ const initialState: Reserva = {
 }
 
 export const ModalCalendario = () => {
-    const { closeModal, reservaSeleccionado } = useReservaStore();
+    const { closeModal, reservaSeleccionado, fechaSeleccionada } = useReservaStore();
     const { idcliente, color, importe, habitacionid, checkin, checkout, cant_personas, onInputChange, onResetForm, formState } = useForm(reservaSeleccionado ?? initialState)
     const { addReserva, putReserva } = useMutateReserva()
 
@@ -48,7 +49,7 @@ export const ModalCalendario = () => {
         onInputChange({
             target: {
                 name: "importe",
-                value: precio?.base ?? 1,
+                value: precio ? calcularPrecios(precio, h.capacidad) : 0,
             },
         });
 
@@ -159,16 +160,16 @@ export const ModalCalendario = () => {
 
                     <div>
                         <label htmlFor="checkin">Check In</label>
-                        <input onChange={onInputChange} value={checkin.slice(0, 10)} type="date" name="checkin" className="w-full border border-gray-300 text-black rounded-md px-3 py-2" id="checkin" />
+                        <input onChange={onInputChange} value={fechaSeleccionada ?? checkin.slice(0, 10)} type="date" name="checkin" className="w-full border border-gray-300 text-black rounded-md px-3 py-2" id="checkin" />
                     </div>
 
                     <div>
                         <label htmlFor="checkout">Check Out</label>
                         <input
                             onChange={onInputChange}
-                            value={checkout.slice(0, 10)}
+                            value={fechaSeleccionada ?? checkout.slice(0, 10)}
                             type="date"
-                            min={checkin}
+                            min={fechaSeleccionada ?? checkin}
                             name="checkout"
                             className="w-full border border-gray-300 rounded-md px-3 py-2"
                             id="checkout"
