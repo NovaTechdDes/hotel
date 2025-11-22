@@ -42,20 +42,29 @@ export const getReporteOcupacion = async(anio: number): Promise<TemporadaAlta> =
 };
 
 export const postReserva = async (reserva: Omit<Reserva, 'id' | 'creado_en'>): Promise<boolean | SweetAlertResult<any>> => {
+    try {
+        const { data: { user }, error: userError } = await supabase.auth.getUser();
 
-    const { data: { user }, error: userError } = await supabase.auth.getUser();
+        if (userError || !user) {
+            await Swal.fire('Error', 'No se pudo obtener el usuario autenticado', 'error');
+            throw new Error('No se pudo obtener el usuario autenticado');
+        }
 
-    if (userError || !user) {
-        await Swal.fire('Error', 'No se pudo obtener el usuario autenticado', 'error');
-        throw new Error('No se pudo obtener el usuario autenticado');
+
+        const reservaWhitUser = { ...reserva, idcliente: reserva.idcliente  || null, usuarioid: user?.id }
+        console.log(reservaWhitUser)
+
+        const { data, error } = await supabase.from('reserva').insert(reservaWhitUser).select().single();
+        console.log(data)
+        if (error) {
+            console.log(error)
+            return await Swal.fire('Error al cargar la reserva', error.message, 'error')
+        };
+        return true   
+    } catch (error: any) {
+        console.log(error);
+        return await Swal.fire('Error al cargar la reserva', error.message, 'error');
     }
-
-    const reservaWhitUser = { ...reserva, usuarioid: user?.id }
-
-    const { data, error } = await supabase.from('reserva').insert(reservaWhitUser).select().single();
-    console.log(data)
-    if (error) return await Swal.fire('Error al cargar la reserva', error.message, 'error');
-    return true
 };
 
 export const updateReserva = async (reserva: Partial<Reserva>): Promise<Reserva | SweetAlertResult<any>> => {

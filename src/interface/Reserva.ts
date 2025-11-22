@@ -3,13 +3,16 @@ import type { Habitacion } from "./Habitacion";
 
 export interface Reserva {
     id?: string;
-    idcliente: string;
+    idcliente: string | null;
     checkin: string;
     checkout: string;
     importe: number;
     habitacionid: string;
     color: string;
     cant_personas: number;
+    cliente_nombre: string;
+    cliente_dni: string;
+    cliente_telefono: string;
     observaciones: string;
 
     creado_en?: Date;

@@ -15,21 +15,25 @@ const initialState: Reserva = {
   checkout: new Date().toISOString().slice(0, 10),
   habitacionid: '',
   importe: 0,
-  idcliente: '',
+  idcliente: null,
   color: '#0c0e31',
   observaciones: '',
+  cliente_telefono: '',
+  cliente_dni: '',
+  cliente_nombre: '',
 };
 
 export const ModalCalendario = () => {
   const { closeModal, reservaSeleccionado, fechaSeleccionada } = useReservaStore();
-  const { idcliente, color, importe, habitacionid, checkin, observaciones, checkout, cant_personas, onInputChange, onResetForm, formState } = useForm(reservaSeleccionado ?? initialState);
+  const { idcliente, color, importe, cliente_dni, cliente_telefono, cliente_nombre, habitacionid, checkin, observaciones, checkout, cant_personas, onInputChange, onResetForm, formState } = useForm(
+    reservaSeleccionado ?? initialState
+  );
   const { addReserva, putReserva } = useMutateReserva();
 
   const { data: habitaciones } = useHabitaciones();
   const { data: precio } = usePrecio();
   const { data: clientes } = useClientes();
 
-  const [buscador, setBuscador] = useState<string>('');
   const [listaCliente, setListaCliente] = useState<boolean>(false);
   const { mutateAsync: agregarReserva, isPending: isPendigAgregar } = addReserva;
   const { mutateAsync: modificarReserva, isPending: isPendigModificar } = putReserva;
@@ -70,7 +74,13 @@ export const ModalCalendario = () => {
   };
 
   const handleCliente = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setBuscador(e.target.value);
+    onInputChange({
+      target: {
+        name: 'cliente_nombre',
+        value: e.target.value,
+      },
+    });
+
     onInputChange({
       target: {
         name: 'idcliente',
@@ -80,15 +90,34 @@ export const ModalCalendario = () => {
   };
 
   const handleNombre = (e: React.MouseEvent<HTMLLIElement>) => {
+    const { nombre, dni, telefono } = clientes?.find((elem) => elem.id === (e.currentTarget as HTMLLIElement).id) ?? { nombre: '', dni: '', telefono: '' };
+
     onInputChange({
       target: {
         name: 'idcliente',
         value: (e.currentTarget as HTMLLIElement).id,
       },
     });
+    onInputChange({
+      target: {
+        name: 'cliente_nombre',
+        value: nombre,
+      },
+    });
+    onInputChange({
+      target: {
+        name: 'cliente_dni',
+        value: dni,
+      },
+    });
+    onInputChange({
+      target: {
+        name: 'cliente_telefono',
+        value: telefono,
+      },
+    });
 
     setListaCliente(false);
-    setBuscador('');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -130,15 +159,15 @@ export const ModalCalendario = () => {
               onClick={() => setListaCliente(!listaCliente)}
               className="w-full border border-gray-500  border-gray-500-gray-300 mb-1 rounded-md px-3 ý-2 flex justify-between items-center"
             >
-              {idcliente ? clientes?.find((elem) => elem.id === idcliente)?.nombre : buscador !== '' ? buscador : 'Seleccionar un cliente'}
+              {idcliente ? clientes?.find((elem) => elem.id === idcliente)?.nombre : cliente_nombre !== '' ? cliente_nombre : 'Seleccionar un cliente'}
               {listaCliente ? <TiArrowSortedUp /> : <TiArrowSortedDown />}
             </button>
             {listaCliente && (
               <div className="relative mt-1">
                 <input
                   type="text"
-                  name="buscador"
-                  value={buscador}
+                  name="cliente_nombre"
+                  value={cliente_nombre}
                   onChange={handleCliente}
                   className="w-full border border-gray-500 rounded-md px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
                   placeholder="Buscar Cliente..."
@@ -147,7 +176,7 @@ export const ModalCalendario = () => {
                 <ul className="absolute z-10 w-full bg-white shadow-lg rounded-b-md max-h-60 overflow-y-auto border border-gray-500 mt-1 py-1">
                   {clientes?.map(
                     (elem) =>
-                      elem.nombre.toUpperCase().startsWith(buscador.toUpperCase()) && (
+                      elem.nombre.toUpperCase().startsWith(cliente_nombre.toUpperCase()) && (
                         <li key={elem.id} onClick={handleNombre} id={elem.id} className="px-4 py-2 hover:bg-indigo-50 cursor-pointer transition-colors border-b border-gray-200 last:border-b-0">
                           {elem.nombre} - {elem.domicilio} - {elem.telefono}
                         </li>
@@ -156,6 +185,24 @@ export const ModalCalendario = () => {
                 </ul>
               </div>
             )}
+          </div>
+
+          <div>
+            <label htmlFor="cliente_dni">DNI</label>
+            <input className="w-full border border-gray-500 rounded-md px-3 py-2" placeholder="00000000" type="text" name="cliente_dni" id="cliente_dni" onChange={onInputChange} value={cliente_dni} />
+          </div>
+
+          <div>
+            <label htmlFor="cliente_telefono">Telefono</label>
+            <input
+              className="w-full border border-gray-500 rounded-md px-3 py-2"
+              placeholder="00000000"
+              type="text"
+              name="cliente_telefono"
+              id="cliente_telefono"
+              onChange={onInputChange}
+              value={cliente_telefono}
+            />
           </div>
 
           <div className="col-span-2">
@@ -222,7 +269,7 @@ export const ModalCalendario = () => {
               style={{ backgroundColor: color ?? '#000' }} //Dinamicamente sino no toma el color
               className="border rounded-lg p-2 text-center text-white"
             >
-              {idcliente ? clientes?.find((elem) => elem.id === idcliente)?.nombre : buscador !== '' ? buscador : 'Seleccionar un cliente'}
+              {idcliente ? clientes?.find((elem) => elem.id === idcliente)?.nombre : cliente_nombre !== '' ? cliente_nombre : 'Seleccionar un cliente'}
             </div>
           </div>
 
