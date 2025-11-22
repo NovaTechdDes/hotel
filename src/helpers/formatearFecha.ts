@@ -6,3 +6,17 @@ export const formatearAString = (date: Date) => {
     const fechaAjustada = new Date(fecha.getTime() - offset);
     return fechaAjustada.toISOString();
 }
+
+
+export const reordenarFecha = (fecha: string) => {
+    const fechaFormateada = fecha.slice(0, 10).split('-').reverse().join('/');
+    return fechaFormateada;
+};
+
+export const calcularDias = (checkin: string, checkout: string ) => {
+    const fechaCheckin = new Date(checkin);
+    const fechaCheckout = new Date(checkout);
+    const diffTime = Math.abs(fechaCheckout.getTime() - fechaCheckin.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+}

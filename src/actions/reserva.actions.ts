@@ -1,9 +1,9 @@
 import Swal, { type SweetAlertResult } from "sweetalert2";
-import type { Reserva } from "../interface/Reserva";
+import type { Reserva, TemporadaAlta } from "../interface/Reserva";
 import { supabase } from "../lib/supababase";
 
 export const getReservas = async (): Promise<Reserva[]> => {
-    const { data, error } = await supabase.from('reserva').select('*, cliente: idcliente(nombre), habitacion: habitacionid(*)');
+    const { data, error } = await supabase.from('reserva').select('*, cliente: idcliente(nombre), habitacion: habitacionid(*)').order('checkin', { ascending: false });
 
     if (error) await Swal.fire('Error al obtener las Reservas', error.message, 'error')
     return data as Reserva[];
@@ -24,6 +24,22 @@ export const getReservasMonth = async (month: number, anio: number) => {
     return data as Reserva[];
 };
 
+export const getReporteOcupacion = async(anio: number): Promise<TemporadaAlta> => {
+    const {data, error} = await supabase.rpc('reporte_ocupacion', {
+        anio
+    }).single<TemporadaAlta>();
+
+    if(error){
+        await Swal.fire('Error al obtener el reporte', error.message, 'error');
+        return {
+            total_dias_ocupados: 0,
+            total_reservas: 0,
+            porcentaje_ocupacion: 0
+        };
+    };
+
+    return data
+};
 
 export const postReserva = async (reserva: Omit<Reserva, 'id' | 'creado_en'>): Promise<boolean | SweetAlertResult<any>> => {
 
@@ -44,10 +60,12 @@ export const postReserva = async (reserva: Omit<Reserva, 'id' | 'creado_en'>): P
 
 export const updateReserva = async (reserva: Partial<Reserva>): Promise<Reserva | SweetAlertResult<any>> => {
 
-    const { cliente, habitacion, ...updates } = reserva;
+    const { cliente: _cliente, habitacion: _habitacion, ...updates } = reserva;
+    console.log({_cliente, _habitacion});
 
     const { data, error } = await supabase.from('reserva').update(updates).eq('id', reserva.id).select().single();
     if (error) return await Swal.fire('Error al modificar la reserva', error.message, 'error')
+
     return data;
 };
 
@@ -60,3 +78,4 @@ export const deleteReserva = async (id: string): Promise<boolean | SweetAlertRes
     return data;
 
 };
+

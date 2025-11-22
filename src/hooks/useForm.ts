@@ -1,4 +1,4 @@
-import { useEffect, useState, type ChangeEvent } from 'react';
+import { useEffect, useState } from 'react';
 
 type InputChage = {
     target: {
@@ -18,6 +18,7 @@ export function useForm<T extends object>(initialForm: T) {
 
 
     const onInputChange = ({ target }: InputChage) => {
+    
         const { name, value } = target;
         setFormState((prev) => ({
             ...prev,
