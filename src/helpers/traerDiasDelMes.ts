@@ -8,6 +8,5 @@ export const traerDiasDelMes = (day: Date) => {
         end: endOfMonth(day)
     });
 
-
     return days
 };

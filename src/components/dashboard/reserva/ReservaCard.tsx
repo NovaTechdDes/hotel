@@ -27,8 +27,8 @@ export const ReservaCard = ({ buscador, reserva }: Props) => {
     <div className="flex gap-5 justify-between mb-5">
       <div className="flex gap-5  ">
         <div className="w-15 h-15 text-white flex items-center justify-center rounded-lg" style={{ backgroundColor: color }}>
-          {cliente?.nombre[0]}
-          {cliente?.nombre.split(' ', 2)[1][0]}
+          {reserva.idcliente ? cliente?.nombre[0] : reserva.cliente_nombre[0]}
+          {reserva.idcliente ? cliente?.nombre.split(' ', 2)[1][0] : reserva.cliente_nombre.split(' ', 2)[1][0]}
         </div>
 
         <div>

@@ -4,18 +4,19 @@ interface Props {
   title: string;
   color: string;
   temporadaAlta: TemporadaAlta;
+  meses: string[];
 }
 
-export const Ocupacion = ({ temporadaAlta, color, title }: Props) => {
+export const Ocupacion = ({ temporadaAlta, color, title, meses }: Props) => {
   if (!temporadaAlta) return;
 
   return (
     <div className="border  p-5 border-gray-300 shadow-2xl  bg-orange-500/5 rounded-lg">
       <div className="flex justify-between ">
-        <h2 className="text-xl font-bold">Temporada Alta</h2>
+        <h2 className="text-xl font-bold">{title}</h2>
 
-        <p className="text-white text-sm rounded-lg p-1" style={{ backgroundColor: color }}>
-          Diciembre, Enero, Febrero, Julio
+        <p className="text-white text-xs rounded-lg p-1" style={{ backgroundColor: color }}>
+          {meses.map((elem) => elem.slice(0, 3) + ', ')}
         </p>
       </div>
 

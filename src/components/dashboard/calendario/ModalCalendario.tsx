@@ -24,11 +24,12 @@ const initialState: Reserva = {
 };
 
 export const ModalCalendario = () => {
-  const { closeModal, reservaSeleccionado, fechaSeleccionada } = useReservaStore();
+  const { closeModal, reservaSeleccionado, fechaSeleccionada, habitacionSeleccionada } = useReservaStore();
   const { idcliente, color, importe, cliente_dni, cliente_telefono, cliente_nombre, habitacionid, checkin, observaciones, checkout, cant_personas, onInputChange, onResetForm, formState } = useForm(
     reservaSeleccionado ?? initialState
   );
   const { addReserva, putReserva } = useMutateReserva();
+  const [error, setError] = useState<boolean>(false);
 
   const { data: habitaciones } = useHabitaciones();
   const { data: precio } = usePrecio();
@@ -67,6 +68,12 @@ export const ModalCalendario = () => {
       onInputChange({ target: { name: 'checkout', value: fechaSeleccionada ?? '' } });
     }
   }, [fechaSeleccionada, reservaSeleccionado]);
+
+  useEffect(() => {
+    if (habitacionSeleccionada) {
+      onInputChange({ target: { name: 'habitacionid', value: habitacionSeleccionada } });
+    }
+  }, [habitacionSeleccionada]);
 
   const handleCloseModal = () => {
     onResetForm();
@@ -122,6 +129,8 @@ export const ModalCalendario = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (checkout < checkin) return setError(true);
 
     if (reservaSeleccionado) {
       const ok = await modificarReserva(formState);
@@ -209,14 +218,14 @@ export const ModalCalendario = () => {
             <label className="text-lg font-semibold" htmlFor="habitacionid">
               Habitacion
             </label>
-            <select name="habitacionid" onChange={onInputChange} value={habitacionid} className="w-full border border-gray-500 rounded-md px-3 py-2" id="habitacionid">
-              <option value="">---Seleccionar Opcion---</option>
-              {habitaciones?.map((elem) => (
-                <option key={elem.id} value={elem.id}>
-                  {elem.nombre + ' - ' + elem.tipo}
-                </option>
-              ))}
-            </select>
+
+            <input
+              disabled
+              className="border w-full p-2 rounded-md capitalize bg-gray-300"
+              id={habitacionSeleccionada ?? ''}
+              name="habitacionid"
+              value={habitaciones?.find((elem) => elem.id === habitacionSeleccionada)?.tipo}
+            />
           </div>
 
           <div>
@@ -252,6 +261,7 @@ export const ModalCalendario = () => {
               Check Out
             </label>
             <input onChange={onInputChange} value={checkout.slice(0, 10)} type="date" min={checkin} name="checkout" className="w-full border border-gray-500 rounded-md px-3 py-2" id="checkout" />
+            {error && <p className="text-red-500">La fecha de checkout debe ser mayor a la de checkin</p>}
           </div>
 
           <div>

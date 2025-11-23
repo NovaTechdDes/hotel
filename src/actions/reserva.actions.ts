@@ -41,6 +41,23 @@ export const getReporteOcupacion = async(anio: number): Promise<TemporadaAlta> =
     return data
 };
 
+export const getReporteTemporadaBaja = async(anio: number): Promise<TemporadaAlta> => {
+    const {data, error} = await supabase.rpc('reporte_ocupacion_baja', {
+        anio
+    }).single<TemporadaAlta>();
+
+    if(error){
+        await Swal.fire('Error al obtener el reporte', error.message, 'error');
+        return {
+            total_dias_ocupados: 0,
+            total_reservas: 0,
+            porcentaje_ocupacion: 0
+        };
+    };
+
+    return data
+};
+
 export const postReserva = async (reserva: Omit<Reserva, 'id' | 'creado_en'>): Promise<boolean | SweetAlertResult<any>> => {
     try {
         const { data: { user }, error: userError } = await supabase.auth.getUser();

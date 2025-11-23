@@ -1,6 +1,6 @@
 // CalendarioHotel.tsx
 import type { Cliente, Habitacion, Reserva } from '../../interface';
-import { format, setMonth } from 'date-fns';
+import { format, setMonth, setYear } from 'date-fns';
 import { useClientes, useHabitaciones } from '../../hooks';
 
 import { useReservaStore } from '../../store/reserva.store';
@@ -37,7 +37,7 @@ const devolverReserva = (reservas: Reserva[], day: Date, hab: Habitacion, client
 };
 
 export const Calendario = () => {
-  const { mesSeleccionado } = useCalendarioStore();
+  const { mesSeleccionado, anioSeleccionado } = useCalendarioStore();
 
   const [days, setDays] = useState(traerDiasDelMes(new Date()));
   const { isModalOpen, openDetalle, openModal, isDetalleOpen } = useReservaStore();
@@ -48,10 +48,10 @@ export const Calendario = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const todayRef = useRef<HTMLTableCellElement>(null);
 
-  const handleReserva = (e: React.MouseEvent<HTMLTableCellElement>, day: Date) => {
+  const handleReserva = (e: React.MouseEvent<HTMLTableCellElement>, day: Date, habitacionid: string) => {
     const target = e.currentTarget as HTMLTableCellElement;
     if (target.id === '') {
-      openModal(formatearAString(day).slice(0, 10));
+      openModal(formatearAString(day).slice(0, 10), habitacionid);
     } else {
       openDetalle(reservas?.find((reserva) => reserva.id === target.id));
     }
@@ -59,8 +59,9 @@ export const Calendario = () => {
 
   useEffect(() => {
     const date = setMonth(new Date(), mesSeleccionado);
-    setDays(traerDiasDelMes(date));
-  }, [mesSeleccionado]);
+    const year = setYear(date, anioSeleccionado);
+    setDays(traerDiasDelMes(year));
+  }, [mesSeleccionado, anioSeleccionado]);
 
   //Ejecutamos este useefect para mover el foco del scroll al dia actual
   useEffect(() => {
@@ -91,9 +92,9 @@ export const Calendario = () => {
           </thead>
           <tbody>
             {habitaciones?.map((hab) => (
-              <tr key={hab.id}>
-                <td className="border p-2 bg-gray-50 sticky left-0">
-                  <div>
+              <tr key={hab.id} className="">
+                <td className="border bg-gray-50 sticky left-0">
+                  <div className="border-r p-2 border-gray-800">
                     <p className="font-semibold">{hab.nombre}</p>
                     <span className="text-gray-500 text-xs">{hab.tipo}</span>
                   </div>
@@ -102,7 +103,7 @@ export const Calendario = () => {
                   <td
                     id={devolverReserva(reservas ?? [], day, hab, clientes!).id}
                     key={day.toISOString()}
-                    onClick={(e) => handleReserva(e, day)}
+                    onClick={(e) => handleReserva(e, day, hab?.id ?? '')}
                     className={`border h-10 w-20 text-center hover:bg-gray-200 cursor-pointer `}
                     style={{ backgroundColor: `${devolverReserva(reservas ?? [], day, hab, clientes!).fondo}` }}
                   >

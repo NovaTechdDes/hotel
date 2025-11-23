@@ -58,13 +58,13 @@ export const DetallesReserva = () => {
 
           {/* Informacion de la reserva */}
           <div className="border-gray-200 justify-around py-5 border rounded-lg flex gap-5 items-center">
-            <div className="w-15 h-15 rounded-lg flex justify-center items-center text-white" style={{ backgroundColor: '#3e3e3e' }}>
-              {cliente?.nombre[0]}
-              {cliente?.nombre.split(' ', 2)[1][0]}
+            <div className="w-15 h-15 rounded-lg flex justify-center items-center text-white capitalize" style={{ backgroundColor: '#3e3e3e' }}>
+              {reservaSeleccionado?.idcliente ? cliente?.nombre[0] : reservaSeleccionado?.cliente_nombre[0]}
+              {reservaSeleccionado?.idcliente ? cliente?.nombre.split(' ', 2)[1][0] : reservaSeleccionado?.cliente_nombre.split(' ', 2)[1][0]}
             </div>
 
             <div>
-              <p>{cliente?.nombre}</p>
+              <p className="capitalize">{reservaSeleccionado?.idcliente ? cliente?.nombre : reservaSeleccionado?.cliente_nombre}</p>
               <span className="text-gray-500">
                 {habitacion?.nombre} - {habitacion?.tipo}
               </span>
