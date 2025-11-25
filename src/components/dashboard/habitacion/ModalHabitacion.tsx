@@ -2,8 +2,9 @@ import { CgClose } from 'react-icons/cg';
 import { useMutateHabitacion } from '../../../hooks/habitacion/useMutateHabitacion';
 import type { Habitacion } from '../../../interface/Habitacion';
 import { useForm } from '../../../hooks/useForm';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useHabitacionStore } from '../../../store';
+import { useCaracteristicas } from '../../../hooks';
 
 const initialState: Habitacion = {
   creado_en: new Date(),
@@ -11,16 +12,28 @@ const initialState: Habitacion = {
   nombre: '',
   descripcion: '',
   tipo: 'individual',
+  caracteristica_habitacion: [],
 };
 
 const ModalHabitacion = () => {
+  const { data: caracteristicas } = useCaracteristicas();
   const { habitacionSeleccionado, closeModal } = useHabitacionStore();
+
   const { addHabitacion, putHabitacion } = useMutateHabitacion();
   const { isPending: isPendingAgregar, mutateAsync: agregarHabitacion } = addHabitacion;
   const { isPending: isPendingModificar, mutateAsync: modificarHabitacion } = putHabitacion;
 
   const { nombre, capacidad, formState, descripcion, onInputChange, onResetForm, tipo } = useForm(habitacionSeleccionado ?? initialState);
+  const [caracterisitcasSeleccionadas, setCaracterisitcasSeleccionadas] = useState<string[]>([]);
   const [error, setError] = useState<boolean>(false);
+
+  useEffect(() => {
+    setCaracterisitcasSeleccionadas(habitacionSeleccionado?.caracteristica_habitacion?.map((c) => c.caracteristicaid) ?? []);
+  }, [habitacionSeleccionado]);
+
+  useEffect(() => {
+    console.log(caracterisitcasSeleccionadas);
+  }, [caracterisitcasSeleccionadas]);
 
   const handleCloseModal = () => {
     onResetForm();
@@ -34,16 +47,21 @@ const ModalHabitacion = () => {
     if (capacidad === 0) return setError(true);
 
     if (habitacionSeleccionado) {
-      const result = await modificarHabitacion(formState);
-      console.log(result);
+      await modificarHabitacion(formState);
       closeModal();
     } else {
-      const result = await agregarHabitacion(formState);
+      const result = await agregarHabitacion({ habitacion: formState, listadoCaracteristicas: caracterisitcasSeleccionadas });
 
       if (result) {
         closeModal();
       }
     }
+  };
+
+  const handleCaracteristicasChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    if (caracterisitcasSeleccionadas.find((elem) => elem === e.target.value)) return;
+
+    setCaracterisitcasSeleccionadas([...caracterisitcasSeleccionadas, e.target.value]);
   };
 
   return (
@@ -59,7 +77,7 @@ const ModalHabitacion = () => {
               <label htmlFor="nombre" className="block text-sm font-medium mb-1">
                 Nombre
               </label>
-              <input type="text" id="nombre" name="nombre" value={nombre} onChange={onInputChange} className="w-full border rounded-md px-3 py-2" placeholder="Nombre" />
+              <input type="text" id="nombre" name="nombre" value={nombre} onChange={onInputChange} className="w-full border rounded-md px-3 py-2" placeholder="Ej: Nombre" />
               {error && nombre === '' && <p className="text-red-500">El nombre es obligatorio</p>}
             </div>
 
@@ -88,15 +106,40 @@ const ModalHabitacion = () => {
               <label htmlFor="descripcion" className="block text-sm font-medium mb-1">
                 Descripcion
               </label>
-              <textarea name="descripcion" id="decripcion" className="w-full border rounded-md px-3 py-2" value={descripcion} onChange={onInputChange}></textarea>
+              <textarea name="descripcion" id="decripcion" className="w-full border rounded-md px-3 py-2" value={descripcion} onChange={onInputChange} placeholder="Ej: Descripcion">
+                {descripcion}
+              </textarea>
             </div>
 
             <div>
-              <label htmlFor="caracteristica">Carcateristicas de la Habitacion</label>
+              <label htmlFor="caracteristicas" className="block text-sm font-medium mb-1">
+                Características de la Habitación
+              </label>
+              <select onChange={handleCaracteristicasChange} name="caracteristicas" id="caracteristicas" className="w-full border rounded-md px-3 py-2">
+                <option value="">--- Seleccionar una opción ---</option>
+                {caracteristicas?.map((elem) => (
+                  <option value={elem.id} key={elem.id}>
+                    {elem.nombre}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="col-span-2 flex flex-wrap gap-2 mt-2">
+              {caracterisitcasSeleccionadas.map((elemId) => (
+                <div key={elemId} className="inline-flex text-sm bg-gray-100 border border-gray-300 text-gray-700 px-3 py-1 rounded-full items-center gap-1">
+                  <span>{caracteristicas?.find((caracteristica) => caracteristica.id === elemId)?.nombre}</span>
+                  <CgClose
+                    size={15}
+                    className="cursor-pointer text-gray-500 hover:text-gray-800"
+                    onClick={() => setCaracterisitcasSeleccionadas(caracterisitcasSeleccionadas.filter((id) => id !== elemId))}
+                  />
+                </div>
+              ))}
             </div>
           </div>
 
-          <div className="flex justify-end mt-4 gap-2 mt-auto">
+          <div className="flex justify-end gap-2 mt-auto">
             <button type="button" className="px-4 py-2 bg-gray-300 rounded hover:bg-green-300 cursor-pointer transition" onClick={handleCloseModal}>
               Cancelar
             </button>

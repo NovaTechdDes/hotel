@@ -5,3 +5,4 @@ export * from './Precio';
 export * from './Reserva';
 export * from './TipoEgreso';
 export * from './Usuario';
+export * from './Caracteristica';
