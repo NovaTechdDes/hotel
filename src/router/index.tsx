@@ -9,6 +9,7 @@ import { Reporte } from '../pages/dashboard/Reporte';
 import Egreso from '../pages/dashboard/Egreso';
 import { Configuracion } from '../pages/dashboard/Configuracion';
 import RecoverPassword from '../pages/auth/RecoverPassword';
+import UpdatePassword from '../pages/auth/UpdatePassword';
 
 export const router = createBrowserRouter([
   {
@@ -40,5 +41,10 @@ export const router = createBrowserRouter([
     path: '/recuperar-contraseña',
     element: <PublicRoute />,
     children: [{ path: '/recuperar-contraseña', element: <RecoverPassword /> }],
+  },
+  {
+    path: '/actualizar-contraseña',
+    element: <PublicRoute />,
+    children: [{ path: '/actualizar-contraseña', element: <UpdatePassword /> }],
   },
 ]);

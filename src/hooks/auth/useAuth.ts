@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import { loginSupabase, recoveryPassword } from '../../actions/auth.actions';
+import { loginSupabase, recoveryPassword, updatePassword } from '../../actions/auth.actions';
 
 //Este hook lo que hace es dar la opcion de loguear o cerrar sesion, y devolver tambien un boolean para saber si esta logueado o no
 
@@ -33,6 +33,11 @@ export const useAuth = () => {
     return ok;
   };
 
+  const actualizarContraseña = async (password: string) => {
+    const ok = await updatePassword(password);
+    return ok;
+  };
+
   const estaAutenticado = !!session;
 
   return {
@@ -43,5 +48,6 @@ export const useAuth = () => {
     login,
     logout,
     recuperarContraseña,
+    actualizarContraseña,
   };
 };

@@ -82,7 +82,9 @@ export const createUser = async (email: string, password: string = '', rol: stri
 
 export const recoveryPassword = async (email: string) => {
   try {
-    const { error } = await supabase.auth.resetPasswordForEmail(email);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: 'http://localhost:3000/actualizar-contraseña',
+    });
     if (error) {
       console.log(error);
       return false;
@@ -91,5 +93,42 @@ export const recoveryPassword = async (email: string) => {
   } catch (error) {
     console.log(error);
     return false;
+  }
+};
+
+export const updatePassword = async (password: string) => {
+  try {
+    console.log(password);
+    const { error } = await supabase.auth.updateUser({
+      password,
+    });
+    if (error) {
+      console.log(error.message);
+      if (error.message === 'New password should be different from the old password.') {
+        return {
+          ok: false,
+          msg: 'La contraseña debe ser diferente a la anterior',
+          token: '',
+        };
+      }
+      return {
+        ok: false,
+        msg: 'Error al actualizar la contraseña',
+        token: '',
+      };
+    }
+
+    return {
+      ok: true,
+      msg: 'Contraseña actualizada correctamente',
+      token: '',
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      ok: false,
+      msg: 'Error al actualizar la contraseña',
+      token: '',
+    };
   }
 };

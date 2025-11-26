@@ -55,7 +55,7 @@ export const ReservaCard = ({ buscador, reserva }: Props) => {
         <Link to={'https://fe.afip.gob.ar/rcel/jsp/index_bis.jsp'} target="_blank" className="cursor-pointer hover:bg-gray-200 rounded-lg px-2">
           <IoDocumentTextOutline title="Realizar Factura" size={20} />
         </Link>
-        <button className="inline-flex justify-center items-center gap-2 cursor-pointer hover:bg-gray-200 border border-gray-300 rounded-lg px-2" onClick={handleReserva}>
+        <button className="inline-flex justify-center items-center gap-2 cursor-pointer hover:bg-blue-700 bg-blue-600 text-white border border-gray-300 rounded-lg p-2" onClick={handleReserva}>
           <HiOutlinePencilSquare />
           Ver Detalles
         </button>
