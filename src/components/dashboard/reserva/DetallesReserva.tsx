@@ -6,6 +6,9 @@ import { useRolAuth } from '../../../hooks/auth/useRolAuth';
 import { CgClose } from 'react-icons/cg';
 import Swal from 'sweetalert2';
 import { calcularDias, reordenarFecha } from '../../../helpers/formatearFecha';
+import { FiPrinter } from 'react-icons/fi';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import PDF from '../../ui/PDF';
 
 export const DetallesReserva = () => {
   const { reservaSeleccionado, closeDetalle, openModal } = useReservaStore();
@@ -47,7 +50,27 @@ export const DetallesReserva = () => {
             <div className="w-full">
               <div className="flex justify-between w-full mb-10">
                 <h3 className="text-xl font-semibold">Detalles Reserva</h3>
-                <CgClose size={20} className="cursor-pointer hover:bg-gray-300 rounded-lg" onClick={handleCancel} />
+                <div className="flex gap-5">
+                  <PDFDownloadLink document={<PDF reserva={reservaSeleccionado!} />} fileName={`Reserva-${reservaSeleccionado?.cliente_nombre}`}>
+                    {({ loading }) =>
+                      loading ? (
+                        <button className="cursor-pointer hover:bg-gray-300 rounded-lg flex gap-2" disabled>
+                          <svg className="animate-spin h-5 w-5 mr-3 text-gray-600" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          Generando Documento...
+                        </button>
+                      ) : (
+                        <button className="cursor-pointer hover:bg-gray-300 rounded-lg">
+                          <FiPrinter size={20} className="cursor-pointer hover:bg-gray-200 rounded-lg" />
+                        </button>
+                      )
+                    }
+                  </PDFDownloadLink>
+
+                  <CgClose size={20} className="cursor-pointer hover:bg-gray-300 rounded-lg" onClick={handleCancel} />
+                </div>
               </div>
             </div>
 
