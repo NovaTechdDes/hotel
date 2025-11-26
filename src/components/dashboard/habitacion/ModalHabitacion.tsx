@@ -28,7 +28,7 @@ const ModalHabitacion = () => {
   const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
-    setCaracterisitcasSeleccionadas(habitacionSeleccionado?.caracteristica_habitacion?.map((c) => c.caracteristicaid) ?? []);
+    setCaracterisitcasSeleccionadas(habitacionSeleccionado?.caracteristica_habitacion ? habitacionSeleccionado.caracteristica_habitacion.map((c: any) => c.caracteristicaid) : []);
   }, [habitacionSeleccionado]);
 
   const handleCloseModal = () => {
