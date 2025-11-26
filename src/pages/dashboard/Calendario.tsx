@@ -107,7 +107,14 @@ export const Calendario = () => {
                     className={`border h-10 w-20 text-center hover:bg-gray-200 cursor-pointer `}
                     style={{ backgroundColor: `${devolverReserva(reservas ?? [], day, hab, clientes!).fondo}` }}
                   >
-                    <p className="text-white capitalize">{devolverReserva(reservas ?? [], day, hab, clientes!).cliente}</p>
+                    {(() => {
+                      const reservaData = devolverReserva(reservas ?? [], day, hab, clientes!);
+                      const clientName = reservaData.cliente;
+                      if (clientName && clientName.length > 25) {
+                        return <p className="text-white p-1 capitalize">{clientName.slice(0, 20)}...</p>;
+                      }
+                      return <p className="text-white p-1 capitalize">{clientName}</p>;
+                    })()}
                   </td>
                 ))}
               </tr>

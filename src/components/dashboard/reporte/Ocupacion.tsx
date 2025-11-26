@@ -22,7 +22,7 @@ export const Ocupacion = ({ temporadaAlta, color, title, meses }: Props) => {
 
       <div className="flex gap-5 flex-col my-5">
         <div className="flex justify-between">
-          <p className="text-gray-500">Total de Rervas</p>
+          <p className="text-gray-500">Total de Reservas</p>
           <span className="font-bold text-2xl">{temporadaAlta.total_reservas}</span>
         </div>
 

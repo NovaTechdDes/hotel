@@ -45,8 +45,7 @@ export const postHabitacion = async (habitacion: Omit<Habitacion, 'id' | 'creado
 
 export const updateHabitacion = async (updates: Partial<Habitacion>): Promise<boolean> => {
   try {
-    const { id, creado_en, ...dataUpdate } = updates;
-    console.log(creado_en);
+    const { id, creado_en, caracteristica_habitacion, ...dataUpdate } = updates;
     const { data, error } = await supabase.from('habitacion').update(dataUpdate).eq('id', id);
     if (error) {
       await Swal.fire('Error al modificar la habitacion', error.message, 'error');

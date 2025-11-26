@@ -31,10 +31,6 @@ const ModalHabitacion = () => {
     setCaracterisitcasSeleccionadas(habitacionSeleccionado?.caracteristica_habitacion?.map((c) => c.caracteristicaid) ?? []);
   }, [habitacionSeleccionado]);
 
-  useEffect(() => {
-    console.log(caracterisitcasSeleccionadas);
-  }, [caracterisitcasSeleccionadas]);
-
   const handleCloseModal = () => {
     onResetForm();
     closeModal();
@@ -96,7 +92,8 @@ const ModalHabitacion = () => {
               <select id="tipo" name="tipo" value={tipo} onChange={onInputChange} className="w-full border rounded-md px-3 py-2">
                 <option value="individual">Individual</option>
                 <option value="doble">Doble</option>
-                <option value="suite">Suite</option>
+                <option value="triple">Triple</option>
+                <option value="cuadruple">Cuadruple</option>
                 <option value="casa">Casa</option>
                 <option value="hostel">Hostel</option>
               </select>

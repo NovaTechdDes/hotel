@@ -3,8 +3,9 @@ import { reordenarFecha } from '../../../helpers/formatearFecha';
 
 import type { Reserva } from '../../../interface';
 import { HiOutlineCalendar, HiOutlinePencilSquare } from 'react-icons/hi2';
-import { BiPrinter } from 'react-icons/bi';
 import { LuBed } from 'react-icons/lu';
+import { Link } from 'react-router-dom';
+import { IoDocumentTextOutline } from 'react-icons/io5';
 
 interface Props {
   reserva: Reserva;
@@ -51,9 +52,9 @@ export const ReservaCard = ({ buscador, reserva }: Props) => {
       </div>
 
       <div className="flex gap-5 items-center">
-        <button className="cursor-pointer hover:bg-gray-200 rounded-lg px-2">
-          <BiPrinter size={20} />
-        </button>
+        <Link to={'https://fe.afip.gob.ar/rcel/jsp/index_bis.jsp'} target="_blank" className="cursor-pointer hover:bg-gray-200 rounded-lg px-2">
+          <IoDocumentTextOutline title="Realizar Factura" size={20} />
+        </Link>
         <button className="inline-flex justify-center items-center gap-2 cursor-pointer hover:bg-gray-200 border border-gray-300 rounded-lg px-2" onClick={handleReserva}>
           <HiOutlinePencilSquare />
           Ver Detalles

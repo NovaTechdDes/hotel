@@ -18,7 +18,7 @@ export const DetallesReserva = () => {
 
   const handleDelete = async () => {
     const { isConfirmed } = await Swal.fire({
-      title: `Quiere eliminar reserva de ${cliente?.nombre}`,
+      title: `Quiere eliminar reserva de ${cliente?.nombre ? cliente?.nombre : reservaSeleccionado?.cliente_nombre}`,
       showCancelButton: true,
       confirmButtonText: 'Aceptar',
     });
@@ -95,7 +95,7 @@ export const DetallesReserva = () => {
           </div>
 
           <div className="flex gap-3 justify-center mt-5 border-t pt-5 border-gray-300">
-            <button onClick={handleUpdate} className="w-full justify-center flex gap-2 items-center bg-blue-500 p-2 text-white rounded-lg cursor-pointer hover:bg-blue-400">
+            <button onClick={handleUpdate} disabled={isPending} className="w-full justify-center flex gap-2 items-center bg-blue-500 p-2 text-white rounded-lg cursor-pointer hover:bg-blue-400">
               <HiOutlinePencil size={20} className="cursor-pointer hover:bg-gray-200 rounded-lg" />
               Editar
             </button>
