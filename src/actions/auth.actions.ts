@@ -43,8 +43,7 @@ export const getRolUser = async (): Promise<Usuario | false> => {
     return false;
   }
 
-  const { data: user, error: errorRol } = await supabase.from('usuarios').select().eq('id', data.user.id).single();
-
+  const { data: user, error: errorRol } = await supabase.from('usuarios').select().eq('id', data.user.id).single<Usuario>();
   if (errorRol) {
     await Swal.fire('Error al obtener el rol del usuario', errorRol.message, 'error');
     return false;

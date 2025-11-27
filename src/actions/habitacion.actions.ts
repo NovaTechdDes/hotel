@@ -19,7 +19,10 @@ export const getHabitacionById = async (id: number): Promise<Habitacion | null> 
 
 export const postHabitacion = async (habitacion: Omit<Habitacion, 'id' | 'creado_en'>, listadoCaracteristicas: string[]): Promise<boolean> => {
   try {
-    const { data, error } = await supabase.from('habitacion').insert(habitacion).select().single<Habitacion>();
+    const { caracteristica_habitacion, ...habitacionToInsert } = habitacion;
+    console.log(caracteristica_habitacion);
+
+    const { data, error } = await supabase.from('habitacion').insert(habitacionToInsert).select().single<Habitacion>();
     if (error) {
       await Swal.fire('Error al cargar la habitacion', error.message, 'error');
       return false;

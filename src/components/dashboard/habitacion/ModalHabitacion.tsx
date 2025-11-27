@@ -141,13 +141,13 @@ const ModalHabitacion = () => {
               Cancelar
             </button>
             {!habitacionSeleccionado && (
-              <button type="submit" disabled={isPendingAgregar} className="px-4 py-2 bg-black text-white rounded hover:opacity-80 cursor-pointer transition">
+              <button type="submit" disabled={isPendingAgregar} className="px-4 py-2 bg-blue-700 text-white rounded hover:opacity-80 cursor-pointer transition">
                 {isPendingAgregar ? 'Guardando...' : 'Guardar'}
               </button>
             )}
 
             {habitacionSeleccionado && (
-              <button type="submit" disabled={isPendingModificar} className="px-4 py-2 bg-black text-white rounded hover:opacity-80 cursor-pointer transition">
+              <button type="submit" disabled={isPendingModificar} className="px-4 py-2 bg-blue-700 text-white rounded hover:opacity-80 cursor-pointer transition">
                 {isPendingModificar ? 'Modificando...' : 'Modificar'}
               </button>
             )}
