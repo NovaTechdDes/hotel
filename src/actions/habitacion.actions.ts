@@ -3,7 +3,7 @@ import type { Habitacion } from '../interface/Habitacion';
 import { supabase } from '../lib/supababase';
 
 export const getHabitaciones = async (): Promise<Habitacion[]> => {
-  const { data, error } = await supabase.from('habitacion').select(`*, caracteristica_habitacion (caracteristicaid)`).order('id');
+  const { data, error } = await supabase.from('habitacion').select(`*, caracteristica_habitacion (caracteristicaid)`).order('nombre');
 
   if (error) await Swal.fire('Error al obtener las habitaciones', error.message, 'error');
 

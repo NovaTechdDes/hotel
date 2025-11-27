@@ -1,22 +1,18 @@
-
-
-import { HeaderMain, ListaTipoEgresos, ModalTipoEgreso } from '../../components'
-import { useTipoEgresoStore } from '../../store'
-
+import { HeaderMain, ListaTipoEgresos, ModalTipoEgreso } from '../../components';
+import { useTipoEgresoStore } from '../../store';
 
 const TipoEgreso = () => {
+  const { openModal, isModalOpen } = useTipoEgresoStore();
 
-    const { openModal, isModalOpen } = useTipoEgresoStore()
+  return (
+    <main>
+      <HeaderMain botonText="Agregar Tipo" title="Tipo Egreso" openModal={openModal} />
 
-    return (
-        <main>
-            <HeaderMain botonText='Agregar Tipo' openModal={openModal} />
+      <ListaTipoEgresos />
 
-            <ListaTipoEgresos />
+      {isModalOpen && <ModalTipoEgreso />}
+    </main>
+  );
+};
 
-            {isModalOpen && <ModalTipoEgreso />}
-        </main>
-    )
-}
-
-export default TipoEgreso
+export default TipoEgreso;

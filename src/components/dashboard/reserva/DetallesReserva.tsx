@@ -83,7 +83,11 @@ export const DetallesReserva = () => {
           <div className="border-gray-200 justify-around py-5 border rounded-lg flex gap-5 items-center">
             <div className="w-15 h-15 rounded-lg flex justify-center items-center text-white capitalize" style={{ backgroundColor: '#3e3e3e' }}>
               {reservaSeleccionado?.idcliente ? cliente?.nombre[0] : reservaSeleccionado?.cliente_nombre[0]}
-              {reservaSeleccionado?.idcliente ? cliente?.nombre.split(' ', 2)[1][0] : reservaSeleccionado?.cliente_nombre.split(' ', 2)[1][0]}
+              {reservaSeleccionado?.idcliente
+                ? cliente?.nombre?.split(' ', 2)[1][0]
+                : reservaSeleccionado?.cliente_nombre !== ''
+                ? reservaSeleccionado?.cliente_nombre[0]
+                : reservaSeleccionado?.cliente_nombre}
             </div>
 
             <div>

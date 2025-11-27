@@ -131,6 +131,7 @@ export const ModalCalendario = () => {
     e.preventDefault();
 
     if (checkout < checkin) return setError(true);
+    if (cliente_nombre === '') return setError(true);
 
     if (reservaSeleccionado) {
       const ok = await modificarReserva(formState);
@@ -194,6 +195,7 @@ export const ModalCalendario = () => {
                 </ul>
               </div>
             )}
+            {error && cliente_nombre === '' && <p className="text-red-500">Debe seleccionar un cliente</p>}
           </div>
 
           <div>
