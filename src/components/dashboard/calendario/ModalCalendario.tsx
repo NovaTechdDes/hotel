@@ -8,6 +8,7 @@ import { useReservaStore } from '../../../store/reserva.store';
 import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti';
 import { useMutateReserva } from '../../../hooks/reserva/useMutateReserva';
 import { calcularPrecios } from '../../../helpers/calcularPrecio';
+import { BiCalendar } from 'react-icons/bi';
 
 const initialState: Reserva = {
   cant_personas: 0,
@@ -255,14 +256,28 @@ export const ModalCalendario = () => {
             <label className="text-lg font-semibold" htmlFor="checkin">
               Check In
             </label>
-            <input onChange={onInputChange} value={checkin.slice(0, 10)} type="date" name="checkin" className="w-full border border-gray-500 text-black rounded-md px-3 py-2" id="checkin" />
+            <div className="relative">
+              <input onChange={onInputChange} value={checkin.slice(0, 10)} type="date" name="checkin" className="w-full border border-gray-500 text-black rounded-md px-3 py-2" id="checkin" />
+              <BiCalendar className="absolute right-2 top-1/2 -translate-y-1/2 text-black pointer-events-none" />
+            </div>
           </div>
 
           <div>
             <label className="text-lg font-semibold" htmlFor="checkout">
               Check Out
             </label>
-            <input onChange={onInputChange} value={checkout.slice(0, 10)} type="date" min={checkin} name="checkout" className="w-full border border-gray-500 rounded-md px-3 py-2" id="checkout" />
+            <div className="relative">
+              <input
+                onChange={onInputChange}
+                value={checkout.slice(0, 10)}
+                type="date"
+                min={checkin}
+                name="checkout"
+                className="w-full border border-gray-500 text-black rounded-md px-3 py-2"
+                id="checkout"
+              />
+              <BiCalendar className="absolute right-2 top-1/2 -translate-y-1/2 text-black pointer-events-none" />
+            </div>
             {error && <p className="text-red-500">La fecha de checkout debe ser mayor a la de checkin</p>}
           </div>
 

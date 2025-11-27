@@ -48,3 +48,9 @@ body {
   background-color: #555;
   /* color al pasar el mouse */
 }
+
+input[type="date"] {
+  appearance: auto !important;
+  -webkit-appearance: auto !important;
+  /* Para navegadores basados en WebKit (Chrome, Safari) */
+}
