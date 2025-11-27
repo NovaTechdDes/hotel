@@ -109,17 +109,17 @@ export const ModalEgreso = () => {
           </div>
 
           <div className="flex justify-end col-span-2  mt-auto gap-2">
-            <button type="button" className="px-4 py-2 bg-gray-300 rounded hover:bg-green-300 cursor-pointer transition" onClick={handleCloseModal}>
+            <button type="button" className="px-4 py-2 bg-gray-300 rounded hover:bg-red-300 cursor-pointer transition" onClick={handleCloseModal}>
               Cancelar
             </button>
             {!egresoSeleccionado && (
-              <button type="submit" disabled={isPendingAgregar} className="px-4 py-2 bg-black text-white rounded hover:opacity-80 cursor-pointer transition">
+              <button type="submit" disabled={isPendingAgregar} className="px-4 py-2 bg-green-800 text-white rounded hover:bg-green-700 cursor-pointer transition">
                 {isPendingAgregar ? 'Guardando...' : 'Guardar'}
               </button>
             )}
 
             {egresoSeleccionado && (
-              <button type="submit" disabled={isPendingModificar} className="px-4 py-2 bg-black text-white rounded hover:opacity-80 cursor-pointer transition">
+              <button type="submit" disabled={isPendingModificar} className="px-4 py-2 bg-green-800 text-white rounded hover:bg-green-700 cursor-pointer transition">
                 {isPendingModificar ? 'Modificando...' : 'Modificar'}
               </button>
             )}

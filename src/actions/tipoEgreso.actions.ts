@@ -41,7 +41,7 @@ export const deleteTipoEgreso = async (id: number): Promise<boolean | SweetAlert
   try {
     const { error } = await supabase.from('tipoEgreso').delete().eq('id', id);
 
-    if (!verError(error?.code, error?.message)) {
+    if (!verError(error?.code)) {
       return false;
     }
 
