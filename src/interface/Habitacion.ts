@@ -5,7 +5,7 @@ export interface Habitacion {
   capacidad: number;
   creado_en: Date;
   descripcion: string;
-  disponible: boolean;
+  disponible?: boolean;
   observaciones?: string;
   caracteristica_habitacion: string[];
 }
