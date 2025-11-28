@@ -25,9 +25,9 @@ export const ReservaCard = ({ buscador, reserva }: Props) => {
   }
 
   return (
-    <div className="flex gap-5 justify-between mb-5">
-      <div className="flex gap-5  ">
-        <div className="w-15 h-15 text-white flex items-center justify-center rounded-lg" style={{ backgroundColor: color }}>
+    <div className="flex flex-col md:flex-row gap-5 justify-between mb-5 border-b border-gray-400 pb-2">
+      <div className="flex gap-5 ">
+        <div className="md:w-15 md:h-15 w-10 h-10 text-white flex items-center justify-center rounded-lg" style={{ backgroundColor: color }}>
           {reserva.idcliente ? cliente?.nombre[0] : reserva.cliente_nombre[0]}
           {reserva.idcliente ? cliente?.nombre.split(' ', 2)[1][0] : reserva.cliente_nombre.split(' ', 2)[1][0]}
         </div>
@@ -38,7 +38,7 @@ export const ReservaCard = ({ buscador, reserva }: Props) => {
             <p className="text-gray-500">{habitacion?.tipo}</p>
           </div>
           <p className="flex items-center gap-5">
-            <LuBed />
+            <LuBed className="hidden md:block" />
             <span className="text-gray-500">Habitacion {habitacion?.nombre}</span>
           </p>
         </div>
@@ -51,12 +51,16 @@ export const ReservaCard = ({ buscador, reserva }: Props) => {
         </p>
       </div>
 
-      <div className="flex gap-5 items-center">
+      <div className="flex gap-5 md:w-auto w-full items-center">
         <Link to={'https://fe.afip.gob.ar/rcel/jsp/index_bis.jsp'} target="_blank" className="cursor-pointer hover:bg-gray-200 rounded-lg px-2">
           <IoDocumentTextOutline title="Realizar Factura" size={20} />
         </Link>
-        <button className="inline-flex justify-center items-center gap-2 cursor-pointer hover:bg-blue-700 bg-blue-600 text-white border border-gray-300 rounded-lg p-2" onClick={handleReserva}>
-          <HiOutlinePencilSquare />
+
+        <button
+          className="inline-flex w-full justify-center items-center text-xs md:text-base gap-2 cursor-pointer hover:bg-blue-700 bg-blue-600 text-white border border-gray-300 rounded-lg p-2"
+          onClick={handleReserva}
+        >
+          <HiOutlinePencilSquare className="hidden md:block" />
           Ver Detalles
         </button>
       </div>

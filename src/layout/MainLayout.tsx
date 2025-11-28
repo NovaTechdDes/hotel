@@ -6,7 +6,7 @@ export const MainLayout = () => {
     <div className="grid grid-cols-5 h-screen w-screen">
       <AsideBar />
 
-      <div className="col-span-4 border-l ml-64 w-full border-slate-300 bg-slate-200 pt-2">
+      <div className="md:col-span-4 col-span-5 border-l sm:ml-64 w-full border-slate-300 bg-slate-200 pt-2">
         <Outlet />
       </div>
     </div>

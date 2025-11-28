@@ -6,10 +6,13 @@ import { RiPushpinLine } from 'react-icons/ri';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/auth/useAuth';
 import { FaArrowTrendDown } from 'react-icons/fa6';
+import { useState } from 'react';
+import { MdOutlineMenu } from 'react-icons/md';
 
 export const AsideBar = () => {
   const navigate = useNavigate();
   const { logout } = useAuth();
+  const [open, setOpen] = useState<boolean>(false);
 
   const handleLogout = () => {
     logout();
@@ -17,55 +20,66 @@ export const AsideBar = () => {
   };
 
   return (
-    <aside className="bg-slate-200 text-black px-5 h-screen w-64 fixed top-0 left-0 flex flex-col">
-      <h3 className="text-xl font-bold my-2">Hotel Mis Casitas</h3>
+    <>
+      <aside className={`bg-slate-200 text-black px-5 h-screen fixed top-0 left-0 z-50 w-64 flex-col  ${open ? 'flex' : 'hidden'} sm:flex`}>
+        <h3 className="text-xl font-bold my-2">Hotel Mis Casitas</h3>
 
-      <nav className="gap-5 flex flex-col flex-1">
-        <NavLink className={({ isActive }) => `flex hover:opacity-80 text-slate-800 items-center gap-2 ${isActive ? 'bg-white p-2 rounded-lg' : ''}`} to="/calendario">
-          <RiPushpinLine />
-          Inicio
-        </NavLink>
+        <nav className="gap-5 flex flex-col flex-1">
+          <NavLink className={({ isActive }) => `flex hover:opacity-80 text-slate-800 items-center gap-2 ${isActive ? 'bg-white p-2 rounded-lg' : ''}`} to="/calendario">
+            <RiPushpinLine />
+            Inicio
+          </NavLink>
 
-        <NavLink className={({ isActive }) => `flex hover:opacity-80 text-slate-800 items-center gap-2 ${isActive ? 'bg-white p-2 rounded-lg' : ''}`} to="/reserva">
-          <IoDocumentTextOutline />
-          Reservas
-        </NavLink>
+          <NavLink className={({ isActive }) => `flex hover:opacity-80 text-slate-800 items-center gap-2 ${isActive ? 'bg-white p-2 rounded-lg' : ''}`} to="/reserva">
+            <IoDocumentTextOutline />
+            Reservas
+          </NavLink>
 
-        <NavLink className={({ isActive }) => `flex hover:opacity-80 text-slate-800 items-center gap-2 ${isActive ? 'bg-white p-2 rounded-lg' : ''}`} to="/habitacion">
-          <LuBedDouble />
-          Habitaciones
-        </NavLink>
+          <NavLink className={({ isActive }) => `flex hover:opacity-80 text-slate-800 items-center gap-2 ${isActive ? 'bg-white p-2 rounded-lg' : ''}`} to="/habitacion">
+            <LuBedDouble />
+            Habitaciones
+          </NavLink>
 
-        <NavLink className={({ isActive }) => `flex hover:opacity-80 text-slate-800 items-center gap-2 ${isActive ? 'bg-white p-2 rounded-lg' : ''}`} to="/cliente">
-          <GoPeople />
-          Clientes
-        </NavLink>
+          <NavLink className={({ isActive }) => `flex hover:opacity-80 text-slate-800 items-center gap-2 ${isActive ? 'bg-white p-2 rounded-lg' : ''}`} to="/cliente">
+            <GoPeople />
+            Clientes
+          </NavLink>
 
-        <NavLink className={({ isActive }) => `flex hover:opacity-80 text-slate-800 items-center gap-2 ${isActive ? 'bg-white p-2 rounded-lg' : ''}`} to="/reporte">
-          <FcStatistics />
-          Reportes
-        </NavLink>
+          <NavLink className={({ isActive }) => `flex hover:opacity-80 text-slate-800 items-center gap-2 ${isActive ? 'bg-white p-2 rounded-lg' : ''}`} to="/reporte">
+            <FcStatistics />
+            Reportes
+          </NavLink>
 
-        <NavLink className={({ isActive }) => `flex hover:opacity-80 text-slate-800 items-center gap-2 ${isActive ? 'bg-white p-2 rounded-lg' : ''}`} to="/egreso">
-          <FaArrowTrendDown />
-          Egreso
-        </NavLink>
-      </nav>
+          <NavLink className={({ isActive }) => `flex hover:opacity-80 text-slate-800 items-center gap-2 ${isActive ? 'bg-white p-2 rounded-lg' : ''}`} to="/egreso">
+            <FaArrowTrendDown />
+            Egreso
+          </NavLink>
+        </nav>
 
-      <div className="mt-auto mb-3 flex flex-col gap-5 pb-4">
-        <NavLink
-          className={({ isActive }) => `flex hover:opacity-80 text-slate-800 items-center gap-2 py-2 border-t border-slate-400 ${isActive ? 'bg-white p-2 rounded-lg' : ''}`}
-          to="/configuracion"
-        >
-          <IoSettingsOutline />
-          Configuración
-        </NavLink>
+        <div className="mt-auto mb-3 flex flex-col gap-5 pb-4">
+          <NavLink
+            className={({ isActive }) => `flex hover:opacity-80 text-slate-800 items-center gap-2 py-2 border-t border-slate-400 ${isActive ? 'bg-white p-2 rounded-lg' : ''}`}
+            to="/configuracion"
+          >
+            <IoSettingsOutline />
+            Configuración
+          </NavLink>
 
-        <div onClick={handleLogout} className="flex cursor-pointer hover:opacity-80 text-red-600 font-semibold items-center gap-2 ">
-          <LuLogOut />
-          Cerrar Sesion
+          <div onClick={handleLogout} className="flex cursor-pointer hover:opacity-80 text-red-600 font-semibold items-center gap-2 ">
+            <LuLogOut />
+            Cerrar Sesion
+          </div>
         </div>
-      </div>
-    </aside>
+      </aside>
+
+      <button
+        onClick={() => {
+          setOpen(!open);
+        }}
+        className="fixed top-4 left-4 z-50 sm:hidden p-2 rounded-md bg-blue-500 text-white"
+      >
+        <MdOutlineMenu />
+      </button>
+    </>
   );
 };
