@@ -10,22 +10,12 @@ const ListaHabitacion = () => {
   }
 
   return (
-    <div className="bg-white h-[80vh] border border-gray-300 shadow-2xl rounded-lg mx-5 overflow-auto">
-      <table className="w-full text-black rounded-lg">
-        <thead className="border border-gray-300 rounded-lg">
-          <tr>
-            <th className="py-2">Nombre</th>
-            <th>Tipo</th>
-            <th>Cantidad</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody className="border border-gray-300 rounded-lg">
-          {habitaciones?.map((elem) => (
-            <HabitacionCard key={elem.id} habitacion={elem} />
-          ))}
-        </tbody>
-      </table>
+    <div className=" h-[80vh] border border-gray-300 shadow-2xl rounded-lg mx-1 md:mx-5 overflow-auto">
+      <div className="w-full text-black rounded-lg grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
+        {habitaciones?.map((elem) => (
+          <HabitacionCard key={elem.id} habitacion={elem} />
+        ))}
+      </div>
     </div>
   );
 };
