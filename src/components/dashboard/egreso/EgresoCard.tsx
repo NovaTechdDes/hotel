@@ -36,7 +36,7 @@ export const EgresoCard = ({ egreso }: Props) => {
   };
 
   return (
-    <div className={`bg-white text-black p-5 m-5 rounded-lg shadow-xl ${isPending ? 'opacity-70 pointer-events-none relative' : ''}`}>
+    <div className={`bg-white text-black p-5 my-5 rounded-lg shadow-xl ${isPending ? 'opacity-70 pointer-events-none relative' : ''}`}>
       <div>
         <div className="flex justify-between">
           <h3 className="font-semibold text-2xl">{descripcion}</h3>

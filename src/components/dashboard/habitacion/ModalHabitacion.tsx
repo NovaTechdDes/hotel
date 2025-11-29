@@ -62,13 +62,13 @@ const ModalHabitacion = () => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/80 z-50">
-      <div className="bg-white rounded-lg shadow-lg w-4xl h-[80vh] p-8 text-black flex-col flex">
+      <div className="bg-white rounded-lg shadow-lg w-4xl min-h-[80vh] p-8 text-black flex-col flex">
         <div className="flex justify-between border-b border-gray-300 mb-2 pb-2">
           <h2 className="text-3xl font-bold  text-left">{habitacionSeleccionado ? 'Modificar Habitacion' : 'Agregar Habitacion'}</h2>
           <CgClose size={35} onClick={handleCloseModal} className="hover:bg-gray-300 rounded-lg p-2 cursor-pointer" />
         </div>
         <form className="flex flex-1 flex-col gap-4" onSubmit={handleSubmitForm}>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="flex sm:grid flex-col sm:flex-row md:grid-cols-2 gap-4">
             <div>
               <label htmlFor="nombre" className="block text-sm font-medium mb-1">
                 Nombre
@@ -99,7 +99,7 @@ const ModalHabitacion = () => {
               </select>
             </div>
 
-            <div className="col-span-2">
+            <div>
               <label htmlFor="descripcion" className="block text-sm font-medium mb-1">
                 Descripcion
               </label>
