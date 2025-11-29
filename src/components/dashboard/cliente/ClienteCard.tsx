@@ -1,10 +1,12 @@
 import type { Cliente } from '../../../interface/Cliente';
 import { MdDeleteOutline } from 'react-icons/md';
-import { BiPencil } from 'react-icons/bi';
 import Swal from 'sweetalert2';
 import { useMutateCliente } from '../../../hooks/clientes/useMutateCliente';
 import { useClienteStore } from '../../../store/cliente.store';
 import { useRolAuth } from '../../../hooks/auth/useRolAuth';
+import { CiLocationOn } from 'react-icons/ci';
+import { LuIdCard, LuPhone } from 'react-icons/lu';
+import { BiPencil } from 'react-icons/bi';
 
 interface Props {
   cliente: Cliente;
@@ -17,7 +19,7 @@ const ClienteCard = ({ cliente }: Props) => {
   const { filtro } = useClienteStore();
 
   const { mutateAsync, isPending } = removeCliente;
-  const { nombre, dni, id, domicilio, localidad, telefono } = cliente;
+  const { nombre, dni, id, localidad, telefono } = cliente;
 
   const handleDeleteCliente = async () => {
     const { isConfirmed } = await Swal.fire({
@@ -38,28 +40,53 @@ const ClienteCard = ({ cliente }: Props) => {
   if (!nombre.toUpperCase().startsWith(filtro?.toUpperCase() || '') && !dni.toUpperCase().startsWith(filtro?.toUpperCase() || '')) return null;
 
   return (
-    <tr className="text-center border border-gray-300 text-lg">
-      <td className="py-2 capitalize">{nombre}</td>
-      <td className="py-2">{dni}</td>
-      <td className="py-2">{telefono}</td>
-      <td className="py-2 capitalize">{domicilio}</td>
-      <td className="py-2 capitalize">{localidad}</td>
-      <td className="py-2">
-        <div className="flex items-center gap-2 justify-center">
-          {isPending ? (
-            <span className="flex items-center gap-1 text-gray-500">
-              <span className="w-4 h-4 border-2 border-gray-400 border-t-black rounded-full animate-spin"></span>
-              <span className="text-xs">Cargando...</span>
-            </span>
-          ) : (
-            <>
-              <BiPencil size={20} className="cursor-pointer hover:bg-gray-300 rounded-lg" onClick={handleUpdateCliente} />
-              {user && user.rol === 'admin' && <MdDeleteOutline className="text-red-500 cursor-pointer hover:bg-red-300 rounded-lg" size={20} onClick={handleDeleteCliente} />}
-            </>
-          )}
+    <div className="text-center border text-black bg-white rounded-lg border-gray-300 text-lg p-5">
+      <div>
+        <h2 className="font-bold capitalize">{nombre}</h2>
+      </div>
+
+      <div className="flex flex-col gap-3">
+        <div className="flex items-center gap-2">
+          <LuIdCard className="text-gray-600" />
+          <p className="capitalize text-gray-800 text-sm">{dni}</p>
         </div>
-      </td>
-    </tr>
+        <div className="flex items-center gap-2">
+          <LuPhone className="text-gray-600" />
+          <p className="capitalize text-gray-800 text-sm">{telefono}</p>
+        </div>
+        {localidad && (
+          <div className="flex items-center gap-2">
+            <CiLocationOn className="text-gray-600" />
+            <p className="capitalize text-gray-800 text-sm">{localidad}</p>
+          </div>
+        )}
+      </div>
+
+      <div className="flex items-center gap-2 justify-center  my-2">
+        {isPending ? (
+          <span className="flex items-center gap-1 text-gray-500">
+            <span className="w-4 h-4 border-2 border-gray-400 border-t-black rounded-full animate-spin"></span>
+            <span className="text-xs">Cargando...</span>
+          </span>
+        ) : (
+          <div className="grid grid-cols-2 w-full mt-10  gap-2">
+            <button
+              className="flex items-center gap-2 text-white-500 justify-center hover:bg-gray-200 bg-white border border-gray-300 text-black cursor-pointer p-2 rounded-lg"
+              onClick={handleUpdateCliente}
+            >
+              <BiPencil size={20} className="cursor-pointer hover:bg-gray-300 rounded-lg" />
+              <p>Editar</p>
+            </button>
+            {user && user.rol === 'admin' && (
+              <button className="flex items-center justify-center gap-2 text-white-500 hover:bg-red-500 bg-red-600 text-white cursor-pointer p-2 rounded-lg" onClick={handleDeleteCliente}>
+                <MdDeleteOutline className=" cursor-pointer rounded-lg" size={20} />
+                <p>Eliminar</p>
+              </button>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 
