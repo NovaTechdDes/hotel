@@ -54,3 +54,13 @@ input[type="date"] {
   -webkit-appearance: auto !important;
   /* Para navegadores basados en WebKit (Chrome, Safari) */
 }
+
+#login{
+  background-image: url('/login-bg.jpg');
+  background-color: transparent;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+}
