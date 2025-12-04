@@ -42,18 +42,18 @@ const HabitacionCard = ({ habitacion }: Props) => {
   };
 
   return (
-    <div className={`text-center border p-5 rounded-lg bg-white border-gray-300 text-lg transition-all duration-200 ${loading ? 'bg-gray-300/70 opacity-70' : ''}`}>
+    <div className={`text-center border p-5 rounded-lg bg-white dark:bg-slate-800 border-gray-300 text-lg transition-all duration-200 ${loading ? 'bg-gray-300/70 opacity-70' : ''}`}>
       <div className="flex justify-between px-2">
         <div>
-          <h2 className="font-bold">{nombre}</h2>
-          <p className="text-gray-500 capitalize text-start text-sm">{tipo}</p>
+          <h2 className="font-bold dark:text-white">{nombre}</h2>
+          <p className="text-gray-500 dark:text-slate-200 capitalize text-start text-sm">{tipo}</p>
         </div>
         <div>
-          <p className="text-green-700 bg-green-200 p-2 text-xs rounded-lg">{disponible ?? 'Disponible'}</p>
+          <p className="text-green-700 bg-green-200 p-2 text-xs rounded-lg dark:text-white dark:bg-green-700">{disponible ?? 'Disponible'}</p>
         </div>
       </div>
 
-      <div className="mt-5 flex items-center gap-2 text-sm text-gray-700">
+      <div className="mt-5 flex items-center gap-2 text-sm text-gray-700 dark:text-slate-200">
         <IoPeopleOutline size={20} />
         <p>Capacidad:</p>
         <p>{capacidad} personas</p>
@@ -75,12 +75,18 @@ const HabitacionCard = ({ habitacion }: Props) => {
           </span>
         ) : (
           <>
-            <button className="flex justify-center items-center gap-2 border border-gray-300 text-black bg-white rounded-lg py-1 px-1 hover:bg-gray-200 cursor-pointer" onClick={handleUpdate}>
-              <BiPencil size={20} className="cursor-pointer hover:bg-gray-300 rounded-lg" />
+            <button
+              className="flex  justify-center items-center gap-2 border border-gray-300 text-black bg-white rounded-lg py-1 px-1 hover:bg-gray-200 cursor-pointer dark:bg-slate-800 dark:text-white dark:border-gray-300 dark:hover:bg-gray-700"
+              onClick={handleUpdate}
+            >
+              <BiPencil size={20} className="cursor-pointe rounded-lg" />
               <p>Editar</p>
             </button>
             {user && user?.rol === 'admin' && (
-              <button className="flex justify-center items-center gap-2 text-white bg-red-600 rounded-lg py-1 px-1 hover:bg-red-700 cursor-pointer" onClick={handleDeleteHabitacion}>
+              <button
+                className="flex  justify-center items-center gap-2 text-white bg-red-600 rounded-lg py-1 px-1 hover:bg-red-700 cursor-pointer dark:bg-slate-800 dark:text-red-500 dark:border-red-500 dark:border dark:hover:bg-slate-700"
+                onClick={handleDeleteHabitacion}
+              >
                 <MdDeleteOutline className=" cursor-pointer  rounded-lg" size={20} />
                 <p>Eliminar</p>
               </button>
