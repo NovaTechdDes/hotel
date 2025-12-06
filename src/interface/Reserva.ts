@@ -15,6 +15,7 @@ export interface Reserva {
   cliente_telefono: string;
   observaciones: string;
   nro_reserva?: number;
+  mostrar: boolean;
 
   creado_en?: Date;
   usuarioid?: string;

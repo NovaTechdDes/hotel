@@ -11,6 +11,8 @@ interface Props {
 }
 
 export const TdCeldaReserva = ({ day, habitacion, reservas, clientes, handleReserva }: Props) => {
+  console.log(devolverReserva(reservas ?? [], day, habitacion, clientes!));
+
   return (
     <td
       id={devolverReserva(reservas ?? [], day, habitacion, clientes!).id}

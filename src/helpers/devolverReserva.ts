@@ -5,6 +5,13 @@ export const devolverReserva = (reservas: Reserva[], day: Date, hab: Habitacion,
   const reserva = reservas?.find((elem) => {
     if (elem.checkin.slice(0, 10) <= formatearAString(day).slice(0, 10) && elem.checkout.slice(0, 10) >= formatearAString(day).slice(0, 10) && elem.habitacionid === hab.id) return elem;
   });
+
+  if (reserva && !reserva?.mostrar) {
+    return {
+      id: '',
+      fondo: '',
+    };
+  }
   if (reserva) {
     return {
       id: reserva.id,

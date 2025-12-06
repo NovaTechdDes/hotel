@@ -16,6 +16,7 @@ export const getReservasMonth = async (month: number, anio: number) => {
   const { data, error } = await supabase
     .from('reserva')
     .select('*, cliente: idcliente(nombre), habitacion: habitacionid(*)')
+    .eq('mostrar', true)
     .gte('checkin', startDate.toISOString())
     .lte('checkin', endDate.toISOString());
 
@@ -116,7 +117,7 @@ export const updateReserva = async (reserva: Partial<Reserva>): Promise<Reserva 
 };
 
 export const deleteReserva = async (id: string): Promise<boolean | SweetAlertResult<any>> => {
-  const { data, error } = await supabase.from('reserva').delete().eq('id', id).select().single();
+  const { data, error } = await supabase.from('reserva').update({ mostrar: false }).eq('id', id).select().single();
 
   if (error) return await Swal.fire('Error al eliminar la reserva', error.message, 'error');
 

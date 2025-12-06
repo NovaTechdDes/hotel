@@ -24,6 +24,10 @@ export const ReservaCard = ({ buscador, reserva }: Props) => {
     return;
   }
 
+  if (!reserva.mostrar) {
+    return;
+  }
+
   return (
     <div className="flex flex-col md:flex-row gap-5 justify-between mb-5 border-b border-gray-400 pb-2">
       <div className="flex gap-5 ">
