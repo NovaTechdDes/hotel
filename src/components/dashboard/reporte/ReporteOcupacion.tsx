@@ -21,21 +21,21 @@ export const ReporteOcupacion = () => {
     );
 
   return (
-    <div className="border bg-white p-5 border-gray-300 shadow-2xl rounded-lg">
+    <div className="border bg-white p-5 border-gray-300 shadow-2xl rounded-lg dark:bg-gray-800">
       <div className="grid grid-cols-2 gap-5 ">
         <div>
           <div className="flex gap-2 items-center">
             <AiOutlinePercentage color="blue" className="font-semibold" />
-            <h2 className="text-2xl font-bold">Reporte de Ocupacion</h2>
+            <h2 className="text-2xl font-bold dark:text-white">Reporte de Ocupacion</h2>
           </div>
-          <p className="text-gray-500">Analisis de ocupacion en temporada alta y baja</p>
+          <p className="text-gray-500 dark:text-gray-400">Analisis de ocupacion en temporada alta y baja</p>
         </div>
 
-        <div className="flex items-center flex-col mx-5">
-          <label htmlFor="year" className="font-bold">
+        <div className="flex items-center flex-col mx-5 dark:bg-gray-800">
+          <label htmlFor="year" className="font-bold dark:text-white">
             Seleccionar Año
           </label>
-          <select name="year" className="w-full border border-gray-300 rounded-lg px-2 py-1 text-xl" id="year" onChange={(e) => setYear(e.target.value)} value={year}>
+          <select name="year" className="w-full border border-gray-300 rounded-lg px-2 py-1 text-xl dark:text-white" id="year" onChange={(e) => setYear(e.target.value)} value={year}>
             <option value={anio - 5}>{anio - 5}</option>
             <option value={anio - 4}>{anio - 4}</option>
             <option value={anio - 3}>{anio - 3}</option>
