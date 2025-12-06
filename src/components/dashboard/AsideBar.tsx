@@ -16,8 +16,6 @@ export const AsideBar = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState<boolean>(false);
 
-  console.log(theme);
-
   const handleLogout = () => {
     logout();
     navigate('/login');
@@ -67,12 +65,17 @@ export const AsideBar = () => {
         </nav>
 
         <div className="mt-auto mb-3 flex flex-col gap-5 pb-4">
-          <button onClick={toggleTheme} className="border-t border-slate-400 py-2 flex hover:opacity-80 items-center gap-2">
+          <button onClick={toggleTheme} className="border-t border-slate-400 py-2 flex hover:opacity-80 items-center gap-2 cursor-pointer">
             <IoSunnyOutline />
             Modo {theme === 'light' ? 'Oscuro' : 'Claro'}
           </button>
 
-          <NavLink className={({ isActive }) => `flex hover:opacity-80 text-slate-800 dark:text-white items-center gap-2   ${isActive ? 'bg-white p-2 rounded-lg' : ''}`} to="/configuracion">
+          <NavLink
+            className={({ isActive }) =>
+              `flex hover:opacity-80 text-slate-800 dark:text-white items-center gap-2 dark:bg-slate-700 dark:border-gray-600 p-2 rounded-lg ${isActive ? 'bg-white p-2 rounded-lg' : ''}`
+            }
+            to="/configuracion"
+          >
             <IoSettingsOutline />
             Configuración
           </NavLink>

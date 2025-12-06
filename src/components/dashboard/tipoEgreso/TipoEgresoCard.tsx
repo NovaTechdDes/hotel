@@ -35,26 +35,36 @@ const TipoEgresoCard = ({ tipoEgreso }: Props) => {
   };
 
   return (
-    <div className={`text-black mx-5 bg-gray-100 my-5 rounded-lg shadow-xl border border-gray-300 ${isPending ? 'opacity-70 pointer-events-none relative' : ''}`}>
+    <div
+      className={`text-black mx-5 bg-gray-100 my-5 rounded-lg shadow-xl border border-gray-300 dark:bg-slate-700 dark:border-gray-600 ${isPending ? 'opacity-70 pointer-events-none relative' : ''}`}
+    >
       <div className="flex gap-5 items-center m-5">
-        <GoTag size={25} className="text-blue-800" />
-        <h3 className="text-xl font-semibold">{descripcion}</h3>
+        <GoTag size={25} className="text-blue-800 dark:text-gray-400" />
+        <h3 className="text-xl font-semibold dark:text-white">{descripcion}</h3>
       </div>
 
       <div className="flex gap-5 justify-center mb-5">
-        <button className="border cursor-pointer hover:bg-gray-200 border-gray-300 rounded-lg flex items-center gap-2 px-4" disabled={isPending} onClick={handlePut}>
+        <button
+          className="border cursor-pointer hover:bg-gray-200 border-gray-300 rounded-lg flex items-center gap-2 px-4 dark:text-white dark:hover:bg-gray-600 dark:bg-gray-700 dark:border-gray-600"
+          disabled={isPending}
+          onClick={handlePut}
+        >
           <BiPencil />
           Editar
         </button>
 
-        <button className="border cursor-pointer hover:bg-red-800 text-white bg-red-700 border-red-300 rounded-lg flex items-center gap-2 px-4" disabled={isPending} onClick={handleDelete}>
+        <button
+          className="border cursor-pointer hover:bg-red-800 text-white bg-red-700 border-red-300 rounded-lg flex items-center gap-2 px-4 dark:bg-slate-800 dark:text-red-500 dark:border-slate-600 dark:hover:bg-gray-600"
+          disabled={isPending}
+          onClick={handleDelete}
+        >
           <MdDeleteOutline />
           Eliminar
         </button>
       </div>
       {isPending && (
-        <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-70 rounded-lg">
-          <span className="text-red-600 font-semibold text-base">Eliminando...</span>
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-100 bg-opacity-70 rounded-lg dark:bg-slate-800">
+          <span className="text-red-600 font-semibold text-base dark:text-red-400">Eliminando...</span>
         </div>
       )}
     </div>

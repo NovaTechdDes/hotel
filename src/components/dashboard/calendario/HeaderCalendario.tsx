@@ -22,19 +22,19 @@ export const HeaderCalendario = () => {
   return (
     <header className="flex items-center justify-center sm:justify-between">
       <div className="flex gap-2 py-2 mx-5 items-center text-black font-bold">
-        <div onClick={handlePreviusMonth} className=" p-1 hover:bg-green-300 border border-gray-300 rounded-lg cursor-pointer">
-          <MdKeyboardArrowLeft size={20} />
+        <div onClick={handlePreviusMonth} className=" p-1 hover:bg-green-300 border border-gray-300 rounded-lg cursor-pointer dark:border-gray-600 dark:bg-gray-600 dark:hover:bg-gray-700">
+          <MdKeyboardArrowLeft size={20} className="dark:text-white" />
         </div>
-        <p className="text-xs">
+        <p className="text-xs dark:text-white">
           {nombreMes(mesSeleccionado).toUpperCase().slice(0, 3)} {anioSeleccionado}
         </p>
-        <div onClick={handleNextMonth} className=" p-1 hover:bg-green-300 border border-gray-300 rounded-lg cursor-pointer">
-          <MdKeyboardArrowRight size={20} />
+        <div onClick={handleNextMonth} className=" p-1 hover:bg-green-300 border border-gray-300 rounded-lg cursor-pointer dark:border-gray-600 dark:bg-gray-600 dark:hover:bg-gray-700">
+          <MdKeyboardArrowRight size={20} className="dark:text-white" />
         </div>
       </div>
 
       <div className="mx-5 py-2 flex gap-5 sm:ml-auto">
-        <button onClick={handleModalReserva} className="bg-black text-white rounded-lg py-1 px-2 text-sm hover:opacity-80 cursor-pointer">
+        <button onClick={handleModalReserva} className="bg-black text-white rounded-lg py-1 px-2 text-sm hover:opacity-80 cursor-pointer dark:bg-blue-600 dark:text-white dark:hover:bg-blue-700">
           Reservar
         </button>
       </div>

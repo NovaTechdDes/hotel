@@ -34,30 +34,30 @@ export const ReservaCard = ({ buscador, reserva }: Props) => {
 
         <div>
           <div className="flex items-center gap-2">
-            <p>{cliente?.nombre}</p>
-            <p className="text-gray-500">{habitacion?.tipo}</p>
+            <p className="dark:text-white">{cliente?.nombre ? cliente.nombre : reserva.cliente_nombre}</p>
+            <p className="text-gray-500 dark:text-gray-200 dark:bg-gray-600 rounded-lg px-2 capitalize">{habitacion?.tipo}</p>
           </div>
           <p className="flex items-center gap-5">
-            <LuBed className="hidden md:block" />
-            <span className="text-gray-500">Habitacion {habitacion?.nombre}</span>
+            <LuBed className="hidden md:block dark:text-gray-200" />
+            <span className="text-gray-500 dark:text-gray-200">Habitacion {habitacion?.nombre}</span>
           </p>
         </div>
       </div>
 
       <div className="flex items-end gap-2 justify-center text-gray-500">
-        <HiOutlineCalendar size={20} />
-        <p>
+        <HiOutlineCalendar size={20} className="dark:text-gray-200" />
+        <p className="dark:text-gray-200">
           {reordenarFecha(checkin)} - {reordenarFecha(checkout)}
         </p>
       </div>
 
-      <div className="flex gap-5 md:w-auto w-full items-center">
-        <Link to={'https://fe.afip.gob.ar/rcel/jsp/index_bis.jsp'} target="_blank" className="cursor-pointer hover:bg-gray-200 rounded-lg px-2">
+      <div className="flex gap-5 md:w-auto w-full items-center dark:text-gray-300">
+        <Link to={'https://fe.afip.gob.ar/rcel/jsp/index_bis.jsp'} target="_blank" className="cursor-pointer hover:bg-gray-200 rounded-lg px-2 dark:hover:bg-gray-600">
           <IoDocumentTextOutline title="Realizar Factura" size={20} />
         </Link>
 
         <button
-          className="inline-flex w-full justify-center items-center text-xs md:text-base gap-2 cursor-pointer hover:bg-blue-700 bg-blue-600 text-white border border-gray-300 rounded-lg p-2"
+          className="inline-flex w-full justify-center items-center text-xs md:text-base gap-2 cursor-pointer hover:bg-blue-700 bg-blue-600 text-white border border-gray-300 rounded-lg p-2  dark:border-gray-600"
           onClick={handleReserva}
         >
           <HiOutlinePencilSquare className="hidden md:block" />

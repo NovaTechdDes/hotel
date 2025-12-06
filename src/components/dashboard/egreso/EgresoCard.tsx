@@ -36,20 +36,20 @@ export const EgresoCard = ({ egreso }: Props) => {
   };
 
   return (
-    <div className={`bg-white text-black p-5 my-5 rounded-lg shadow-xl ${isPending ? 'opacity-70 pointer-events-none relative' : ''}`}>
+    <div className={`bg-white dark:bg-gray-600 text-black dark:text-white p-5 my-5 rounded-lg shadow-xl ${isPending ? 'opacity-70 pointer-events-none relative' : ''}`}>
       <div>
         <div className="flex justify-between">
           <h3 className="font-semibold text-2xl">{descripcion}</h3>
-          <p className="flex text-xs gap-5 items-center bg-gray-100 px-2 py-1 rounded-lg">
+          <p className="flex text-xs gap-5 items-center bg-gray-100 dark:bg-gray-500 px-2 py-1 rounded-lg">
             <GoTag />
             {tipoEgreso?.descripcion}
           </p>
         </div>
 
         <div className="flex gap-5">
-          <span className="flex items-center gap-2 text-gray-500">
+          <span className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
             <BiCalendar />
-            {creado_en?.slice(0, 10)}
+            {creado_en?.slice(0, 10).split('-').reverse().join('/')}
           </span>
           <span className="font-semibold text-lg">${importe.toFixed(2)}</span>
         </div>
@@ -62,7 +62,11 @@ export const EgresoCard = ({ egreso }: Props) => {
         </button>
 
         {user && user.rol === 'admin' && (
-          <button disabled={isPending} onClick={handleDelete} className="flex  gap-2 border border-gray-300 rounded-lg items-center px-8 py-1 cursor-pointer text-white bg-red-500 hover:bg-red-600">
+          <button
+            disabled={isPending}
+            onClick={handleDelete}
+            className="flex  gap-2 border border-gray-300 rounded-lg items-center px-8 py-1 cursor-pointer text-white bg-red-500 hover:bg-red-600 dark:bg-gray-700 dark:text-red-500 hover:dark:bg-gray-600"
+          >
             <MdDeleteOutline />
             Eliminar
           </button>
