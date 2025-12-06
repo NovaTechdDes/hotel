@@ -22,6 +22,7 @@ const initialState: Reserva = {
   cliente_telefono: '',
   cliente_dni: '',
   cliente_nombre: '',
+  mostrar: true,
 };
 
 export const ModalCalendario = () => {
