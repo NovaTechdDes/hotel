@@ -16,7 +16,7 @@ export const TrHabitacionCalendario = ({ habitacion, index, days, reservas, clie
   return (
     <tr key={habitacion.id} className="">
       <td className="border bg-gray-50 sticky left-0">
-        <div className={`border-r p-2 border-gray-800 ${index < 2 ? 'bg-amber-200' : index < 10 ? 'bg-pink-200' : 'bg-green-200'}`}>
+        <div className={`border-r p-2 border-gray-800 ${index < 3 ? 'bg-amber-200' : index < 10 ? 'bg-pink-200' : 'bg-green-200'}`}>
           <p className="font-semibold">{habitacion.nombre}</p>
           <span className="text-gray-500 text-xs">{habitacion.tipo}</span>
         </div>

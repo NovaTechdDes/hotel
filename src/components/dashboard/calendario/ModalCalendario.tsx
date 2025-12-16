@@ -132,7 +132,7 @@ export const ModalCalendario = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (checkout < checkin) return setError(true);
+    if (checkout <= checkin) return setError(true);
     if (cliente_nombre === '') return setError(true);
 
     if (reservaSeleccionado) {
@@ -246,6 +246,7 @@ export const ModalCalendario = () => {
               placeholder="2.00"
             />
           </div>
+
           <div>
             <label className="text-lg font-semibold" htmlFor="importe">
               Importe Por noche

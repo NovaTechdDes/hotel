@@ -12,7 +12,6 @@ export const loginSupabase = async (email: string, password: string) => {
     });
 
     if (error?.message === 'Invalid login credentials') {
-      await Swal.fire('Error al iniciar sesion', 'credenciales invalidas', 'error');
       return {
         ok: false,
         msg: 'Credenciales Invalidas',
@@ -129,5 +128,18 @@ export const updatePassword = async (password: string) => {
       msg: 'Error al actualizar la contraseña',
       token: '',
     };
+  }
+};
+
+export const verificarRol = async () => {
+  const { data, error } = await supabase.auth.getUser();
+
+  if (data.user) {
+    const { data: user } = await supabase.from('usuarios').select().eq('id', data.user.id).single();
+    return user.rol;
+  }
+
+  if (error) {
+    return null;
   }
 };

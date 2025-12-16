@@ -2,20 +2,22 @@ import { HiOutlinePencil } from 'react-icons/hi2';
 import { MdDeleteOutline } from 'react-icons/md';
 import { useReservaStore } from '../../../store/reserva.store';
 import { useMutateReserva } from '../../../hooks/reserva/useMutateReserva';
-import { useRolAuth } from '../../../hooks/auth/useRolAuth';
 import { CgClose } from 'react-icons/cg';
 import Swal from 'sweetalert2';
 import { calcularDias, reordenarFecha } from '../../../helpers/formatearFecha';
 import { FiPrinter } from 'react-icons/fi';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import PDF from '../../ui/PDF';
+import { useEffect, useState } from 'react';
+import { verificarRol } from '../../../actions/auth.actions';
 
 export const DetallesReserva = () => {
   const { reservaSeleccionado, closeDetalle, openModal } = useReservaStore();
-  const { data: user } = useRolAuth();
 
   const { id, checkin, checkout, importe, observaciones, habitacion, cliente } = reservaSeleccionado!;
   const { removeReserva } = useMutateReserva();
+
+  const [rol, setRol] = useState<string>('');
 
   const { mutateAsync, isPending } = removeReserva;
 
@@ -41,6 +43,15 @@ export const DetallesReserva = () => {
   const handleCancel = () => {
     closeDetalle();
   };
+
+  const buscarRolUser = async () => {
+    const rol = await verificarRol();
+    setRol(rol);
+  };
+
+  useEffect(() => {
+    buscarRolUser();
+  }, []);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/80 z-50">
@@ -129,8 +140,7 @@ export const DetallesReserva = () => {
             {isPending ? (
               <span className="text-red-500 text-sm">Eliminando...</span>
             ) : (
-              user &&
-              user.rol === 'admin' && (
+              rol === 'admin' && (
                 <button onClick={handleDelete} className=" w-full justify-center flex gap-2 items-center bg-red-500 p-2 text-white rounded-lg cursor-pointer hover:bg-red-400">
                   <MdDeleteOutline className="cursor-pointer hover:bg-red-200 rounded-lg" color="white" size={20} />
                   Eliminar

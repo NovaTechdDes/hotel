@@ -6,20 +6,31 @@ import { RiPushpinLine } from 'react-icons/ri';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/auth/useAuth';
 import { FaArrowTrendDown } from 'react-icons/fa6';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MdOutlineMenu } from 'react-icons/md';
 import { useTheme } from '../../hooks/ui/usetheme';
+import { verificarRol } from '../../actions/auth.actions';
 
 export const AsideBar = () => {
   const { logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const [open, setOpen] = useState<boolean>(false);
+  const [rol, setRol] = useState<string>('');
 
   const handleLogout = () => {
     logout();
     navigate('/login');
   };
+
+  const buscarRolUser = async () => {
+    const rol = await verificarRol();
+    setRol(rol);
+  };
+
+  useEffect(() => {
+    buscarRolUser();
+  }, []);
 
   return (
     <>
@@ -53,15 +64,24 @@ export const AsideBar = () => {
             Clientes
           </NavLink>
 
-          <NavLink className={({ isActive }) => `flex hover:opacity-80 text-slate-800 dark:text-white items-center gap-2 ${isActive ? 'dark:bg-slate-700 bg-white p-2 rounded-lg' : ''}`} to="/reporte">
-            <FcStatistics />
-            Reportes
-          </NavLink>
-
-          <NavLink className={({ isActive }) => `flex hover:opacity-80 text-slate-800 dark:text-white items-center gap-2 ${isActive ? 'dark:bg-slate-700 bg-white p-2 rounded-lg' : ''}`} to="/egreso">
-            <FaArrowTrendDown />
-            Egreso
-          </NavLink>
+          {rol === 'admin' && (
+            <NavLink
+              className={({ isActive }) => `flex hover:opacity-80 text-slate-800 dark:text-white items-center gap-2 ${isActive ? 'dark:bg-slate-700 bg-white p-2 rounded-lg' : ''}`}
+              to="/reporte"
+            >
+              <FcStatistics />
+              Reportes
+            </NavLink>
+          )}
+          {rol === 'admin' && (
+            <NavLink
+              className={({ isActive }) => `flex hover:opacity-80 text-slate-800 dark:text-white items-center gap-2 ${isActive ? 'dark:bg-slate-700 bg-white p-2 rounded-lg' : ''}`}
+              to="/egreso"
+            >
+              <FaArrowTrendDown />
+              Egreso
+            </NavLink>
+          )}
         </nav>
 
         <div className="mt-auto mb-3 flex flex-col gap-5 pb-4">
