@@ -24,16 +24,18 @@ const TrCalendario = ({ days, scrollContainerRef, todayRef }: Props) => {
   return (
     <tr>
       <th className="border p-2 bg-gray-100 sticky left-0">Habitación</th>
-      {days.map((day) => (
-        <th
-          key={day.toISOString()}
-          ref={formatearAString(new Date()).slice(0, 10) === formatearAString(day).slice(0, 10) ? todayRef : null}
-          style={{ backgroundColor: `${formatearAString(new Date()).slice(0, 10) === formatearAString(day).slice(0, 10) ? color : ''}` }}
-          className="border p-2 text-sm text-center dark:bg-gray-600 dark:text-white dark:border-gray-400"
-        >
-          {format(day, 'dd/MM')}
-        </th>
-      ))}
+      {days.map((day) =>
+        !day ? null : (
+          <th
+            key={day?.toISOString()}
+            ref={formatearAString(new Date()).slice(0, 10) === formatearAString(day).slice(0, 10) ? todayRef : null}
+            style={{ backgroundColor: `${formatearAString(new Date()).slice(0, 10) === formatearAString(day).slice(0, 10) ? color : ''}` }}
+            className="border p-2 text-sm text-center dark:bg-gray-600 dark:text-white dark:border-gray-400"
+          >
+            {format(day, 'dd/MM')}
+          </th>
+        )
+      )}
     </tr>
   );
 };

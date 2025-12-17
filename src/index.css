@@ -62,3 +62,16 @@ input[type="date"] {
   width: 100vw;
   height: 100vh;
 }
+
+#calendarioMobile{
+  margin-left: calc(0.25rem * 5);
+  margin-right: calc(0.25rem * 5);
+}
+
+
+@media (max-width: 400px) {
+  #calendarioMobile {
+    margin-left: 0rem;
+    margin-right: 0rem;
+  }
+}

@@ -21,9 +21,7 @@ export const TrHabitacionCalendario = ({ habitacion, index, days, reservas, clie
           <span className="text-gray-500 text-xs">{habitacion.tipo}</span>
         </div>
       </td>
-      {days?.map((day) => (
-        <TdCeldaReserva key={day.toISOString()} day={day} habitacion={habitacion} reservas={reservas} clientes={clientes} handleReserva={handleReserva} />
-      ))}
+      {days?.map((day) => (!day ? null : <TdCeldaReserva key={day.toISOString()} day={day} habitacion={habitacion} reservas={reservas} clientes={clientes} handleReserva={handleReserva} />))}
     </tr>
   );
 };

@@ -13,6 +13,8 @@ import { traerDiasDelMes } from '../../helpers/traerDiasDelMes';
 import { useCalendarioStore } from '../../store/calendario.store';
 import TrCalendario from '../../components/dashboard/calendario/TrCalendario';
 import { TrHabitacionCalendario } from '../../components/dashboard/calendario/TrHabitacionCalendario';
+import { useIsMobile } from '../../helpers/useIsMobile';
+import { CalendarioMobile } from '../../components/dashboard/calendario/CalendarioMobile';
 
 export const Calendario = () => {
   const { mesSeleccionado, anioSeleccionado } = useCalendarioStore();
@@ -47,6 +49,12 @@ export const Calendario = () => {
       scrollContainerRef.current?.scrollTo({ left: todayRef.current.offsetLeft, behavior: 'smooth' });
     }
   }, [days]);
+
+  const isMobile = useIsMobile();
+
+  if (isMobile && reservas) {
+    return <CalendarioMobile reservas={reservas} />;
+  }
 
   return (
     <>
