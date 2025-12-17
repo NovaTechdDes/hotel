@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const TrCalendarioMobile = () => {
   return (
     <tr>
