@@ -1,13 +1,13 @@
 export const TrCalendarioMobile = () => {
   return (
     <tr>
-      <th>L</th>
-      <th>M</th>
-      <th>X</th>
-      <th>J</th>
-      <th>V</th>
-      <th>S</th>
-      <th>D</th>
+      <th className="pt-5">L</th>
+      <th className="pt-5">M</th>
+      <th className="pt-5">X</th>
+      <th className="pt-5">J</th>
+      <th className="pt-5">V</th>
+      <th className="pt-5">S</th>
+      <th className="pt-5">D</th>
     </tr>
   );
 };

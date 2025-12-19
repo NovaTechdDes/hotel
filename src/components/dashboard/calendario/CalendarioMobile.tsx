@@ -30,7 +30,7 @@ export const CalendarioMobile = ({ reservas }: Props) => {
 
       <div id="calendarioMobile" className="overflow-x-auto border mx-5 rounded-md text-black h-[calc(100vh-128px)] bg-white dark:bg-slate-800 dark:text-white">
         <table className=" w-full border-collapse h-full">
-          <thead className="text-xs">
+          <thead className="text-xs ">
             <TrCalendarioMobile />
           </thead>
           <tbody className="h-full text-xs">

@@ -76,7 +76,7 @@ export const postReserva = async (reserva: Omit<Reserva, 'id' | 'creado_en'>): P
     }
 
     if (!disponible) {
-      await Swal.fire('Error', 'La habitacion no esta disponible', 'error');
+      await Swal.fire('Error', 'La habitacion no esta disponible para la fecha seleccionada', 'error');
       return false;
     }
 

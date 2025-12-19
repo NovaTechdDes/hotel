@@ -14,7 +14,8 @@ export const reordenarFecha = (fecha: string) => {
 export const calcularDias = (checkin: string, checkout: string) => {
   const fechaCheckin = new Date(checkin);
   const fechaCheckout = new Date(checkout);
-  const diffTime = Math.abs(fechaCheckout.getTime() - fechaCheckin.getTime()) + 1;
+
+  const diffTime = Math.abs(fechaCheckout.getTime() - fechaCheckin.getTime());
   const diffDays = diffTime === 0 ? Math.ceil(1 / (1000 * 60 * 60 * 24)) : Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   return diffDays;
 };

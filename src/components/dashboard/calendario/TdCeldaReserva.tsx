@@ -22,8 +22,8 @@ export const TdCeldaReserva = ({ day, habitacion, reservas, clientes, handleRese
       {(() => {
         const reservaData = devolverReserva(reservas ?? [], day, habitacion, clientes!);
         const clientName = reservaData.cliente;
-        if (clientName && clientName.length > 25) {
-          return <p className="text-white p-1 capitalize">{clientName.slice(0, 20)}...</p>;
+        if (clientName && clientName.length > 14) {
+          return <p className="text-white p-1 ca0pitalize">{clientName.slice(0, 14)}...</p>;
         }
         return <p className="text-white p-1 capitalize">{clientName}</p>;
       })()}

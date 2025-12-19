@@ -3,12 +3,12 @@ import { AsideBar } from '../components/dashboard/AsideBar';
 
 export const MainLayout = () => {
   return (
-    <div className="grid grid-cols-5 h-screen w-screen">
+    <div className="h-screen w-screen">
       <AsideBar />
 
-      <div className="md:col-span-4 col-span-5 dark:bg-slate-800 border-l sm:ml-64 w-full border-slate-300 bg-slate-200 pt-2">
+      <main className="md:ml-64 dark:bg-slate-800 border-l h-screen border-slate-300 bg-slate-200 pt-2">
         <Outlet />
-      </div>
+      </main>
     </div>
   );
 };

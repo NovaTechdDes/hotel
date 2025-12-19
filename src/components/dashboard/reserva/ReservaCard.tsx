@@ -24,7 +24,7 @@ export const ReservaCard = ({ buscador, reserva }: Props) => {
     return;
   }
 
-  if (reserva.mostrar) {
+  if (!reserva.mostrar) {
     return;
   }
 
