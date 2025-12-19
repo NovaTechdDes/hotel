@@ -55,7 +55,7 @@ export const DetallesReserva = () => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/80 z-50">
-      <div className="bg-white rounded-lg shadow-lg w-2xl h-min-[50vh] p-8 text-black">
+      <div className="bg-white rounded-lg shadow-lg w-2xl h-min-[50vh] p-8 text-black dark:bg-slate-800 dark:text-white">
         <div>
           <div className="flex flex-col justify-between items-center">
             <div className="w-full">
@@ -65,28 +65,28 @@ export const DetallesReserva = () => {
                   <PDFDownloadLink document={<PDF reserva={reservaSeleccionado!} />} fileName={`Reserva-${reservaSeleccionado?.cliente_nombre}`}>
                     {({ loading }) =>
                       loading ? (
-                        <button className="cursor-pointer hover:bg-gray-300 rounded-lg flex gap-2" disabled>
-                          <svg className="animate-spin h-5 w-5 mr-3 text-gray-600" viewBox="0 0 24 24">
+                        <button className="cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-700 rounded-lg flex gap-2" disabled>
+                          <svg className="animate-spin h-5 w-5 mr-3 text-gray-600 dark:text-white" viewBox="0 0 24 24">
                             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                           </svg>
                           Generando Documento...
                         </button>
                       ) : (
-                        <button className="cursor-pointer hover:bg-gray-300 rounded-lg">
-                          <FiPrinter size={20} className="cursor-pointer hover:bg-gray-200 rounded-lg" />
+                        <button className="cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-700 rounded-lg">
+                          <FiPrinter size={20} className="cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg" />
                         </button>
                       )
                     }
                   </PDFDownloadLink>
 
-                  <CgClose size={20} className="cursor-pointer hover:bg-gray-300 rounded-lg" onClick={handleCancel} />
+                  <CgClose size={20} className="cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-700 rounded-lg" onClick={handleCancel} />
                 </div>
               </div>
             </div>
 
             <div className="flex gap-4 items-center justify-between w-full mb-5">
-              <span className="text-gray-500">Informacion de la reserva actual</span>
+              <span className="text-gray-500 dark:text-gray-300">Informacion de la reserva actual</span>
             </div>
           </div>
 
@@ -103,13 +103,13 @@ export const DetallesReserva = () => {
 
             <div>
               <p className="capitalize">{reservaSeleccionado?.idcliente ? cliente?.nombre : reservaSeleccionado?.cliente_nombre}</p>
-              <span className="text-gray-500">
+              <span className="text-gray-500 dark:text-gray-300">
                 {habitacion?.nombre} - {habitacion?.tipo}
               </span>
             </div>
 
             <div>
-              <p className="text-gray-500">Importe Total</p>
+              <p className="text-gray-500 dark:text-gray-300">Importe Total</p>
               <p className="font-semibold">${importe * calcularDias(checkin, checkout)}</p>
             </div>
           </div>
@@ -117,22 +117,22 @@ export const DetallesReserva = () => {
           {/* Checkin y checkout */}
           <div className="justify-around flex mt-5">
             <div>
-              <p className="text-gray-500">Check-In</p>
+              <p className="text-gray-500 dark:text-gray-300">Check-In</p>
               <p className="font-semibold">{reordenarFecha(checkin)}</p>
             </div>
 
             <div>
-              <p className="text-gray-500">Check-Out</p>
+              <p className="text-gray-500 dark:text-gray-300">Check-Out</p>
               <p className="font-semibold">{reordenarFecha(checkout)}</p>
             </div>
           </div>
 
           <div className="mt-2">
             <p className="text-gray-500">Observaciones</p>
-            <p className="text-slate-900 text-md capitalize">{observaciones ?? 'Sin observaciones'}</p>
+            <p className="text-slate-900 text-md capitalize dark:text-white">{observaciones ?? 'Sin observaciones'}</p>
           </div>
 
-          <div className="flex gap-3 justify-center mt-5 border-t pt-5 border-gray-300">
+          <div className="flex gap-3 justify-center mt-5 border-t pt-5 border-gray-300 dark:border-gray-700">
             <button onClick={handleUpdate} disabled={isPending} className="w-full justify-center flex gap-2 items-center bg-blue-500 p-2 text-white rounded-lg cursor-pointer hover:bg-blue-400">
               <HiOutlinePencil size={20} className="cursor-pointer hover:bg-gray-200 rounded-lg" />
               Editar

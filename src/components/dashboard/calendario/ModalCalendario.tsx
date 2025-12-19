@@ -72,7 +72,9 @@ export const ModalCalendario = () => {
   }, [fechaSeleccionada, reservaSeleccionado]);
 
   useEffect(() => {
-    if (habitacionSeleccionada) {
+    if (reservaSeleccionado?.habitacionid) {
+      onInputChange({ target: { name: 'habitacionid', value: reservaSeleccionado.habitacionid } });
+    } else if (habitacionSeleccionada) {
       onInputChange({ target: { name: 'habitacionid', value: habitacionSeleccionada } });
     }
   }, [habitacionSeleccionada]);
@@ -152,7 +154,7 @@ export const ModalCalendario = () => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/80 z-50">
-      <div className="bg-white border border-gray-500 rounded-lg shadow-lg w-4xl h-min-[80vh] p-8 text-black">
+      <div className="bg-white border border-gray-500 rounded-lg shadow-lg w-4xl h-min-[80vh] p-8 text-black dark:bg-slate-800 dark:text-white">
         <div>
           <div className="flex justify-between">
             <h3 className="font-semibold text-xl">{reservaSeleccionado ? 'Modificar Reserva' : 'Nueva Reserva'}</h3>
@@ -162,14 +164,14 @@ export const ModalCalendario = () => {
         </div>
 
         <form className="mt-2 grid grid-cols-2 gap-4 flex-1 overflow-auto mx-2 px-2">
-          <div className="col-span-2">
+          <div id="cliente" className="col-span-2">
             <label className="text-lg font-semibold" htmlFor="nombre">
               Nombre del Cliente
             </label>
             <button
               type="button"
               onClick={() => setListaCliente(!listaCliente)}
-              className="w-full border border-gray-500  border-gray-500-gray-300 mb-1 rounded-md px-3 ý-2 flex justify-between items-center"
+              className="w-full border border-gray-500  border-gray-500-gray-300 mb-1 rounded-md px-3 ý-2 flex justify-between items-center dark:border-gray-600"
             >
               {idcliente ? clientes?.find((elem) => elem.id === idcliente)?.nombre : cliente_nombre !== '' ? cliente_nombre : 'Seleccionar un cliente'}
               {listaCliente ? <TiArrowSortedUp /> : <TiArrowSortedDown />}
@@ -200,12 +202,20 @@ export const ModalCalendario = () => {
             {error && cliente_nombre === '' && <p className="text-red-500">Debe seleccionar un cliente</p>}
           </div>
 
-          <div>
+          <div id="dni">
             <label htmlFor="cliente_dni">DNI</label>
-            <input className="w-full border border-gray-500 rounded-md px-3 py-2" placeholder="00000000" type="text" name="cliente_dni" id="cliente_dni" onChange={onInputChange} value={cliente_dni} />
+            <input
+              className="w-full border border-gray-500 rounded-md px-3 py-2 dark:border-gray-600 dark:text-gray-200"
+              placeholder="00000000"
+              type="text"
+              name="cliente_dni"
+              id="cliente_dni"
+              onChange={onInputChange}
+              value={cliente_dni}
+            />
           </div>
 
-          <div>
+          <div id="telefono">
             <label htmlFor="cliente_telefono">Telefono</label>
             <input
               className="w-full border border-gray-500 rounded-md px-3 py-2"
@@ -218,21 +228,20 @@ export const ModalCalendario = () => {
             />
           </div>
 
-          <div className="col-span-2">
+          <div id="habitacion" className="col-span-2">
             <label className="text-lg font-semibold" htmlFor="habitacionid">
               Habitacion
             </label>
 
             <input
               disabled
-              className="border w-full p-2 rounded-md capitalize bg-gray-300"
-              id={habitacionSeleccionada ?? ''}
-              name="habitacionid"
-              value={habitaciones?.find((elem) => elem.id === habitacionSeleccionada)?.tipo}
+              className="border w-full p-2 rounded-md capitalize bg-gray-300 dark:bg-gray-600 dark:text-gray-200 dark:border-gray-600"
+              id={habitacionid ?? ''}
+              value={habitaciones?.find((elem) => elem.id === habitacionid)?.tipo ?? ''}
             />
           </div>
 
-          <div>
+          <div id="personas">
             <label className="text-lg font-semibold" htmlFor="cant_personas">
               Cantidad de Personas
             </label>
@@ -247,24 +256,31 @@ export const ModalCalendario = () => {
             />
           </div>
 
-          <div>
+          <div id="importe">
             <label className="text-lg font-semibold" htmlFor="importe">
               Importe Por noche
             </label>
             <input onChange={onInputChange} value={importe} type="number" name="importe" className="w-full border border-gray-500 rounded-md px-3 py-2" id="importe" placeholder="0.00" />
           </div>
 
-          <div>
+          <div id="checkin">
             <label className="text-lg font-semibold" htmlFor="checkin">
               Check In
             </label>
             <div className="relative">
-              <input onChange={onInputChange} value={checkin.slice(0, 10)} type="date" name="checkin" className="w-full border border-gray-500 text-black rounded-md px-3 py-2" id="checkin" />
-              <BiCalendar className="absolute right-2 top-1/2 -translate-y-1/2 text-black pointer-events-none" />
+              <input
+                onChange={onInputChange}
+                value={checkin.slice(0, 10)}
+                type="date"
+                name="checkin"
+                className="w-full border border-gray-500 text-black rounded-md px-3 py-2 dark:border-gray-600 dark:text-gray-200"
+                id="checkin"
+              />
+              <BiCalendar className="absolute right-3 top-1/2 -translate-y-1/2 text-black pointer-events-none dark:text-gray-200" size={20} />
             </div>
           </div>
 
-          <div>
+          <div id="checkout">
             <label className="text-lg font-semibold" htmlFor="checkout">
               Check Out
             </label>
@@ -275,10 +291,10 @@ export const ModalCalendario = () => {
                 type="date"
                 min={checkin}
                 name="checkout"
-                className="w-full border border-gray-500 text-black rounded-md px-3 py-2"
+                className="w-full border border-gray-500 text-black rounded-md px-3 py-2 dark:border-gray-600 dark:text-gray-200"
                 id="checkout"
               />
-              <BiCalendar className="absolute right-2 top-1/2 -translate-y-1/2 text-black pointer-events-none" />
+              <BiCalendar className="absolute right-3 top-1/2 -translate-y-1/2 text-black pointer-events-none dark:text-gray-200" size={20} />
             </div>
             {error && <p className="text-red-500">La fecha de checkout debe ser mayor a la de checkin</p>}
           </div>
@@ -310,7 +326,7 @@ export const ModalCalendario = () => {
           </div>
 
           <div className="flex items-center justify-end mt-4 gap-2">
-            <button type="button" className="px-4 py-2 bg-gray-300 rounded hover:bg-green-300 cursor-pointer transition" onClick={handleCloseModal}>
+            <button type="button" className="px-4 py-2 bg-gray-300 rounded hover:bg-green-300 cursor-pointer transition dark:bg-gray-600  dark:hover:bg-gray-700" onClick={handleCloseModal}>
               Cancelar
             </button>
 
@@ -319,7 +335,12 @@ export const ModalCalendario = () => {
                 {isPendigAgregar ? 'Guardando...' : 'Guardar'}
               </button>
             ) : (
-              <button disabled={isPendigModificar} type="submit" className="px-4 py-2 bg-blue-400 rounded hover:bg-blue-300 cursor-pointer transition" onClick={handleSubmit}>
+              <button
+                disabled={isPendigModificar}
+                type="submit"
+                className="px-4 py-2 bg-blue-400 rounded hover:bg-blue-300 cursor-pointer transition dark:bg-blue-600 dark:hover:bg-blue-500"
+                onClick={handleSubmit}
+              >
                 {isPendigModificar ? 'Modificando   ...' : 'Modificar'}
               </button>
             )}
