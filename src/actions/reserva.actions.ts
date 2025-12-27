@@ -123,3 +123,33 @@ export const deleteReserva = async (id: string): Promise<boolean | SweetAlertRes
 
   return data;
 };
+
+export const subirPDFReserva = async (blob: Blob, reservaId?: string): Promise<{ ok: boolean; msg: string }> => {
+  if (!reservaId)
+    return {
+      ok: false,
+      msg: 'No se proporciono un id de reserva',
+    };
+  const fileName = `reserva-${reservaId}.pdf`;
+
+  const { error } = await supabase.storage.from('reservas-pdf').upload(fileName, blob, {
+    contentType: 'application/pdf',
+    upsert: true,
+  });
+
+  if (error) {
+    console.log(error);
+    await Swal.fire('Error al subir el PDF', error.message, 'error');
+    return {
+      ok: false,
+      msg: '',
+    };
+  }
+
+  const { data } = await supabase.storage.from('reservas-pdf').createSignedUrl(fileName, 60 * 60);
+
+  return {
+    ok: true,
+    msg: data?.signedUrl || '',
+  };
+};

@@ -1,15 +1,19 @@
-import { HiOutlinePencil } from 'react-icons/hi2';
-import { MdDeleteOutline } from 'react-icons/md';
+import { useEffect, useState } from 'react';
+
+import { calcularDias, reordenarFecha } from '../../../helpers/formatearFecha';
 import { useReservaStore } from '../../../store/reserva.store';
 import { useMutateReserva } from '../../../hooks/reserva/useMutateReserva';
+import PDF from '../../ui/PDF';
+import { verificarRol } from '../../../actions/auth.actions';
+
+import { HiOutlinePencil } from 'react-icons/hi2';
+import { MdContentCopy, MdDeleteOutline } from 'react-icons/md';
 import { CgClose } from 'react-icons/cg';
 import Swal from 'sweetalert2';
-import { calcularDias, reordenarFecha } from '../../../helpers/formatearFecha';
 import { FiPrinter } from 'react-icons/fi';
-import { PDFDownloadLink } from '@react-pdf/renderer';
-import PDF from '../../ui/PDF';
-import { useEffect, useState } from 'react';
-import { verificarRol } from '../../../actions/auth.actions';
+import { pdf, PDFDownloadLink } from '@react-pdf/renderer';
+import { subirPDFReserva } from '../../../actions/reserva.actions';
+import { IoCheckmarkDone } from 'react-icons/io5';
 
 export const DetallesReserva = () => {
   const { reservaSeleccionado, closeDetalle, openModal } = useReservaStore();
@@ -18,8 +22,20 @@ export const DetallesReserva = () => {
   const { removeReserva } = useMutateReserva();
 
   const [rol, setRol] = useState<string>('');
+  const [url, setUrl] = useState<string>('');
 
   const { mutateAsync, isPending } = removeReserva;
+
+  const handleLink = async () => {
+    const blob = await pdf(<PDF reserva={reservaSeleccionado!} />).toBlob();
+
+    const { ok, msg } = await subirPDFReserva(blob, id);
+
+    if (!ok) return;
+
+    setUrl(msg);
+    await navigator.clipboard.writeText(msg);
+  };
 
   const handleDelete = async () => {
     const { isConfirmed } = await Swal.fire({
@@ -53,6 +69,12 @@ export const DetallesReserva = () => {
     buscarRolUser();
   }, []);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setUrl('');
+    }, 3000);
+  }, [url]);
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/80 z-50">
       <div className="bg-white rounded-lg shadow-lg w-2xl h-min-[50vh] p-8 text-black dark:bg-slate-800 dark:text-white">
@@ -61,7 +83,10 @@ export const DetallesReserva = () => {
             <div className="w-full">
               <div className="flex justify-between w-full mb-10">
                 <h3 className="text-xl font-semibold">Detalles Reserva</h3>
+
                 <div className="flex gap-5">
+                  {url === '' ? <MdContentCopy className="hover:text-gray-600 dark:hover:text-gray-400 cursor-pointer" onClick={handleLink} /> : <IoCheckmarkDone className="text-green-500" />}
+
                   <PDFDownloadLink document={<PDF reserva={reservaSeleccionado!} />} fileName={`Reserva-${reservaSeleccionado?.cliente_nombre}`}>
                     {({ loading }) =>
                       loading ? (
@@ -70,7 +95,6 @@ export const DetallesReserva = () => {
                             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                           </svg>
-                          Generando Documento...
                         </button>
                       ) : (
                         <button className="cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-700 rounded-lg">
