@@ -49,7 +49,7 @@ export const CalendarioMobile = ({ reservas }: Props) => {
         </table>
       </div>
 
-      <div className="container mx-auto mt-7 flex flex-col gap-5 mb-10">
+      <div className="container mx-auto mt-7 flex flex-col gap-5 mb-10 dark:bg-slate-800">
         <h3 className="text-xl font-semibold dark:text-white mx-10">Reservas este mes</h3>
         {reservasMes?.map((reserva) => (
           <ReservaCardMobile key={reserva.id} reserva={reserva} />

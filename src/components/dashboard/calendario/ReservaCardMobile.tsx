@@ -5,11 +5,14 @@ interface Props {
 }
 
 export const ReservaCardMobile = ({ reserva }: Props) => {
+  if (!reserva.mostrar) {
+    return null;
+  }
   return (
     <div key={reserva.id} className="flex gap-5 border border-gray-500 rounded-lg p-2 items-center mx-10">
       <div className="w-10 h-10 text-white flex items-center justify-center rounded-lg " style={{ backgroundColor: reserva.color }}>
-        {reserva.idcliente ? reserva.cliente?.nombre[0] : reserva.cliente_nombre[0]}
-        {reserva.idcliente ? reserva.cliente?.nombre.split(' ', 2)[1][0] : reserva.cliente_nombre.split(' ', 2)[1][0]}
+        {reserva.idcliente ? reserva.cliente?.nombre?.split(' ', 2)?.[0]?.[0] : reserva.cliente_nombre?.split(' ', 2)?.[0]?.[0]}
+        {reserva.idcliente ? reserva.cliente?.nombre?.split(' ', 2)?.[1]?.[0] : reserva.cliente_nombre?.split(' ', 2)?.[1]?.[0]}
       </div>
       <div className="flex flex-col">
         <div>
