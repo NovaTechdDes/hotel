@@ -96,12 +96,12 @@ export const postReserva = async (reserva: Omit<Reserva, 'id' | 'creado_en'>): P
     const { data, error } = await supabase.from('reserva').insert(reservaWhitUser).select().single();
     console.log(data);
     if (error) {
-      console.log(error);
+      console.error(error);
       return await Swal.fire('Error al cargar la reserva', error.message, 'error');
     }
     return true;
   } catch (error: any) {
-    console.log(error);
+    console.error(error);
     return await Swal.fire('Error al cargar la reserva', error.message, 'error');
   }
 };
@@ -138,7 +138,7 @@ export const subirPDFReserva = async (blob: Blob, reservaId?: string): Promise<{
   });
 
   if (error) {
-    console.log(error);
+    console.error(error);
     await Swal.fire('Error al subir el PDF', error.message, 'error');
     return {
       ok: false,

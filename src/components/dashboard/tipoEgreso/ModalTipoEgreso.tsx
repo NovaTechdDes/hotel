@@ -32,13 +32,11 @@ export const ModalTipoEgreso = () => {
     if (tipoEgresoSeleccionado) {
       const result = await modificarTipo(formState);
       if (result) {
-        console.log(result);
         closeModal();
       }
     } else {
       const result = await agregarTipo(formState);
       if (result) {
-        console.log(result);
         closeModal();
       }
     }

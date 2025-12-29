@@ -32,7 +32,9 @@ const HabitacionCard = ({ habitacion }: Props) => {
 
     if (isConfirmed && id) {
       const result = await mutateAsync(id);
-      console.log(result);
+      if (result) {
+        setLoading(false);
+      }
     }
     setLoading(false);
   };

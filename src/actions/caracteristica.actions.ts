@@ -8,7 +8,7 @@ export const getCaracteristicas = async (): Promise<Caracteristica[]> => {
     if (error) throw error;
     return data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return [];
   }
 };
@@ -21,7 +21,7 @@ export const postCaracteristica = async (caracteristica: string): Promise<boolea
     if (error) throw error;
     return true;
   } catch (error: any) {
-    console.log(error);
+    console.error(error);
     await Swal.fire('Error al cargar caracteristica', error.message, 'error');
     return false;
   }
@@ -33,7 +33,7 @@ export const updateCaracteristica = async (updates: Partial<Caracteristica>): Pr
     if (error) throw error;
     return true;
   } catch (error: any) {
-    console.log(error);
+    console.error(error);
     await Swal.fire('Error al modificar caracteristica', error.message, 'error');
     return false;
   }
@@ -45,7 +45,7 @@ export const deleteCaracteristica = async (id: string): Promise<boolean> => {
     if (error) throw error;
     return true;
   } catch (error: any) {
-    console.log(error);
+    console.error(error);
     await Swal.fire('Error al eliminar caracteristica', error.message, 'error');
     return false;
   }

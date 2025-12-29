@@ -24,7 +24,7 @@ export const postTipoEgreso = async (tipoEgreso: Omit<TipoEgreso, 'id' | 'creado
     if (error) return await Swal.fire('Error al cargar tipo de egreso', error.message, 'error');
     return data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return await Swal.fire('Error al cargar tipo de egreso', 'error', 'error');
   }
 };
@@ -47,7 +47,7 @@ export const deleteTipoEgreso = async (id: number): Promise<boolean | SweetAlert
 
     return true;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return false;
   }
 };

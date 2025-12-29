@@ -41,7 +41,7 @@ export const postHabitacion = async (habitacion: Omit<Habitacion, 'id' | 'creado
     }
     return true;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return false;
   }
 };
@@ -57,7 +57,7 @@ export const updateHabitacion = async (updates: Partial<Habitacion>): Promise<bo
     console.log(data);
     return true;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return false;
   }
 };
@@ -72,7 +72,7 @@ export const deleteHabitacion = async (id: string): Promise<boolean> => {
     console.log(data);
     return true;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return false;
   }
 };

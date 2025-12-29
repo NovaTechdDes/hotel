@@ -18,7 +18,7 @@ export const CaracteristicaLista = () => {
     }
 
     const ok = await agregar(nombre);
-    console.log(ok);
+
     if (ok) {
       setNombre('');
       setError(false);

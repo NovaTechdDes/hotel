@@ -25,7 +25,7 @@ export const loginSupabase = async (email: string, password: string) => {
       ok: true,
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return {
       msg: 'Error al iniciar sesion',
       token: '',
@@ -73,7 +73,7 @@ export const createUser = async (email: string, password: string = '', rol: stri
     console.log(usuario);
     return true;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return false;
   }
 };
@@ -84,24 +84,23 @@ export const recoveryPassword = async (email: string) => {
       redirectTo: 'http://localhost:3000/actualizar-contraseña',
     });
     if (error) {
-      console.log(error);
+      console.error(error);
       return false;
     }
     return true;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return false;
   }
 };
 
 export const updatePassword = async (password: string) => {
   try {
-    console.log(password);
     const { error } = await supabase.auth.updateUser({
       password,
     });
     if (error) {
-      console.log(error.message);
+      console.error(error.message);
       if (error.message === 'New password should be different from the old password.') {
         return {
           ok: false,
@@ -122,7 +121,7 @@ export const updatePassword = async (password: string) => {
       token: '',
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return {
       ok: false,
       msg: 'Error al actualizar la contraseña',
