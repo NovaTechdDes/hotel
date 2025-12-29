@@ -12,7 +12,7 @@ export const Reserva = () => {
   const [buscador, setBuscador] = useState('');
 
   return (
-    <div className="text-black md:mx-10 mx-2 my-5 flex flex-col gap-5 ">
+    <div className="text-black md:mx-10 mx-2 py-5 flex flex-col gap-5 h-full">
       <div className="bg-white rounded-lg p-5 border border-gray-300 dark:bg-slate-800 dark:border-gray-600">
         <h3 className="text-2xl font-semibold dark:text-white">Reservas</h3>
         <span className="text-gray-500 dark:text-gray-400">Gestiona y visualiza todas las reservas del hotel</span>
@@ -33,7 +33,7 @@ export const Reserva = () => {
         </div>
       </div>
 
-      <div className="p-5 bg-white rounded-lg border border-gray-300 dark:bg-slate-800 dark:border-gray-600">
+      <div className="p-5 bg-white rounded-lg border border-gray-300 dark:bg-slate-800 dark:border-gray-600 overflow-y-auto h-full">
         {isLoading ? <Loading text="Cargando reservas" /> : reservas?.map((reserva) => <ReservaCard buscador={buscador} reserva={reserva} key={reserva.id} />)}
       </div>
 

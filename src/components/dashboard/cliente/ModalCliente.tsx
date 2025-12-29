@@ -53,7 +53,7 @@ export const ModalCliente = () => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/80 z-50">
-      <div className="bg-white rounded-lg shadow-lg w-4xl h-[80vh] p-8 text-black flex flex-col">
+      <div className="bg-white rounded-lg shadow-lg w-4xl h-[80vh] p-8 text-black flex flex-col dark:bg-slate-800 dark:text-white">
         <div className="flex justify-between border-b border-gray-300 mb-2 pb-2">
           <h2 className="text-3xl font-bold  text-left">Agregar Cliente</h2>
           <CgClose size={35} onClick={handleCloseModal} className="hover:bg-gray-300 rounded-lg p-2 cursor-pointer" />
@@ -64,7 +64,7 @@ export const ModalCliente = () => {
               <label className=" text-sm font-medium mb-1" htmlFor="nombre">
                 Nombre*
               </label>
-              <input type="text" id="nombre" name="nombre" value={nombre} onChange={onInputChange} className="w-full border rounded-md px-3 py-2" placeholder="Nombre" />
+              <input type="text" id="nombre" name="nombre" value={nombre} onChange={onInputChange} className="w-full border rounded-md px-3 py-2  dark:text-white" placeholder="Nombre" />
               {error && nombre === '' && <p className="text-red-500">El nombre es obligatorio</p>}
             </div>
 
@@ -99,7 +99,11 @@ export const ModalCliente = () => {
           </div>
 
           <div className="flex justify-end gap-2 mt-auto">
-            <button type="button" className="px-4 py-2 bg-gray-300 rounded hover:bg-green-300 cursor-pointer transition" onClick={handleCloseModal}>
+            <button
+              type="button"
+              className="px-4 py-2 bg-gray-300 rounded hover:bg-green-300 cursor-pointer transition dark:bg-slate-700 dark:text-white dark:hover:bg-slate-600"
+              onClick={handleCloseModal}
+            >
               Cancelar
             </button>
             {!clienteSeleccionado ? (

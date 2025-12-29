@@ -47,7 +47,7 @@ export const ModalEgreso = () => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/80 z-50">
-      <div className="bg-white rounded-lg shadow-lg w-xl h-[80vh] p-8 text-black flex flex-col">
+      <div className="bg-white rounded-lg shadow-lg w-xl h-[80vh] p-8 text-black flex flex-col dark:bg-slate-800 dark:text-white">
         <div className="flex justify-between border-b border-gray-300 mb-2 pb-2">
           <h2 className="text-3xl font-bold  text-left">{egresoSeleccionado ? 'Modificar Tipo de Egreso' : 'Agregar Tipo de Egreso'}</h2>
           <CgClose size={35} onClick={handleCloseModal} className="hover:bg-gray-300 rounded-lg p-2 cursor-pointer" />
@@ -64,7 +64,7 @@ export const ModalEgreso = () => {
               value={descripcion}
               onChange={onInputChange}
               id="descripcion"
-              className="w-full border rounded-md px-3 py-2"
+              className="w-full border rounded-md px-3 py-2 dark:text-white"
               placeholder="Descripcion del egreso..."
             />
             {error && descripcion === '' && <p className="text-red-500">La descripcion es obligatoria</p>}
@@ -81,9 +81,9 @@ export const ModalEgreso = () => {
                 value={creado_en?.slice(0, 10) ?? new Date().toISOString().slice(0, 10)}
                 onChange={onInputChange}
                 id="creado_en"
-                className="w-full border rounded-md px-3 py-2 text-black"
+                className="w-full border rounded-md px-3 py-2"
               />
-              <BiCalendar className="absolute right-2 top-1/2 -translate-y-1/2 text-black pointer-events-none" />
+              <BiCalendar className="absolute right-3 top-1/2 -translate-y-1/2 text-black pointer-events-none dark:text-gray-200" size={20} />
             </div>
           </div>
 
@@ -109,7 +109,11 @@ export const ModalEgreso = () => {
           </div>
 
           <div className="flex justify-end col-span-2  mt-auto gap-2">
-            <button type="button" className="px-4 py-2 bg-gray-300 rounded hover:bg-red-300 cursor-pointer transition" onClick={handleCloseModal}>
+            <button
+              type="button"
+              className="px-4 py-2 bg-gray-300 rounded hover:bg-red-300 cursor-pointer transition dark:bg-slate-700 dark:text-white dark:hover:bg-slate-600"
+              onClick={handleCloseModal}
+            >
               Cancelar
             </button>
             {!egresoSeleccionado && (

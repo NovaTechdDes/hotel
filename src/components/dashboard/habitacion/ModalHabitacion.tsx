@@ -61,8 +61,8 @@ const ModalHabitacion = () => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/80 z-50">
-      <div className="bg-white rounded-lg shadow-lg w-4xl min-h-[80vh] p-8 text-black flex-col flex">
+    <div className="fixed inset-0 flex items-center justify-center bg-black/80 z-50 ">
+      <div className="bg-white rounded-lg shadow-lg w-4xl min-h-[80vh] p-8 text-black flex-col flex dark:bg-slate-800 dark:text-white">
         <div className="flex justify-between border-b border-gray-300 mb-2 pb-2">
           <h2 className="text-3xl font-bold  text-left">{habitacionSeleccionado ? 'Modificar Habitacion' : 'Agregar Habitacion'}</h2>
           <CgClose size={35} onClick={handleCloseModal} className="hover:bg-gray-300 rounded-lg p-2 cursor-pointer" />
@@ -103,7 +103,14 @@ const ModalHabitacion = () => {
               <label htmlFor="descripcion" className="block text-sm font-medium mb-1">
                 Descripcion
               </label>
-              <textarea name="descripcion" id="decripcion" className="w-full border rounded-md px-3 py-2" value={descripcion} onChange={onInputChange} placeholder="Ej: Descripcion">
+              <textarea
+                name="descripcion"
+                id="decripcion"
+                className="w-full border rounded-md px-3 py-2 dark:bg-slate-800 dark:text-white"
+                value={descripcion}
+                onChange={onInputChange}
+                placeholder="Ej: Descripcion"
+              >
                 {descripcion}
               </textarea>
             </div>
@@ -137,11 +144,15 @@ const ModalHabitacion = () => {
           </div>
 
           <div className="flex justify-end gap-2 mt-auto">
-            <button type="button" className="px-4 py-2 bg-gray-300 rounded hover:bg-green-300 cursor-pointer transition" onClick={handleCloseModal}>
+            <button
+              type="button"
+              className="px-4 py-2 bg-gray-300 rounded hover:bg-green-300 cursor-pointer transition dark:bg-slate-700 dark:text-white dark:hover:bg-slate-600"
+              onClick={handleCloseModal}
+            >
               Cancelar
             </button>
             {!habitacionSeleccionado && (
-              <button type="submit" disabled={isPendingAgregar} className="px-4 py-2 bg-blue-700 text-white rounded hover:opacity-80 cursor-pointer transition">
+              <button type="submit" disabled={isPendingAgregar} className="px-4 py-2 bg-blue-700 text-white rounded hover:opacity-80 cursor-pointer transition dark:bg-slate-700 dark:text-white">
                 {isPendingAgregar ? 'Guardando...' : 'Guardar'}
               </button>
             )}

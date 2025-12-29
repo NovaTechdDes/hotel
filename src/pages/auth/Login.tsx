@@ -41,10 +41,10 @@ export const Login = () => {
           <div className="mt-10 text-left px-10 w-full">
             <p className="text-red-500">{error}</p>
           </div>
-          <form className="flex flex-col gap-4 w-full  px-10" onSubmit={handleLogin}>
-            <div className="flex w-full flex-col gap-1">
+          <form className="flex flex-col gap-4 w-full px-10" onSubmit={handleLogin}>
+            <div className="flex w-full flex-col gap-1 px-2">
               <label className="text-sm text-white">Email</label>
-              <div className="relative full">
+              <div className="relative w-full">
                 <CiMail size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-200" />
                 <input
                   value={email}
@@ -57,7 +57,7 @@ export const Login = () => {
               </div>
             </div>
             <div>
-              <label className="flex flex-col gap-1">
+              <label className="flex flex-col gap-1 px-2">
                 <span className="text-sm text-white">Contraseña</span>
                 <div className="relative w-full">
                   <TbLockPassword size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-200" />
@@ -72,10 +72,10 @@ export const Login = () => {
                 </div>
               </label>
             </div>
-            <button disabled={loading} type="submit" className="mt-2 cursor-pointer hover:opacity-80 bg-blue-600 text-white font-semibold py-2 rounded hover:bg-blue-700 transition">
+            <button disabled={loading} type="submit" className="mt-2 px-2 mx-2 cursor-pointer hover:opacity-80 bg-blue-600 text-white font-semibold py-2 rounded hover:bg-blue-700 transition">
               {loading ? 'Inicinado...' : 'Iniciar Sesión'}
             </button>
-            <Link to="/recuperar-contraseña" className="text-blue-400 bg-slate-700 px-2 py-1 rounded-lg text-lg hover:underline text-center">
+            <Link to="/recuperar-contraseña" className="text-blue-400 px-2 mx-2 bg-slate-700 py-1 rounded-lg text-lg hover:underline text-center">
               ¿Olvidaste tu contraseña?
             </Link>
           </form>
