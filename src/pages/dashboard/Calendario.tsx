@@ -59,12 +59,12 @@ export const Calendario = () => {
   return (
     <>
       <HeaderCalendario />
-      <div ref={scrollContainerRef} className="overflow-x-auto border mx-2 rounded-md text-black h-[calc(100vh-128px)] bg-white">
+      <div ref={scrollContainerRef} className="overflow-x-auto border mx-2 rounded-md text-black h-[calc(100vh-75px)] bg-white">
         <table className="min-w-max border-collapse">
           <thead>
             <TrCalendario days={days || []} scrollContainerRef={scrollContainerRef} todayRef={todayRef} />
           </thead>
-          <tbody>
+          <tbody className="h-full">
             {habitaciones?.map((hab, index) => (
               <TrHabitacionCalendario key={hab.id} clientes={clientes ?? []} days={days} habitacion={hab} index={index} reservas={reservas ?? []} handleReserva={handleReserva} />
             ))}

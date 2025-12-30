@@ -1,10 +1,14 @@
 import type { Cliente, Habitacion, Reserva } from '../interface';
 import { formatearAString } from './formatearFecha';
 
-export const devolverReserva = (reservas: Reserva[], day: Date, hab: Habitacion, clientes: Cliente[] = []) => {
-  const reserva = reservas?.find((elem) => {
-    if (elem.checkin.slice(0, 10) <= formatearAString(day).slice(0, 10) && elem.checkout.slice(0, 10) > formatearAString(day).slice(0, 10) && elem.habitacionid === hab.id) return elem;
-  });
+export const devolverReserva = async (reservas: Reserva[], day: Date, hab: Habitacion, clientes: Cliente[] = []) => {
+  let reserva: Reserva | null = null;
+
+  for await (const elem of reservas) {
+    if (elem.checkin.slice(0, 10) <= formatearAString(day).slice(0, 10) && elem.checkout.slice(0, 10) > formatearAString(day).slice(0, 10) && elem.habitacionid === hab.id) {
+      reserva = elem;
+    }
+  }
 
   if (reserva && !reserva?.mostrar) {
     return {
