@@ -67,7 +67,7 @@ export const postReserva = async (reserva: Omit<Reserva, 'id' | 'creado_en'>): P
     const { data: disponible, error: disponibleError } = await supabase.rpc('habitacion_disponible', {
       p_habitacion: reserva.habitacionid,
       p_checkin: new Date(reserva.checkin + 'T00:00:00Z'),
-      p_checkout: new Date(reserva.checkout + 'T23:59:59Z'),
+      p_checkout: new Date(reserva.checkout + 'T00:00:00Z'),
     });
 
     if (disponibleError) {
