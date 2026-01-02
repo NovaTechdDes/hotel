@@ -3,7 +3,7 @@ import type { Reserva, TemporadaAlta } from '../interface/Reserva';
 import { supabase } from '../lib/supababase';
 
 export const getReservas = async (): Promise<Reserva[]> => {
-  const { data, error } = await supabase.from('reserva').select('*, cliente: idcliente(nombre), habitacion: habitacionid(*)').order('checkin', { ascending: false });
+  const { data, error } = await supabase.from('reserva').select('*, cliente: idcliente(nombre), habitacion: habitacionid(*)').eq('mostrar', true).order('checkin', { ascending: false });
 
   if (error) await Swal.fire('Error al obtener las Reservas', error.message, 'error');
   return data as Reserva[];
@@ -66,8 +66,8 @@ export const postReserva = async (reserva: Omit<Reserva, 'id' | 'creado_en'>): P
   try {
     const { data: disponible, error: disponibleError } = await supabase.rpc('habitacion_disponible', {
       p_habitacion: reserva.habitacionid,
-      p_checkin: new Date(reserva.checkin + 'T00:00:00'),
-      p_checkout: new Date(reserva.checkout + 'T23:59:59'),
+      p_checkin: new Date(reserva.checkin + 'T00:00:00Z'),
+      p_checkout: new Date(reserva.checkout + 'T23:59:59Z'),
     });
 
     if (disponibleError) {
