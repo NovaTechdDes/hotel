@@ -108,8 +108,8 @@ export const postReserva = async (reserva: Omit<Reserva, 'id' | 'creado_en'>): P
 
 export const updateReserva = async (reserva: Partial<Reserva>): Promise<Reserva | SweetAlertResult<any>> => {
   const { cliente: _cliente, habitacion: _habitacion, ...updates } = reserva;
-  console.log({ _cliente, _habitacion });
 
+  updates.idcliente = reserva.idcliente || null;
   const { data, error } = await supabase.from('reserva').update(updates).eq('id', reserva.id).select().single();
   if (error) return await Swal.fire('Error al modificar la reserva', error.message, 'error');
 
