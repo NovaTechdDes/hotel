@@ -40,10 +40,8 @@ export const TdCeldaReserva = ({ day, habitacion, reservas, clientes, handleRese
     >
       {(() => {
         const clientName = reservaAux.cliente;
-        if (clientName && clientName.length > 14) {
-          return <p className="text-white p-1 ca0pitalize">{clientName.slice(0, 14)}...</p>;
-        }
-        return <p className="text-white p-1 capitalize">{clientName}</p>;
+
+        return <p className="text-white p-1 text-xs capitalize">{clientName?.slice(0, 5)}...</p>;
       })()}
     </td>
   );

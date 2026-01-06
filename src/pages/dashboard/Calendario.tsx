@@ -60,7 +60,7 @@ export const Calendario = () => {
     <>
       <HeaderCalendario />
       <div ref={scrollContainerRef} className="overflow-x-auto border mx-2 rounded-md text-black h-[calc(100vh-75px)] bg-white">
-        <table className="min-w-max border-collapse">
+        <table className="min-w-max border-collapse table-auto">
           <thead>
             <TrCalendario days={days || []} scrollContainerRef={scrollContainerRef} todayRef={todayRef} />
           </thead>

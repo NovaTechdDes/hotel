@@ -15,10 +15,10 @@ interface Props {
 export const TrHabitacionCalendario = ({ habitacion, index, days, reservas, clientes, handleReserva }: Props) => {
   return (
     <tr key={habitacion.id} className="">
-      <td className="border bg-gray-50 sticky left-0">
-        <div className={`border-r p-2 border-gray-800 ${index < 3 ? 'bg-amber-200' : index < 11 ? 'bg-pink-200' : 'bg-green-200'}`}>
-          <p className="font-semibold">{habitacion.nombre}</p>
-          <span className="text-gray-500 text-xs">{habitacion.tipo}</span>
+      <td className={`border border-gray-800 sticky left-0 align-middle p-0 ${index < 3 ? 'bg-amber-200' : index < 11 ? 'bg-pink-200' : 'bg-green-200'}`}>
+        <div className={` flex flex-col items-center  min-h-[2rem] h-full`}>
+          <p className="font-semibold text-xs leading-none">{habitacion.nombre}</p>
+          <span className="text-gray-500 text-xs leading-none">{habitacion.tipo}</span>
         </div>
       </td>
       {days?.map((day) => (!day ? null : <TdCeldaReserva key={day.toISOString()} day={day} habitacion={habitacion} reservas={reservas} clientes={clientes} handleReserva={handleReserva} />))}
