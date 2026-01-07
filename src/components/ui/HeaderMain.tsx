@@ -17,7 +17,7 @@ export const HeaderMain = ({ botonText = 'Agregar', openModal, title }: Props) =
             border border-gray-300 bg-blue-700 text-white
            dark:text-black font-bold cursor-pointer rounded-lg 
            px-2 py-1 text-md hover:bg-blue-600 transition-all duration-200 
-           dark:border-gray-600 dark:bg-white dark:hover:bg-blue-600 dark:hover:text-white"
+           dark:border-gray-600 dark:bg-blue-700 dark:hover:bg-blue-600 dark:text-white"
           onClick={click}
         >
           {botonText}

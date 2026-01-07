@@ -46,8 +46,8 @@ export const ModalEgreso = () => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/80 z-50">
-      <div className="bg-white rounded-lg shadow-lg w-xl h-[80vh] p-8 text-black flex flex-col dark:bg-slate-800 dark:text-white">
+    <div className="fixed inset-0 flex items-center justify-center bg-black/80 z-50" onClick={handleCloseModal}>
+      <div className="bg-white rounded-lg shadow-lg w-xl h-[80vh] p-8 text-black flex flex-col dark:bg-slate-800 dark:text-white" onClick={(e) => e.stopPropagation()}>
         <div className="flex justify-between border-b border-gray-300 mb-2 pb-2">
           <h2 className="text-3xl font-bold  text-left">{egresoSeleccionado ? 'Modificar Tipo de Egreso' : 'Agregar Tipo de Egreso'}</h2>
           <CgClose size={35} onClick={handleCloseModal} className="hover:bg-gray-300 rounded-lg p-2 cursor-pointer" />
@@ -98,9 +98,11 @@ export const ModalEgreso = () => {
           <div className="col-span-2">
             <label htmlFor="tipoegresoid">Tipo de Egreso *</label>
             <select name="tipoegresoid" value={tipoegresoid} onChange={onInputChange} id="tipoegresoid" className="w-full border rounded-md px-3 py-2">
-              <option value="">---Seleccionar una opcion---</option>
+              <option value="" className="text-black dark:text-white dark:bg-slate-800">
+                ---Seleccionar una opcion---
+              </option>
               {tipoEgresos?.map((elem) => (
-                <option key={elem.id} value={elem.id}>
+                <option key={elem.id} value={elem.id} className="text-black dark:text-white dark:bg-slate-800">
                   {elem.descripcion}
                 </option>
               ))}
