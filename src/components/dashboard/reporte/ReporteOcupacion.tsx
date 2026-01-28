@@ -36,14 +36,30 @@ export const ReporteOcupacion = () => {
             Seleccionar Año
           </label>
           <select name="year" className="w-full border border-gray-300 rounded-lg px-2 py-1 text-xl dark:text-white" id="year" onChange={(e) => setYear(e.target.value)} value={year}>
-            <option value={anio - 5}>{anio - 5}</option>
-            <option value={anio - 4}>{anio - 4}</option>
-            <option value={anio - 3}>{anio - 3}</option>
-            <option value={anio - 2}>{anio - 2}</option>
-            <option value={anio - 1}>{anio - 1}</option>
-            <option value={anio}>{anio}</option>
-            <option value={anio + 1}>{anio + 1}</option>
-            <option value={anio + 2}>{anio + 2}</option>
+            <option className="text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800" value={anio - 5}>
+              {anio - 5}
+            </option>
+            <option className="text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800" value={anio - 4}>
+              {anio - 4}
+            </option>
+            <option className="text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800" value={anio - 3}>
+              {anio - 3}
+            </option>
+            <option className="text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800" value={anio - 2}>
+              {anio - 2}
+            </option>
+            <option className="text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800" value={anio - 1}>
+              {anio - 1}
+            </option>
+            <option className="text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800" value={anio}>
+              {anio}
+            </option>
+            <option className="text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800" value={anio + 1}>
+              {anio + 1}
+            </option>
+            <option className="text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800" value={anio + 2}>
+              {anio + 2}
+            </option>
           </select>
         </div>
       </div>

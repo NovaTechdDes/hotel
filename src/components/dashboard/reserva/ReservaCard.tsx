@@ -13,14 +13,18 @@ interface Props {
 }
 
 export const ReservaCard = ({ buscador, reserva }: Props) => {
-  const { cliente, color, habitacion, checkin, checkout } = reserva;
+  const { cliente, color, habitacion, checkin, checkout, cliente_nombre } = reserva;
   const { openDetalle } = useReservaStore();
 
   const handleReserva = () => {
     openDetalle(reserva);
   };
 
-  if (!cliente?.nombre.toUpperCase().startsWith(buscador.toUpperCase()) && !habitacion?.nombre.toUpperCase().startsWith(buscador.toUpperCase())) {
+  if (
+    !cliente?.nombre.toUpperCase().startsWith(buscador.toUpperCase()) &&
+    !cliente_nombre.toUpperCase().startsWith(buscador.toUpperCase()) &&
+    !habitacion?.nombre.toUpperCase().startsWith(buscador.toUpperCase())
+  ) {
     return;
   }
 

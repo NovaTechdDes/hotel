@@ -43,7 +43,7 @@ export const ReporteMensual = () => {
           </label>
           <select className="border rounded-lg px-2 py-1 text-lg border-gray-300 w-full dark:text-white" onChange={(e) => setMes(e.target.value)} name="mes" value={mes} id="mes">
             {meses.map((elem) => (
-              <option value={elem.value} key={elem.value}>
+              <option value={elem.value} key={elem.value} className="text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800">
                 {elem.text}
               </option>
             ))}
@@ -53,7 +53,13 @@ export const ReporteMensual = () => {
           <label htmlFor="anio" className="text-lg font-semibold dark:text-white">
             Seleccionar Año
           </label>
-          <select className="border rounded-lg px-2 py-1 text-lg border-gray-300 w-full dark:text-white" name="anio" onChange={(e) => setAnio(e.target.value)} value={anio} id="anio">
+          <select
+            className="border rounded-lg px-2 py-1 text-lg border-gray-300 w-full text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800"
+            name="anio"
+            onChange={(e) => setAnio(e.target.value)}
+            value={anio}
+            id="anio"
+          >
             <option value={year - 5}>{year - 5}</option>
             <option value={year - 4}>{year - 4}</option>
             <option value={year - 3}>{year - 3}</option>
