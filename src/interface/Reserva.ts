@@ -21,6 +21,7 @@ export interface Reserva {
   usuarioid?: string;
   cliente?: Cliente;
   habitacion?: Habitacion;
+  telo?: boolean;
 }
 
 export interface TemporadaAlta {

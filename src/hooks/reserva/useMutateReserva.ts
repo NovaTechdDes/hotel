@@ -26,7 +26,7 @@ export const useMutateReserva = () => {
   });
 
   const putReserva = useMutation({
-    mutationFn: (reserva: Reserva) => updateReserva(reserva),
+    mutationFn: (reserva: Partial<Reserva>) => updateReserva(reserva),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['reservas'] });
       queryClient.invalidateQueries({ queryKey: ['temporada-baja'] });

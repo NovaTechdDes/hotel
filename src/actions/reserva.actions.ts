@@ -3,16 +3,23 @@ import type { Reserva, TemporadaAlta } from '../interface/Reserva';
 import { supabase } from '../lib/supababase';
 import { endOfMonth, startOfMonth } from 'date-fns';
 
-export const getReservas = async (month: number, anio: number): Promise<Reserva[]> => {
+export const getReservas = async (month: number, anio: number, todo: boolean = false): Promise<Reserva[]> => {
   const inicio = startOfMonth(new Date(anio, month, 1));
   const fin = endOfMonth(new Date(anio, month, 1));
-  const { data, error } = await supabase
+
+  const query = supabase
     .from('reserva')
     .select('*, cliente: idcliente(nombre), habitacion: habitacionid(*)')
     .gte('checkin', inicio.toISOString())
     .lte('checkout', fin.toISOString())
     .eq('mostrar', true)
     .order('checkin', { ascending: false });
+
+  if (!todo) {
+    query.eq('telo', false);
+  }
+
+  const { data, error } = await query;
 
   if (error) await Swal.fire('Error al obtener las Reservas', error.message, 'error');
   return data as Reserva[];

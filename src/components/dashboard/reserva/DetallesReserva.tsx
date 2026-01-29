@@ -19,12 +19,13 @@ export const DetallesReserva = () => {
   const { reservaSeleccionado, closeDetalle, openModal } = useReservaStore();
 
   const { id, checkin, checkout, importe, observaciones, habitacion, cliente } = reservaSeleccionado!;
-  const { removeReserva } = useMutateReserva();
+  const { removeReserva, putReserva } = useMutateReserva();
 
   const [rol, setRol] = useState<string>('');
   const [url, setUrl] = useState<string>('');
 
   const { mutateAsync, isPending } = removeReserva;
+  const { mutateAsync: mutateAsyncPut } = putReserva;
 
   const handleLink = async () => {
     const blob = await pdf(<PDF reserva={reservaSeleccionado!} />).toBlob();
@@ -38,11 +39,27 @@ export const DetallesReserva = () => {
   };
 
   const handleDelete = async () => {
-    const { isConfirmed } = await Swal.fire({
+    const { isConfirmed, isDismissed, dismiss } = await Swal.fire({
       title: `Quiere eliminar reserva de ${cliente?.nombre ? cliente?.nombre : reservaSeleccionado?.cliente_nombre}`,
+      showConfirmButton: true,
       showCancelButton: true,
-      confirmButtonText: 'Aceptar',
+      showDenyButton: true,
+
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Transitorio',
+      denyButtonText: 'Cancelar',
+
+      reverseButtons: true, // CLAVE 🔑
+
+      confirmButtonColor: '#B91C1C',
+      denyButtonColor: '#6B7280',
+      cancelButtonColor: '#0EA5E9',
     });
+
+    if (isDismissed && dismiss === 'cancel') {
+      mutateAsyncPut({ id, telo: true });
+      closeDetalle();
+    }
 
     if (isConfirmed && id) {
       await mutateAsync(id);
@@ -121,8 +138,8 @@ export const DetallesReserva = () => {
               {reservaSeleccionado?.idcliente
                 ? cliente?.nombre?.split(' ', 2)[1][0]
                 : reservaSeleccionado?.cliente_nombre !== ''
-                ? reservaSeleccionado?.cliente_nombre[0]
-                : reservaSeleccionado?.cliente_nombre}
+                  ? reservaSeleccionado?.cliente_nombre[0]
+                  : reservaSeleccionado?.cliente_nombre}
             </div>
 
             <div>

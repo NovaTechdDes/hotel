@@ -75,3 +75,14 @@ input[type="date"] {
     margin-right: 0rem;
   }
 }
+
+
+.swal2-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.swal2-actions :first-child{
+  margin-right: 100px;
+}

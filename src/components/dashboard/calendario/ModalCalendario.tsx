@@ -9,6 +9,7 @@ import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti';
 import { useMutateReserva } from '../../../hooks/reserva/useMutateReserva';
 import { calcularPrecios } from '../../../helpers/calcularPrecio';
 import { BiCalendar } from 'react-icons/bi';
+import { COLORES_RESERVA } from '../../../helpers/colores';
 
 const initialState: Reserva = {
   cant_personas: 0,
@@ -17,7 +18,7 @@ const initialState: Reserva = {
   habitacionid: '',
   importe: 0,
   idcliente: null,
-  color: '#0c0e31',
+  color: '#1E40AF',
   observaciones: '',
   cliente_telefono: '',
   cliente_dni: '',
@@ -303,7 +304,20 @@ export const ModalCalendario = () => {
             <label className="font-semibold text-lg" htmlFor="color">
               Color Reserva
             </label>
-            <input type="color" name="color" value={color} onChange={onInputChange} id="color" className="w-full border border-gray-500 rounded-md " />
+            <div className="grid grid-cols-8 gap-2">
+              {COLORES_RESERVA.map((c) => (
+                <button
+                  key={c}
+                  type="button"
+                  name="color"
+                  onClick={() => onInputChange({ target: { name: 'color', value: c } })}
+                  className={`
+                w-8 h-8 rounded-full border-2 transition cursor-pointer m-2
+                ${color === c ? 'border-black scale-120 ring-2 ring-offset-2 ring-black ' : 'border-gray-300'}`}
+                  style={{ backgroundColor: c }}
+                />
+              ))}
+            </div>
           </div>
 
           <div>
