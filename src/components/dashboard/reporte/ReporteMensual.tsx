@@ -3,6 +3,7 @@ import { TarjetaReporte } from './TarjetaReporte';
 import { HiArrowTrendingUp, HiOutlineCalendar } from 'react-icons/hi2';
 import { useReportesMonthAndYear } from '../../../hooks/reporte/useReportesMonthAndYear';
 import { VscGraph } from 'react-icons/vsc';
+import { calcularDias } from '../../../helpers/formatearFecha';
 
 const now = new Date();
 const month = now.getMonth() + 1;
@@ -26,8 +27,8 @@ export const ReporteMensual = () => {
   const [mes, setMes] = useState<string>(month.toString());
   const [anio, setAnio] = useState<string>(year.toString());
 
-  const { data: reservasMes = '' } = useReportesMonthAndYear(parseInt(mes), parseInt(anio));
-  const totalIngresos = reservasMes !== '' ? reservasMes.reduce((suma, reserva) => suma + (reserva.importe ?? 0), 0) : 0;
+  const { data: reservasMes = [] } = useReportesMonthAndYear(parseInt(mes), parseInt(anio));
+  const totalIngresos = reservasMes.length !== 0 ? reservasMes.reduce((suma, reserva) => suma + (reserva.importe ?? 0) * calcularDias(reserva.checkin, reserva.checkout), 0) : 0;
 
   return (
     <div className="bg-white border p-5 border-gray-300 shadow-2xl rounded-lg mb-5 dark:bg-gray-800">

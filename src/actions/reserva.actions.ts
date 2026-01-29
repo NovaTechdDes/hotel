@@ -1,9 +1,18 @@
 import Swal, { type SweetAlertResult } from 'sweetalert2';
 import type { Reserva, TemporadaAlta } from '../interface/Reserva';
 import { supabase } from '../lib/supababase';
+import { endOfMonth, startOfMonth } from 'date-fns';
 
-export const getReservas = async (): Promise<Reserva[]> => {
-  const { data, error } = await supabase.from('reserva').select('*, cliente: idcliente(nombre), habitacion: habitacionid(*)').eq('mostrar', true).order('checkin', { ascending: false });
+export const getReservas = async (month: number, anio: number): Promise<Reserva[]> => {
+  const inicio = startOfMonth(new Date(anio, month, 1));
+  const fin = endOfMonth(new Date(anio, month, 1));
+  const { data, error } = await supabase
+    .from('reserva')
+    .select('*, cliente: idcliente(nombre), habitacion: habitacionid(*)')
+    .gte('checkin', inicio.toISOString())
+    .lte('checkout', fin.toISOString())
+    .eq('mostrar', true)
+    .order('checkin', { ascending: false });
 
   if (error) await Swal.fire('Error al obtener las Reservas', error.message, 'error');
   return data as Reserva[];
@@ -108,7 +117,7 @@ export const postReserva = async (reserva: Omit<Reserva, 'id' | 'creado_en'>): P
 
 export const updateReserva = async (reserva: Partial<Reserva>): Promise<Reserva | SweetAlertResult<any>> => {
   const { cliente: _cliente, habitacion: _habitacion, ...updates } = reserva;
-
+  console.log({ _cliente, _habitacion });
   updates.idcliente = reserva.idcliente || null;
   const { data, error } = await supabase.from('reserva').update(updates).eq('id', reserva.id).select().single();
   if (error) return await Swal.fire('Error al modificar la reserva', error.message, 'error');

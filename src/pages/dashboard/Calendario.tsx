@@ -21,7 +21,8 @@ export const Calendario = () => {
 
   const [days, setDays] = useState(traerDiasDelMes(new Date()));
   const { isModalOpen, openDetalle, openModal, isDetalleOpen } = useReservaStore();
-  const { data: reservas } = useReservas();
+  const { data: reservas, isLoading } = useReservas(mesSeleccionado, anioSeleccionado);
+
   const { data: habitaciones } = useHabitaciones();
   const { data: clientes } = useClientes();
 
@@ -55,6 +56,16 @@ export const Calendario = () => {
   if (isMobile && reservas) {
     return <CalendarioMobile reservas={reservas} />;
   }
+
+  if (isLoading)
+    return (
+      <>
+        <HeaderCalendario />
+        <div className="flex justify-center items-center h-full">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500"></div>
+        </div>
+      </>
+    );
 
   return (
     <>

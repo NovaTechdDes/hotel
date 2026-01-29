@@ -17,5 +17,5 @@ export const calcularDias = (checkin: string, checkout: string) => {
 
   const diffTime = Math.abs(fechaCheckout.getTime() - fechaCheckin.getTime());
   const diffDays = diffTime === 0 ? Math.ceil(1 / (1000 * 60 * 60 * 24)) : Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  return diffDays;
+  return diffDays ?? 1;
 };
