@@ -49,12 +49,18 @@ export const postHabitacion = async (habitacion: Omit<Habitacion, 'id' | 'creado
 export const updateHabitacion = async (updates: Partial<Habitacion>): Promise<boolean> => {
   try {
     const { id, creado_en, caracteristica_habitacion, ...dataUpdate } = updates;
-    const { data, error } = await supabase.from('habitacion').update(dataUpdate).eq('id', id);
+
+    if (!id) return false;
+
+    if (caracteristica_habitacion?.length !== 0) {
+      actualizacionDeCaracteristicas(id, caracteristica_habitacion ?? []);
+    }
+
+    const { error } = await supabase.from('habitacion').update(dataUpdate).eq('id', id);
     if (error) {
       await Swal.fire('Error al modificar la habitacion', error.message, 'error');
       return false;
     }
-    console.log(data);
     return true;
   } catch (error) {
     console.error(error);
@@ -74,5 +80,42 @@ export const deleteHabitacion = async (id: string): Promise<boolean> => {
   } catch (error) {
     console.error(error);
     return false;
+  }
+};
+
+export const eliminarCaracteristicaHabitacion = async (id: string, caracteristicaid: string) => {
+  const { error } = await supabase.from('caracteristica_habitacion').delete().eq('habitacionid', id).eq('caracteristicaid', caracteristicaid);
+  console.log(error);
+  if (error) {
+    await Swal.fire('Error al eliminar la caracteristica', error.message, 'error');
+    return false;
+  }
+  return true;
+};
+
+const actualizacionDeCaracteristicas = async (id: string, caracteristica_habitacion: string[]) => {
+  const { data: caracteristicas } = await supabase.from('caracteristica_habitacion').select('*').eq('habitacionid', id);
+
+  for (const nuevo of caracteristica_habitacion) {
+    let bandera = false;
+    const arregloAux = [];
+
+    if (!caracteristicas) return;
+
+    for (const elem of caracteristicas) {
+      if (elem.caracteristicaid === nuevo) {
+        bandera = true;
+        break;
+      }
+      arregloAux.push(elem.caracteristicaid);
+    }
+
+    if (!bandera) {
+      const { error } = await supabase.from('caracteristica_habitacion').insert({ habitacionid: id, caracteristicaid: nuevo });
+      if (error) {
+        await Swal.fire('Error al cargar la habitacion', error.message, 'error');
+        return false;
+      }
+    }
   }
 };

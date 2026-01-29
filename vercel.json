@@ -1,9 +1,9 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" },
     {
-      "source": "/reserva/:id/pdf",
-      "destination": "https://hwwekellpwszvtgjwwwc.supabase.co/storage/v1/object/public/reservas-pdf/reserva-:id.pdf"
-    }
+      "source": "/storage/:bucket/:path*",
+      "destination": "https://hwwekellpwszvtgjwwwc.supabase.co/storage/v1/object/public/:bucket/:path*"
+    },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

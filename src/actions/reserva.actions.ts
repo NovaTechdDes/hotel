@@ -167,11 +167,11 @@ export const subirPDFReserva = async (blob: Blob, reservaId?: string): Promise<{
     .update({ pdf_path: `/reserva/${reservaId}/pdf` })
     .eq('id', reservaId);
 
-  const { data } = await supabase.storage.from('reservas-pdf').getPublicUrl(fileName);
-  window.open(`/reserva/${reservaId}/pdf`, '_blank');
-
+  //const { data } = await supabase.storage.from('reservas-pdf').getPublicUrl(fileName);
+  //window.open(`/reserva/${reservaId}/pdf`, '_blank');
+  const publicUrl = `/storage/reservas-pdf/${fileName}`;
   return {
     ok: true,
-    msg: data.publicUrl || '',
+    msg: publicUrl || '',
   };
 };

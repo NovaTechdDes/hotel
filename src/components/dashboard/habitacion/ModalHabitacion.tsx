@@ -5,6 +5,7 @@ import { useForm } from '../../../hooks/useForm';
 import { useEffect, useState } from 'react';
 import { useHabitacionStore } from '../../../store';
 import { useCaracteristicas } from '../../../hooks';
+import { eliminarCaracteristicaHabitacion } from '../../../actions/habitacion.actions';
 
 const initialState: Habitacion = {
   creado_en: new Date(),
@@ -43,7 +44,7 @@ const ModalHabitacion = () => {
     if (capacidad === 0) return setError(true);
 
     if (habitacionSeleccionado) {
-      await modificarHabitacion(formState);
+      await modificarHabitacion({ ...formState, caracteristica_habitacion: caracterisitcasSeleccionadas });
       closeModal();
     } else {
       const result = await agregarHabitacion({ habitacion: formState, listadoCaracteristicas: caracterisitcasSeleccionadas });
@@ -58,6 +59,12 @@ const ModalHabitacion = () => {
     if (caracterisitcasSeleccionadas.find((elem) => elem === e.target.value)) return;
 
     setCaracterisitcasSeleccionadas([...caracterisitcasSeleccionadas, e.target.value]);
+  };
+
+  const handleDeleteCaracteristica = (elemId: string) => {
+    if (!habitacionSeleccionado?.id) return;
+    setCaracterisitcasSeleccionadas(caracterisitcasSeleccionadas.filter((id) => id !== elemId));
+    eliminarCaracteristicaHabitacion(habitacionSeleccionado.id, elemId);
   };
 
   return (
@@ -122,8 +129,8 @@ const ModalHabitacion = () => {
             <select onChange={handleCaracteristicasChange} name="caracteristicas" id="caracteristicas" className="w-full border rounded-md px-3 py-2">
               <option value="">--- Seleccionar una opción ---</option>
               {caracteristicas?.map((elem) => (
-                <option value={elem.id} key={elem.id}>
-                  {elem.nombre}
+                <option className="dark:bg-slate-800 dark:text-white" value={elem.id} key={elem.id}>
+                  {elem.nombre.toUpperCase()}
                 </option>
               ))}
             </select>
@@ -132,12 +139,8 @@ const ModalHabitacion = () => {
           <div className="flex flex-wrap gap-2 mt-2">
             {caracterisitcasSeleccionadas.map((elemId) => (
               <div key={elemId} className="inline-flex text-sm bg-gray-100 border border-gray-300 text-gray-700 px-3 py-1 rounded-full items-center gap-1">
-                <span>{caracteristicas?.find((caracteristica) => caracteristica.id === elemId)?.nombre}</span>
-                <CgClose
-                  size={15}
-                  className="cursor-pointer text-gray-500 hover:text-gray-800"
-                  onClick={() => setCaracterisitcasSeleccionadas(caracterisitcasSeleccionadas.filter((id) => id !== elemId))}
-                />
+                <span>{caracteristicas?.find((caracteristica) => caracteristica.id === elemId)?.nombre.toUpperCase()}</span>
+                <CgClose size={15} className="cursor-pointer text-gray-500 hover:text-gray-800" onClick={() => handleDeleteCaracteristica(elemId)} />
               </div>
             ))}
           </div>
