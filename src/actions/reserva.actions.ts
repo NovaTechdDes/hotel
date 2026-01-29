@@ -162,14 +162,7 @@ export const subirPDFReserva = async (blob: Blob, reservaId?: string): Promise<{
     };
   }
 
-  await supabase
-    .from('reserva')
-    .update({ pdf_path: `/reserva/${reservaId}/pdf` })
-    .eq('id', reservaId);
-
-  //const { data } = await supabase.storage.from('reservas-pdf').getPublicUrl(fileName);
-  //window.open(`/reserva/${reservaId}/pdf`, '_blank');
-  const publicUrl = `/storage/reservas-pdf/${fileName}`;
+  const publicUrl = `https://www.miscasitaschajari.com.ar/reservas-pdf/${fileName}`;
   return {
     ok: true,
     msg: publicUrl || '',

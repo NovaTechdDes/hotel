@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/storage/:bucket/:path*",
-      "destination": "https://hwwekellpwszvtgjwwwc.supabase.co/storage/v1/object/public/:bucket/:path*"
+      "source": "/reservas-pdf/:path*",
+      "destination": "https://hwwekellpwszvtgjwwwc.supabase.co/storage/v1/object/public/reservas-pdf/:path*"
     },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
