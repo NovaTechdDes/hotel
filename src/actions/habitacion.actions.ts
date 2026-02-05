@@ -1,6 +1,7 @@
 import Swal from 'sweetalert2';
 import type { Habitacion } from '../interface/Habitacion';
 import { supabase } from '../lib/supababase';
+import { verError } from '../helpers/verError';
 
 export const getHabitaciones = async (): Promise<Habitacion[]> => {
   const { data, error } = await supabase.from('habitacion').select(`*, caracteristica_habitacion (caracteristicaid)`).order('nombre');
@@ -72,7 +73,7 @@ export const deleteHabitacion = async (id: string): Promise<boolean> => {
   try {
     const { data, error } = await supabase.from('habitacion').delete().eq('id', id);
     if (error) {
-      await Swal.fire('error al eliminar la habitacion', error.message, 'error');
+      await verError(error.code, 'No se puedo eliminar la habitacion porque tiene reservas activas');
       return false;
     }
     console.log(data);
@@ -85,7 +86,6 @@ export const deleteHabitacion = async (id: string): Promise<boolean> => {
 
 export const eliminarCaracteristicaHabitacion = async (id: string, caracteristicaid: string) => {
   const { error } = await supabase.from('caracteristica_habitacion').delete().eq('habitacionid', id).eq('caracteristicaid', caracteristicaid);
-  console.log(error);
   if (error) {
     await Swal.fire('Error al eliminar la caracteristica', error.message, 'error');
     return false;
