@@ -31,57 +31,72 @@ export const ReporteMensual = () => {
   const totalIngresos = reservasMes.length !== 0 ? reservasMes.reduce((suma, reserva) => suma + (reserva.importe ?? 0) * calcularDias(reserva.checkin, reserva.checkout), 0) : 0;
 
   return (
-    <div className="bg-white border p-5 border-gray-300 shadow-2xl rounded-lg mb-5 dark:bg-gray-800">
-      <div>
-        <h3 className="text-2xl font-semibold dark:text-white">Reporte de ingreso Mensual</h3>
-        <span className="text-gray-500 dark:text-gray-400">Visualiza los ingresos generados por las reservas del mes</span>
-      </div>
+    <div className="space-y-10">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b border-[#B59E6B]/10 pb-6">
+        <div>
+          <h3 className="text-2xl font-serif text-[#2D2926] dark:text-[#FDFCFB]">Ingresos Mensuales</h3>
+          <p className="text-[10px] uppercase tracking-[0.2em] text-[#B59E6B] mt-1 font-bold">Rendimiento Operativo</p>
+        </div>
 
-      <div className="grid grid-cols-2 gap-10 mt-5">
-        <div className="flex flex-col gap-2">
-          <label htmlFor="mes0" className="text-lg font-semibold dark:text-white">
-            Seleccionar Mes
-          </label>
-          <select className="border rounded-lg px-2 py-1 text-lg border-gray-300 w-full dark:text-white" onChange={(e) => setMes(e.target.value)} name="mes" value={mes} id="mes">
-            {meses.map((elem) => (
-              <option value={elem.value} key={elem.value} className="text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800">
-                {elem.text}
+        <div className="flex flex-wrap gap-4">
+          <div className="space-y-1.5 flex flex-col">
+            <span className="text-[9px] uppercase tracking-widest text-[#2D2926]/40 dark:text-[#FDFCFB]/30 font-bold ml-1">Periodo</span>
+            <select
+              className="bg-transparent border border-[#B59E6B]/20 rounded-sm px-4 py-2 text-xs uppercase tracking-widest text-[#2D2926] dark:text-[#FDFCFB] focus:border-[#B59E6B] outline-none transition-all cursor-pointer"
+              onChange={(e) => setMes(e.target.value)}
+              name="mes"
+              value={mes}
+              id="mes"
+            >
+              {meses.map((elem) => (
+                <option value={elem.value} key={elem.value} className="text-[#2D2926] bg-[#FDFCFB] dark:text-[#FDFCFB] dark:bg-[#2D2926]">
+                  {elem.text}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="space-y-1.5 flex flex-col">
+            <span className="text-[9px] uppercase tracking-widest text-[#2D2926]/40 dark:text-[#FDFCFB]/30 font-bold ml-1">Año Fiscal</span>
+            <select
+              className="bg-transparent border border-[#B59E6B]/20 rounded-sm px-4 py-2 text-xs uppercase tracking-widest text-[#2D2926] dark:text-[#FDFCFB] focus:border-[#B59E6B] outline-none transition-all cursor-pointer"
+              name="anio"
+              onChange={(e) => setAnio(e.target.value)}
+              value={anio}
+              id="anio"
+            >
+              <option value={year - 2} className="bg-[#FDFCFB] dark:bg-[#2D2926]">
+                {year - 2}
               </option>
-            ))}
-          </select>
-        </div>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="anio" className="text-lg font-semibold dark:text-white">
-            Seleccionar Año
-          </label>
-          <select
-            className="border rounded-lg px-2 py-1 text-lg border-gray-300 w-full text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800"
-            name="anio"
-            onChange={(e) => setAnio(e.target.value)}
-            value={anio}
-            id="anio"
-          >
-            <option value={year - 5}>{year - 5}</option>
-            <option value={year - 4}>{year - 4}</option>
-            <option value={year - 3}>{year - 3}</option>
-            <option value={year - 2}>{year - 2}</option>
-            <option value={year - 1}>{year - 1}</option>
-            <option value={year}>{year}</option>
-            <option value={year + 1}>{year + 1}</option>
-            <option value={year + 2}>{year + 2}</option>
-          </select>
+              <option value={year - 1} className="bg-[#FDFCFB] dark:bg-[#2D2926]">
+                {year - 1}
+              </option>
+              <option value={year} className="bg-[#FDFCFB] dark:bg-[#2D2926]">
+                {year}
+              </option>
+              <option value={year + 1} className="bg-[#FDFCFB] dark:bg-[#2D2926]">
+                {year + 1}
+              </option>
+            </select>
+          </div>
         </div>
       </div>
 
-      <div className="md:grid-cols-3 gap-5 grid p-5">
-        <TarjetaReporte title="Total de Reservas" Icon={HiOutlineCalendar} colorIcon="#00f" numero={reservasMes.length.toString()} text={`${meses[parseInt(mes) - 1].text} ${anio}`} />
-        <TarjetaReporte title="Ingreso Totales" Icon={HiArrowTrendingUp} colorIcon="#0f0" numero={`$${totalIngresos.toFixed(2)}`} text={`${meses[parseInt(mes) - 1].text} ${anio}`} />
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <TarjetaReporte title="Reservas Confirmadas" Icon={HiOutlineCalendar} colorIcon="#B59E6B" numero={reservasMes.length.toString()} text="Volumen de Huéspedes" />
         <TarjetaReporte
-          title="Ingreso Promedio"
+          title="Ingresos Devengados"
+          Icon={HiArrowTrendingUp}
+          colorIcon="#B59E6B"
+          numero={`$${totalIngresos.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+          text="Recaudación Bruta"
+        />
+        <TarjetaReporte
+          title="Ingreso por Reserva"
           Icon={VscGraph}
-          colorIcon="#00f"
-          numero={`$${reservasMes.length !== 0 ? (totalIngresos / reservasMes.length).toFixed(2) : '0.00'}`}
-          text="Por Reserva"
+          colorIcon="#B59E6B"
+          numero={`$${reservasMes.length !== 0 ? (totalIngresos / reservasMes.length).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}`}
+          text="Ticket Promedio"
         />
       </div>
     </div>

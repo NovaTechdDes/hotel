@@ -20,22 +20,36 @@ export const HeaderCalendario = () => {
   };
 
   return (
-    <header className="flex items-center justify-center sm:justify-between">
-      <div className="flex gap-2 py-2 mx-5 items-center text-black font-bold">
-        <div onClick={handlePreviusMonth} className=" p-1 hover:bg-green-300 border border-gray-300 rounded-lg cursor-pointer dark:border-gray-600 dark:bg-gray-600 dark:hover:bg-gray-700">
-          <MdKeyboardArrowLeft size={20} className="dark:text-white" />
-        </div>
-        <p className="text-xs dark:text-white">
-          {nombreMes(mesSeleccionado).toUpperCase().slice(0, 3)} {anioSeleccionado}
-        </p>
-        <div onClick={handleNextMonth} className=" p-1 hover:bg-green-300 border border-gray-300 rounded-lg cursor-pointer dark:border-gray-600 dark:bg-gray-600 dark:hover:bg-gray-700">
-          <MdKeyboardArrowRight size={20} className="dark:text-white" />
-        </div>
+    <header className="px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 animate-in fade-in slide-in-from-top-4 duration-1000">
+      <div className="space-y-1">
+        <h1 className="text-4xl font-serif text-[#2D2926] dark:text-[#FDFCFB] tracking-tight">Calendario</h1>
+        <p className="text-[11px] uppercase tracking-[0.4em] text-[#B59E6B] font-bold">Gestión de Ocupación y Disponibilidad</p>
       </div>
 
-      <div className="mx-5 py-2 flex gap-5 sm:ml-auto">
-        <button onClick={handleModalReserva} className="bg-black text-white rounded-lg py-1 px-2 text-sm hover:opacity-80 cursor-pointer dark:bg-blue-600 dark:text-white dark:hover:bg-blue-700">
-          Reservar
+      <div className="flex flex-col sm:flex-row gap-6 w-full md:w-auto items-center">
+        {/* Selector de Periodo Pro */}
+        <div className="flex items-center bg-white dark:bg-[#B59E6B]/10 border border-[#B59E6B]/20 rounded-sm px-2 py-1.5 shadow-sm group transition-all duration-500 hover:border-[#B59E6B]/40">
+          <button onClick={handlePreviusMonth} className="p-2 text-[#2D2926]/40 dark:text-[#FDFCFB]/40 hover:text-[#B59E6B] transition-colors" title="Mes Anterior">
+            <MdKeyboardArrowLeft size={24} />
+          </button>
+
+          <div className="px-6 flex flex-col items-center min-w-[140px]">
+            <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-[#B59E6B] leading-none mb-1">Periodo</p>
+            <p className="text-sm font-serif text-[#2D2926] dark:text-[#FDFCFB] tracking-widest font-medium">
+              {nombreMes(mesSeleccionado).toUpperCase()} {anioSeleccionado}
+            </p>
+          </div>
+
+          <button onClick={handleNextMonth} className="p-2 text-[#2D2926]/40 dark:text-[#FDFCFB]/40 hover:text-[#B59E6B] transition-colors" title="Siguiente Mes">
+            <MdKeyboardArrowRight size={24} />
+          </button>
+        </div>
+
+        <button
+          onClick={handleModalReserva}
+          className="w-full sm:w-auto bg-[#2D2926] dark:bg-[#B59E6B] text-[#FDFCFB] dark:text-[#2D2926] px-8 py-3.5 rounded-sm text-[10px] uppercase tracking-[0.2em] font-bold hover:opacity-90 transition-all shadow-sm active:scale-95"
+        >
+          Nueva Reserva
         </button>
       </div>
     </header>

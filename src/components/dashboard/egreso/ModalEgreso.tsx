@@ -5,7 +5,6 @@ import type { Egreso } from '../../../interface/Egreso';
 import { useEgresoStore } from '../../../store';
 import { useMutateEgreso } from '../../../hooks/egreso/useMutateEgreso';
 import { useTipoEgreso } from '../../../hooks/tipoEgreso/useTipoEgreso';
-import { BiCalendar } from 'react-icons/bi';
 
 const initialState: Egreso = {
   descripcion: '',
@@ -46,16 +45,25 @@ export const ModalEgreso = () => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/80 z-50" onClick={handleCloseModal}>
-      <div className="bg-white rounded-lg shadow-lg w-xl h-[80vh] p-8 text-black flex flex-col dark:bg-slate-800 dark:text-white" onClick={(e) => e.stopPropagation()}>
-        <div className="flex justify-between border-b border-gray-300 mb-2 pb-2">
-          <h2 className="text-3xl font-bold  text-left">{egresoSeleccionado ? 'Modificar Tipo de Egreso' : 'Agregar Tipo de Egreso'}</h2>
-          <CgClose size={35} onClick={handleCloseModal} className="hover:bg-gray-300 rounded-lg p-2 cursor-pointer" />
+    <div className="fixed inset-0 flex items-center justify-center bg-[#1E1B18]/90 backdrop-blur-sm z-50 animate-in fade-in duration-300 px-4" onClick={handleCloseModal}>
+      <div
+        className="bg-[#FDFCFB] dark:bg-[#2D2926] shadow-2xl w-full max-w-2xl rounded-sm p-10 border border-[#B59E6B]/20 transition-all duration-500 overflow-y-auto max-h-[90vh]"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex justify-between items-start mb-10 overflow-hidden">
+          <div className="space-y-1">
+            <h2 className="text-3xl font-serif text-[#2D2926] dark:text-[#FDFCFB] tracking-wide">{egresoSeleccionado ? 'Ajustar Registro' : 'Nuevo Egreso'}</h2>
+            <p className="text-[10px] uppercase tracking-[0.3em] text-[#B59E6B] font-bold">Registro Contable Operatvo</p>
+          </div>
+          <button onClick={handleCloseModal} className="p-2 hover:bg-[#2D2926]/5 dark:hover:bg-white/5 rounded-full transition-colors duration-300 text-[#2D2926]/40 dark:text-[#FDFCFB]/40">
+            <CgClose size={24} />
+          </button>
         </div>
-        <form className="grid grid-cols-2 gap-1 flex-1 min-h-0" onSubmit={handleSubmitForm}>
-          <div className="col-span-2">
-            <label htmlFor="descripcion" className="block text-sm font-medium mb-1">
-              Descripcion *
+
+        <form className="grid grid-cols-1 md:grid-cols-2 gap-8" onSubmit={handleSubmitForm}>
+          <div className="md:col-span-2 space-y-2">
+            <label htmlFor="descripcion" className="text-[10px] uppercase tracking-widest font-bold text-[#2D2926]/40 dark:text-[#FDFCFB]/30">
+              Descripción del Gasto *
             </label>
             <input
               autoFocus
@@ -64,15 +72,15 @@ export const ModalEgreso = () => {
               value={descripcion}
               onChange={onInputChange}
               id="descripcion"
-              className="w-full border rounded-md px-3 py-2 dark:text-white"
-              placeholder="Descripcion del egreso..."
+              className="w-full bg-[#FDFCFB] dark:bg-[#1E1B18] border border-[#F5F0E1] dark:border-white/10 rounded-sm px-4 py-3 text-[#2D2926] dark:text-[#FDFCFB] focus:border-[#B59E6B] focus:ring-1 focus:ring-[#B59E6B] outline-none transition-all duration-300 placeholder:text-[#2D2926]/20 dark:placeholder:text-[#FDFCFB]/10"
+              placeholder="Ej: Pago de Luz Enero, Insumos de Limpieza..."
             />
-            {error && descripcion === '' && <p className="text-red-500">La descripcion es obligatoria</p>}
+            {error && descripcion === '' && <p className="text-[10px] text-red-500 uppercase tracking-widest font-bold">La descripción es obligatoria</p>}
           </div>
 
-          <div>
-            <label htmlFor="creado_en" className="block text-sm font-medium mb-1">
-              Fecha
+          <div className="space-y-2">
+            <label htmlFor="creado_en" className="text-[10px] uppercase tracking-widest font-bold text-[#2D2926]/40 dark:text-[#FDFCFB]/30">
+              Fecha de Emisión
             </label>
             <div className="relative">
               <input
@@ -81,54 +89,68 @@ export const ModalEgreso = () => {
                 value={creado_en?.slice(0, 10) ?? new Date().toISOString().slice(0, 10)}
                 onChange={onInputChange}
                 id="creado_en"
-                className="w-full border rounded-md px-3 py-2"
+                className="w-full bg-[#FDFCFB] dark:bg-[#1E1B18] border border-[#F5F0E1] dark:border-white/10 rounded-sm px-4 py-3 text-[#2D2926] dark:text-[#FDFCFB] focus:border-[#B59E6B] focus:ring-1 focus:ring-[#B59E6B] outline-none transition-all duration-300"
               />
-              <BiCalendar className="absolute right-3 top-1/2 -translate-y-1/2 text-black pointer-events-none dark:text-gray-200" size={20} />
             </div>
           </div>
 
-          <div>
-            <label htmlFor="importe" className="block text-sm font-medium mb-1">
-              Importe *
+          <div className="space-y-2">
+            <label htmlFor="importe" className="text-[10px] uppercase tracking-widest font-bold text-[#2D2926]/40 dark:text-[#FDFCFB]/30">
+              Importe Total *
             </label>
-            <input type="number" name="importe" value={importe} onChange={onInputChange} id="importe" className="w-full border rounded-md px-3 py-2" placeholder="15000.00" />
-            {error && importe <= 0 && <p className="text-red-500">El importe debe ser mayor a 0</p>}
+            <div className="relative">
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#2D2926]/40 dark:text-[#FDFCFB]/30 font-serif">$</span>
+              <input
+                type="number"
+                name="importe"
+                value={importe}
+                onChange={onInputChange}
+                id="importe"
+                className="w-full bg-[#FDFCFB] dark:bg-[#1E1B18] border border-[#F5F0E1] dark:border-white/10 rounded-sm pl-8 pr-4 py-3 text-[#2D2926] dark:text-[#FDFCFB] focus:border-[#B59E6B] focus:ring-1 focus:ring-[#B59E6B] outline-none transition-all duration-300"
+                placeholder="0.00"
+              />
+            </div>
+            {error && importe <= 0 && <p className="text-[10px] text-red-500 uppercase tracking-widest font-bold">El importe debe ser mayor a 0</p>}
           </div>
 
-          <div className="col-span-2">
-            <label htmlFor="tipoegresoid">Tipo de Egreso *</label>
-            <select name="tipoegresoid" value={tipoegresoid} onChange={onInputChange} id="tipoegresoid" className="w-full border rounded-md px-3 py-2">
-              <option value="" className="text-black dark:text-white dark:bg-slate-800">
-                ---Seleccionar una opcion---
+          <div className="md:col-span-2 space-y-2">
+            <label htmlFor="tipoegresoid" className="text-[10px] uppercase tracking-widest font-bold text-[#2D2926]/40 dark:text-[#FDFCFB]/30">
+              Categoría de Egreso *
+            </label>
+            <select
+              name="tipoegresoid"
+              value={tipoegresoid}
+              onChange={onInputChange}
+              id="tipoegresoid"
+              className="w-full bg-[#FDFCFB] dark:bg-[#1E1B18] border border-[#F5F0E1] dark:border-white/10 rounded-sm px-4 py-3 text-[#2D2926] dark:text-[#FDFCFB] focus:border-[#B59E6B] focus:ring-1 focus:ring-[#B59E6B] outline-none transition-all duration-300 appearance-none cursor-pointer"
+            >
+              <option value="" className="text-[#2D2926] dark:text-[#FDFCFB] bg-[#FDFCFB] dark:bg-[#2D2926]">
+                Seleccionar Categoría...
               </option>
               {tipoEgresos?.map((elem) => (
-                <option key={elem.id} value={elem.id} className="text-black dark:text-white dark:bg-slate-800">
+                <option key={elem.id} value={elem.id} className="text-[#2D2926] dark:text-[#FDFCFB] bg-[#FDFCFB] dark:bg-[#2D2926]">
                   {elem.descripcion}
                 </option>
               ))}
             </select>
-            {error && tipoegresoid === '' && <p className="text-red-500">El Tipo de Egreso es obligatorio</p>}
+            {error && tipoegresoid === '' && <p className="text-[10px] text-red-500 uppercase tracking-widest font-bold">La categoría es obligatoria</p>}
           </div>
 
-          <div className="flex justify-end col-span-2  mt-auto gap-2">
+          <div className="flex justify-end md:col-span-2 pt-8 gap-6 border-t border-[#B59E6B]/10">
             <button
               type="button"
-              className="px-4 py-2 bg-gray-300 rounded hover:bg-red-300 cursor-pointer transition dark:bg-slate-700 dark:text-white dark:hover:bg-slate-600"
+              className="text-[10px] uppercase tracking-[0.2em] font-bold text-[#2D2926]/30 dark:text-[#FDFCFB]/30 hover:text-[#2D2926] dark:hover:text-[#FDFCFB] transition-colors duration-300"
               onClick={handleCloseModal}
             >
-              Cancelar
+              Cerrar
             </button>
-            {!egresoSeleccionado && (
-              <button type="submit" disabled={isPendingAgregar} className="px-4 py-2 bg-green-800 text-white rounded hover:bg-green-700 cursor-pointer transition">
-                {isPendingAgregar ? 'Guardando...' : 'Guardar'}
-              </button>
-            )}
-
-            {egresoSeleccionado && (
-              <button type="submit" disabled={isPendingModificar} className="px-4 py-2 bg-green-800 text-white rounded hover:bg-green-700 cursor-pointer transition">
-                {isPendingModificar ? 'Modificando...' : 'Modificar'}
-              </button>
-            )}
+            <button
+              type="submit"
+              disabled={isPendingAgregar || isPendingModificar}
+              className="bg-[#2D2926] dark:bg-[#B59E6B] text-[#FDFCFB] dark:text-[#2D2926] px-12 py-3 rounded-sm text-xs uppercase tracking-[0.2em] font-medium hover:opacity-90 transition-opacity disabled:opacity-50 shadow-sm"
+            >
+              {isPendingAgregar || isPendingModificar ? 'Procesando...' : egresoSeleccionado ? 'Confirmar Ajuste' : 'Guardar Registro'}
+            </button>
           </div>
         </form>
       </div>

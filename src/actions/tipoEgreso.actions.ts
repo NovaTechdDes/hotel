@@ -40,8 +40,9 @@ export const updateTipoEgreso = async (id: number, updates: Partial<TipoEgreso>)
 export const deleteTipoEgreso = async (id: number): Promise<boolean | SweetAlertResult<any>> => {
   try {
     const { error } = await supabase.from('tipoEgreso').delete().eq('id', id);
+    console.log(error);
 
-    if (!verError(error?.code, 'No se puede eliminar el tipo de egreso porque contiene egresos con este tipo')) {
+    if (error && !verError(error?.code, 'No se puede eliminar el tipo de egreso porque contiene egresos con este tipo')) {
       return false;
     }
 

@@ -26,23 +26,34 @@ export const TdCeldaReserva = ({ day, habitacion, reservas, clientes, handleRese
 
   useEffect(() => {
     handlereserva();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [day, habitacion, reservas, clientes]);
 
-  if (!reservaAux) return;
+  if (!reservaAux) return <td className="p-0 border-r border-[#B59E6B]/5" />;
+
+  const isReservaActual = reservaAux.id !== '';
 
   return (
     <td
       id={reservaAux.id}
       key={day.toISOString()}
       onClick={(e) => handleReserva(e, day, habitacion?.id ?? '')}
-      className={`border h-10 w-20 text-center hover:bg-gray-200 cursor-pointer `}
-      style={{ backgroundColor: `${reservaAux.fondo}` }}
+      className={`
+        relative p-1.5 min-w-[100px] h-14 border-r border-b border-[#B59E6B]/20 transition-all duration-300
+        ${!isReservaActual ? 'hover:bg-[#B59E6B]/5 cursor-pointer' : 'cursor-default'}
+      `}
     >
-      {(() => {
-        const clientName = reservaAux.cliente;
-
-        return <p className="text-white p-1 text-xs capitalize">{clientName?.slice(0, 5)}...</p>;
-      })()}
+      {isReservaActual ? (
+        <div
+          className="w-full h-full rounded-sm shadow-sm flex items-center justify-center px-2 animate-in zoom-in-95 duration-500 ring-1 ring-black/5 hover:ring-[#B59E6B]/40 transition-all cursor-pointer overflow-hidden"
+          style={{ backgroundColor: reservaAux.fondo }}
+          title={reservaAux.cliente}
+        >
+          <p className="text-[9px] font-serif text-white tracking-widest uppercase truncate font-medium">{reservaAux.cliente?.slice(0, 4)}...</p>
+        </div>
+      ) : (
+        <div className="w-full h-full rounded-sm border border-transparent group-hover/cell:border-[#B59E6B]/20 transition-all" />
+      )}
     </td>
   );
 };

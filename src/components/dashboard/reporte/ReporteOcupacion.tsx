@@ -1,4 +1,3 @@
-import { AiOutlinePercentage } from 'react-icons/ai';
 import { Ocupacion } from './Ocupacion';
 import { useReporteOcupacion } from '../../../hooks/reporte/useReporteOcupacion';
 import { Loading } from '../../ui/Loading';
@@ -15,58 +14,42 @@ export const ReporteOcupacion = () => {
 
   if (!temporadaAlta || !temporadaBaja)
     return (
-      <div className="min-h-[60vh] flex items-center justify-center">
-        <Loading text="Cargando reporte de ocupacion" />
+      <div className="min-h-[400px] flex items-center justify-center">
+        <Loading text="Sincronizando Estadísticas..." />
       </div>
     );
 
   return (
-    <div className="border bg-white p-5 border-gray-300 shadow-2xl rounded-lg dark:bg-gray-800">
-      <div className="grid grid-cols-2 gap-5 ">
+    <div className="space-y-12">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b border-[#B59E6B]/10 pb-6">
         <div>
-          <div className="flex gap-2 items-center">
-            <AiOutlinePercentage color="blue" className="font-semibold" />
-            <h2 className="text-2xl font-bold dark:text-white">Reporte de Ocupacion</h2>
+          <div className="flex gap-3 items-center mb-1">
+            <h2 className="text-2xl font-serif text-[#2D2926] dark:text-[#FDFCFB]">Análisis de Ocupación</h2>
           </div>
-          <p className="text-gray-500 dark:text-gray-400">Analisis de ocupacion en temporada alta y baja</p>
+          <p className="text-[10px] uppercase tracking-[0.2em] text-[#B59E6B] font-bold">Frecuencia de Huéspedes por Temporada</p>
         </div>
 
-        <div className="flex items-center flex-col mx-5 dark:bg-gray-800">
-          <label htmlFor="year" className="font-bold dark:text-white">
-            Seleccionar Año
-          </label>
-          <select name="year" className="w-full border border-gray-300 rounded-lg px-2 py-1 text-xl dark:text-white" id="year" onChange={(e) => setYear(e.target.value)} value={year}>
-            <option className="text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800" value={anio - 5}>
-              {anio - 5}
-            </option>
-            <option className="text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800" value={anio - 4}>
-              {anio - 4}
-            </option>
-            <option className="text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800" value={anio - 3}>
-              {anio - 3}
-            </option>
-            <option className="text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800" value={anio - 2}>
-              {anio - 2}
-            </option>
-            <option className="text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800" value={anio - 1}>
-              {anio - 1}
-            </option>
-            <option className="text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800" value={anio}>
-              {anio}
-            </option>
-            <option className="text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800" value={anio + 1}>
-              {anio + 1}
-            </option>
-            <option className="text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800" value={anio + 2}>
-              {anio + 2}
-            </option>
+        <div className="flex flex-col space-y-1.5 min-w-[140px]">
+          <span className="text-[9px] uppercase tracking-widest text-[#2D2926]/40 dark:text-[#FDFCFB]/30 font-bold ml-1">Ejercicio</span>
+          <select
+            name="year"
+            className="bg-transparent border border-[#B59E6B]/20 rounded-sm px-4 py-2 text-xs uppercase tracking-widest text-[#2D2926] dark:text-[#FDFCFB] focus:border-[#B59E6B] outline-none transition-all cursor-pointer"
+            id="year"
+            onChange={(e) => setYear(e.target.value)}
+            value={year}
+          >
+            {[anio - 2, anio - 1, anio, anio + 1].map((y) => (
+              <option key={y} className="bg-[#FDFCFB] dark:bg-[#2D2926]" value={y}>
+                {y}
+              </option>
+            ))}
           </select>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 my-5">
-        <Ocupacion title="Temporada alta" color="#ff6900" meses={['Enero', 'Febrero', 'Julio']} temporadaAlta={temporadaAlta} />
-        <Ocupacion title="Temporada baja" color="#0069ff" meses={['Marzo', 'Abril', 'Mayo', 'Junio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']} temporadaAlta={temporadaBaja} />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <Ocupacion title="Temporada Alta" color="#B59E6B" meses={['Ene', 'Feb', 'Jul']} temporadaAlta={temporadaAlta} />
+        <Ocupacion title="Temporada Baja" color="#2D2926" meses={['Mar', 'Abr', 'May', 'Jun', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']} temporadaAlta={temporadaBaja} />
       </div>
     </div>
   );

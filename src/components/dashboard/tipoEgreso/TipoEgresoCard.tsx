@@ -20,9 +20,15 @@ const TipoEgresoCard = ({ tipoEgreso }: Props) => {
 
   const handleDelete = async () => {
     const { isConfirmed } = await Swal.fire({
-      confirmButtonText: 'Aceptar',
+      title: '¿Confirmar Eliminación?',
+      text: `Se retirará "${descripcion}" de los tipos de egreso.`,
+      icon: 'warning',
       showCancelButton: true,
-      title: `Quiere eliminar el Tipo Egreso ${descripcion}`,
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Volver',
+      background: '#FDFCFB',
+      color: '#2D2926',
+      confirmButtonColor: '#B59E6B',
     });
 
     if (isConfirmed && id) {
@@ -36,35 +42,43 @@ const TipoEgresoCard = ({ tipoEgreso }: Props) => {
 
   return (
     <div
-      className={`text-black mx-5 bg-gray-100 my-5 rounded-lg shadow-xl border border-gray-300 dark:bg-slate-700 dark:border-gray-600 ${isPending ? 'opacity-70 pointer-events-none relative' : ''}`}
+      className={`group flex flex-col justify-between p-6 bg-[#FDFCFB] dark:bg-white/5 border border-[#F5F0E1] dark:border-white/10 rounded-sm hover:border-[#B59E6B]/40 transition-all duration-500 relative ${isPending ? 'opacity-50 pointer-events-none' : ''}`}
     >
-      <div className="flex gap-5 items-center m-5">
-        <GoTag size={25} className="text-blue-800 dark:text-gray-400" />
-        <h3 className="text-xl font-semibold dark:text-white">{descripcion}</h3>
+      <div className="flex items-start gap-4 mb-8">
+        <div className="p-3 bg-[#B59E6B]/10 rounded-sm">
+          <GoTag className="text-xl text-[#B59E6B]" />
+        </div>
+        <div>
+          <h3 className="text-sm font-medium tracking-wide text-[#2D2926] dark:text-[#FDFCFB] leading-tight capitalize">{descripcion}</h3>
+          <p className="text-[9px] uppercase tracking-widest text-[#2D2926]/30 dark:text-[#FDFCFB]/20 mt-1">Categoría de Egreso</p>
+        </div>
       </div>
 
-      <div className="flex gap-5 justify-center mb-5">
+      <div className="flex items-center gap-4 pt-4 border-t border-[#B59E6B]/10">
         <button
-          className="border cursor-pointer hover:bg-gray-200 border-gray-300 rounded-lg flex items-center gap-2 px-4 dark:text-white dark:hover:bg-gray-600 dark:bg-gray-700 dark:border-gray-600"
-          disabled={isPending}
           onClick={handlePut}
+          className="flex-1 flex items-center justify-center gap-2 py-2 text-[10px] uppercase tracking-widest font-bold text-[#2D2926]/60 dark:text-[#FDFCFB]/40 hover:text-[#B59E6B] transition-all duration-300"
+          disabled={isPending}
         >
-          <BiPencil />
-          Editar
+          <BiPencil className="text-sm" />
+          <span>Editar</span>
         </button>
 
+        <div className="w-[1px] h-3 bg-[#B59E6B]/20" />
+
         <button
-          className="border cursor-pointer hover:bg-red-800 text-white bg-red-700 border-red-300 rounded-lg flex items-center gap-2 px-4 dark:bg-slate-800 dark:text-red-500 dark:border-slate-600 dark:hover:bg-gray-600"
-          disabled={isPending}
           onClick={handleDelete}
+          className="flex-1 flex items-center justify-center gap-2 py-2 text-[10px] uppercase tracking-widest font-bold text-[#2D2926]/30 dark:text-[#FDFCFB]/20 hover:text-red-400 transition-all duration-300"
+          disabled={isPending}
         >
-          <MdDeleteOutline />
-          Eliminar
+          <MdDeleteOutline className="text-sm" />
+          <span>Retirar</span>
         </button>
       </div>
+
       {isPending && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-100 bg-opacity-70 rounded-lg dark:bg-slate-800">
-          <span className="text-red-600 font-semibold text-base dark:text-red-400">Eliminando...</span>
+        <div className="absolute inset-x-0 bottom-4 flex justify-center">
+          <span className="text-[9px] uppercase tracking-[0.2em] font-bold text-[#B59E6B] animate-pulse">Procesando...</span>
         </div>
       )}
     </div>

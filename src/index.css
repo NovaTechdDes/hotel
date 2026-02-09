@@ -1,19 +1,19 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @variant dark (&:where(.dark, .dark *));
 
-
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
 
+  /* Boutique Shadow System */
+  --shadow-boutique: 0 4px 6px -1px rgba(45, 41, 38, 0.05), 0 2px 4px -1px rgba(45, 41, 38, 0.03);
+  --shadow-boutique-lg: 0 10px 15px -3px rgba(45, 41, 38, 0.07), 0 4px 6px -2px rgba(45, 41, 38, 0.05);
+}
 
 body {
   margin: 0;
@@ -21,39 +21,45 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: #fdfcfb;
+  color: #2d2926;
+  transition: background-color 0.5s ease;
 }
 
-/* Personalizar scrollbar con CSS nativo */
+body.dark {
+  background-color: #1e1b18;
+  color: #fdfcfb;
+}
+
+/* Personalizar scrollbar con estética Boutique */
 ::-webkit-scrollbar {
-  width: 1px;
-  /* ancho de la barra vertical */
-  height: 8px;
-  /* alto de la barra horizontal */
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  /* color del fondo */
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #888;
-  /* color del scroll */
-  border-radius: 6px;
+  background-color: #b59e6b33;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #555;
-  /* color al pasar el mouse */
+  background-color: #b59e6b66;
 }
 
-input[type="date"] {
+input[type='date'] {
   appearance: auto !important;
   -webkit-appearance: auto !important;
   /* Para navegadores basados en WebKit (Chrome, Safari) */
 }
 
-#login, #recuperarContraseña{
+#login,
+#recuperarContraseña {
   background-image: url('/login-bg.jpg');
   background-color: transparent;
   background-size: cover;
@@ -63,11 +69,10 @@ input[type="date"] {
   height: 100vh;
 }
 
-#calendarioMobile{
+#calendarioMobile {
   margin-left: calc(0.25rem * 5);
   margin-right: calc(0.25rem * 5);
 }
-
 
 @media (max-width: 400px) {
   #calendarioMobile {
@@ -76,13 +81,12 @@ input[type="date"] {
   }
 }
 
-
 .swal2-actions {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
 }
 
-.swal2-actions :first-child{
+.swal2-actions :first-child {
   margin-right: 100px;
 }

@@ -1,7 +1,6 @@
 import { BiCalendar, BiPencil } from 'react-icons/bi';
 import type { Egreso } from '../../../interface/Egreso';
 import { MdDeleteOutline } from 'react-icons/md';
-import { GoTag } from 'react-icons/go';
 import { useEgresoStore } from '../../../store';
 import Swal from 'sweetalert2';
 import { useMutateEgreso } from '../../../hooks/egreso/useMutateEgreso';
@@ -21,9 +20,15 @@ export const EgresoCard = ({ egreso }: Props) => {
 
   const handleDelete = async () => {
     const { isConfirmed } = await Swal.fire({
-      title: `Quiere eliminar el egreso ${descripcion}`,
-      confirmButtonText: 'Aceptar',
+      title: '¿Confirmar Eliminación?',
+      text: `Se retirará el registro "${descripcion}" de forma permanente.`,
+      icon: 'warning',
       showCancelButton: true,
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Volver',
+      background: '#FDFCFB',
+      color: '#2D2926',
+      confirmButtonColor: '#B59E6B',
     });
 
     if (isConfirmed && id) {
@@ -36,45 +41,55 @@ export const EgresoCard = ({ egreso }: Props) => {
   };
 
   return (
-    <div className={`bg-white dark:bg-gray-600 text-black dark:text-white p-5 my-5 rounded-lg shadow-xl ${isPending ? 'opacity-70 pointer-events-none relative' : ''}`}>
-      <div>
-        <div className="flex justify-between">
-          <h3 className="font-semibold text-2xl">{descripcion}</h3>
-          <p className="flex text-xs gap-5 items-center bg-gray-100 dark:bg-gray-500 px-2 py-1 rounded-lg">
-            <GoTag />
-            {tipoEgreso?.descripcion}
+    <div
+      className={`group bg-white dark:bg-[#2D2926] p-6 rounded-sm border border-[#B59E6B]/10 shadow-[var(--shadow-boutique)] hover:border-[#B59E6B]/30 transition-all duration-500 relative ${isPending ? 'opacity-50 pointer-events-none' : ''}`}
+    >
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+        <div className="flex-1 space-y-2">
+          <div className="flex items-center gap-3">
+            <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-[#B59E6B] bg-[#B59E6B]/5 px-2 py-0.5 rounded-sm">{tipoEgreso?.descripcion}</span>
+            <span className="text-[10px] text-[#2D2926]/40 dark:text-[#FDFCFB]/30 flex items-center gap-1.5 uppercase tracking-widest">
+              <BiCalendar className="text-sm" />
+              {creado_en?.slice(0, 10).split('-').reverse().join('/')}
+            </span>
+          </div>
+          <h3 className="text-lg font-serif text-[#2D2926] dark:text-[#FDFCFB] tracking-wide capitalize">{descripcion}</h3>
+        </div>
+
+        <div className="flex flex-col items-end gap-1">
+          <p className="text-2xl font-serif text-[#2D2926] dark:text-[#FDFCFB] tracking-tighter">
+            <span className="text-sm mr-1 opacity-40">$</span>
+            {importe.toLocaleString('es-AR', { minimumFractionDigits: 2 })}
           </p>
-        </div>
-
-        <div className="flex gap-5">
-          <span className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
-            <BiCalendar />
-            {creado_en?.slice(0, 10).split('-').reverse().join('/')}
-          </span>
-          <span className="font-semibold text-lg">${importe.toFixed(2)}</span>
+          <div className="flex items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <button
+              onClick={handlePut}
+              className="text-[10px] uppercase tracking-widest font-bold text-[#B59E6B] hover:text-[#2D2926] dark:hover:text-[#FDFCFB] flex items-center gap-1 transition-colors"
+              disabled={isPending}
+            >
+              <BiPencil className="text-sm" />
+              Editar
+            </button>
+            {user && user.rol === 'admin' && (
+              <button
+                onClick={handleDelete}
+                className="text-[10px] uppercase tracking-widest font-bold text-red-400/60 hover:text-red-500 flex items-center gap-1 transition-colors"
+                disabled={isPending}
+              >
+                <MdDeleteOutline className="text-sm" />
+                Retirar
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
-      <div className="flex justify-center items-center border-t border-gray-300 mt-5 pt-5 gap-5">
-        <button disabled={isPending} className="flex gap-2 border border-gray-300 rounded-lg items-center px-8 py-1 hover:bg-blue-700 bg-blue-600 text-white cursor-pointer" onClick={handlePut}>
-          <BiPencil />
-          Editar
-        </button>
-
-        {user && user.rol === 'admin' && (
-          <button
-            disabled={isPending}
-            onClick={handleDelete}
-            className="flex  gap-2 border border-gray-300 rounded-lg items-center px-8 py-1 cursor-pointer text-white bg-red-500 hover:bg-red-600 dark:bg-gray-700 dark:text-red-500 hover:dark:bg-gray-600"
-          >
-            <MdDeleteOutline />
-            Eliminar
-          </button>
-        )}
-      </div>
       {isPending && (
-        <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-70 rounded-lg">
-          <span className="text-tred-600 font-semibold text-base">Eliminando...</span>
+        <div className="absolute inset-0 flex items-center justify-center bg-[#FDFCFB]/80 dark:bg-[#2D2926]/80 backdrop-blur-sm z-20">
+          <div className="flex flex-col items-center gap-3">
+            <div className="w-8 h-8 border-2 border-[#B59E6B] border-t-transparent animate-spin rounded-full" />
+            <span className="text-[10px] uppercase tracking-widest font-bold text-[#B59E6B]">Procesando...</span>
+          </div>
         </div>
       )}
     </div>

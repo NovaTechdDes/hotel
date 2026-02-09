@@ -13,13 +13,15 @@ const CaracteristicaItem = ({ caracteristica }: Props) => {
 
   const handleDelete = async () => {
     const { isConfirmed } = await Swal.fire({
-      title: '¿Estas seguro?',
-      text: 'No podras revertir esto!',
+      title: '¿Eliminar Característica?',
+      text: `Se retirará "${caracteristica.nombre}" de las opciones disponibles.`,
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, eliminar!',
+      confirmButtonText: 'Sí, retirar',
+      cancelButtonText: 'Cancelar',
+      background: '#FDFCFB',
+      color: '#2D2926',
+      confirmButtonColor: '#B59E6B',
     });
 
     if (isConfirmed && caracteristica.id) {
@@ -28,19 +30,22 @@ const CaracteristicaItem = ({ caracteristica }: Props) => {
   };
 
   return (
-    <div className="flex flex-col gap-5  py-5 px-2 border border-gray-300 mx-5 bg-gray-50 rounded-lg h-32 dark:bg-slate-800 dark:border-gray-600">
-      <p className="text-lg font-semibold dark:text-white">{caracteristica.nombre}</p>
+    <div className="group flex flex-col justify-between h-fit p-6 bg-[#FDFCFB] dark:bg-white/5 border border-[#F5F0E1] dark:border-white/10 rounded-sm hover:border-[#B59E6B]/40 transition-all duration-500">
+      <div className="flex items-start justify-between gap-4">
+        <p className="text-sm font-medium tracking-wide text-[#2D2926] dark:text-[#FDFCFB]">{caracteristica.nombre?.toUpperCase()}</p>
+        <div className="w-1.5 h-1.5 rounded-full bg-[#B59E6B] opacity-40" />
+      </div>
 
       <button
         onClick={handleDelete}
-        className="text-red-500 justify-center w-full text-center flex items-center gap-2 cursor-pointer mt-auto border border-gray-300 bg-white p-2 rounded-lg dark:hover:bg-slate-600 dark:bg-slate-700 dark:border-gray-600"
+        className="mt-6 flex items-center justify-center gap-2 text-[10px] uppercase tracking-widest font-bold text-[#2D2926]/40 dark:text-[#FDFCFB]/30 hover:text-red-400 transition-colors duration-300 outline-none"
       >
         {isPendingEliminar ? (
-          'Eliminando...'
+          <span className="animate-pulse">Retirando...</span>
         ) : (
           <>
-            <MdDeleteOutline />
-            Eliminar
+            <MdDeleteOutline className="text-sm" />
+            <span>Retirar</span>
           </>
         )}
       </button>

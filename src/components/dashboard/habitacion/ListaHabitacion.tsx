@@ -6,12 +6,16 @@ const ListaHabitacion = () => {
   const { data: habitaciones, isLoading } = useHabitaciones();
 
   if (isLoading) {
-    return <Loading text="Cargando Habitaciones..." />;
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <Loading text="Preparando Suites..." />
+      </div>
+    );
   }
 
   return (
-    <div className=" h-[80vh] border border-gray-300 shadow-2xl rounded-lg mx-1 md:mx-5 overflow-auto">
-      <div className="w-full text-black rounded-lg grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
+    <div className="min-h-[60vh]">
+      <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {habitaciones?.map((elem) => (
           <HabitacionCard key={elem.id} habitacion={elem} />
         ))}

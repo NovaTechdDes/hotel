@@ -56,7 +56,7 @@ const ModalHabitacion = () => {
   };
 
   const handleCaracteristicasChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    if (caracterisitcasSeleccionadas.find((elem) => elem === e.target.value)) return;
+    if (caracterisitcasSeleccionadas.find((elem) => elem === e.target.value) || e.target.value === '') return;
 
     setCaracterisitcasSeleccionadas([...caracterisitcasSeleccionadas, e.target.value]);
   };
@@ -68,35 +68,67 @@ const ModalHabitacion = () => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/80 z-50" onClick={handleCloseModal}>
-      <div className="bg-white rounded-lg shadow-lg w-4xl min-h-[80vh] p-8 text-black flex-col flex dark:bg-slate-800 dark:text-white" onClick={(e) => e.stopPropagation()}>
-        <div className="flex justify-between border-b border-gray-300 mb-2 pb-2">
-          <h2 className="text-3xl font-bold  text-left">{habitacionSeleccionado ? 'Modificar Habitacion' : 'Agregar Habitacion'}</h2>
-          <CgClose size={35} onClick={handleCloseModal} className="hover:bg-gray-300 rounded-lg p-2 cursor-pointer" />
+    <div className="fixed inset-0 flex items-center justify-center bg-[#1E1B18]/90 backdrop-blur-sm z-50 animate-in fade-in duration-300 px-4" onClick={handleCloseModal}>
+      <div
+        className="bg-[#FDFCFB] dark:bg-[#2D2926] shadow-2xl w-full max-w-2xl rounded-sm p-10 border border-[#B59E6B]/20 transition-all duration-500 overflow-y-auto max-h-[90vh]"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex justify-between items-start mb-10 overflow-hidden">
+          <div className="space-y-1">
+            <h2 className="text-3xl font-serif text-[#2D2926] dark:text-[#FDFCFB] tracking-wide">{habitacionSeleccionado ? 'Ajustar Suite' : 'Nueva Habitación'}</h2>
+            <p className="text-[10px] uppercase tracking-[0.3em] text-[#B59E6B] font-bold">Registro de Inventario Premium</p>
+          </div>
+          <button onClick={handleCloseModal} className="p-2 hover:bg-[#2D2926]/5 dark:hover:bg-white/5 rounded-full transition-colors duration-300 text-[#2D2926]/40 dark:text-[#FDFCFB]/40">
+            <CgClose size={24} />
+          </button>
         </div>
 
-        <form className="grid grid-cols-1 gap-4" onSubmit={handleSubmitForm}>
-          <div>
-            <label htmlFor="nombre" className="block text-sm font-medium mb-1 text-black dark:text-white">
-              Nombre
+        <form className="grid grid-cols-1 md:grid-cols-2 gap-8" onSubmit={handleSubmitForm}>
+          <div className="md:col-span-2 space-y-2">
+            <label className="text-[10px] uppercase tracking-widest font-bold text-[#2D2926]/40 dark:text-[#FDFCFB]/30" htmlFor="nombre">
+              Identificación de la Suite *
             </label>
-            <input type="text" id="nombre" name="nombre" value={nombre} onChange={onInputChange} className="w-full border rounded-md px-3 py-2" placeholder="Ej: Nombre" />
-            {error && nombre === '' && <p className="text-red-500">El nombre es obligatorio</p>}
+            <input
+              autoFocus
+              type="text"
+              id="nombre"
+              name="nombre"
+              value={nombre}
+              onChange={onInputChange}
+              className="w-full bg-[#FDFCFB] dark:bg-[#1E1B18] border border-[#F5F0E1] dark:border-white/10 rounded-sm px-4 py-3 text-[#2D2926] dark:text-[#FDFCFB] focus:border-[#B59E6B] focus:ring-1 focus:ring-[#B59E6B] outline-none transition-all duration-300 placeholder:text-[#2D2926]/20 dark:placeholder:text-[#FDFCFB]/10"
+              placeholder="Ej: Suite Imperial, Hab. 101..."
+            />
+            {error && nombre === '' && <p className="text-[10px] text-red-500 uppercase tracking-widest font-bold">El nombre es obligatorio</p>}
           </div>
 
-          <div>
-            <label htmlFor="capacidad" className="block text-sm font-medium mb-1">
-              Capacidad
+          <div className="space-y-2">
+            <label className="text-[10px] uppercase tracking-widest font-bold text-[#2D2926]/40 dark:text-[#FDFCFB]/30" htmlFor="capacidad">
+              Capacidad Máxima *
             </label>
-            <input type="number" id="capacidad" name="capacidad" value={capacidad} onChange={onInputChange} className="w-full border rounded-md px-3 py-2" placeholder="Capacidad" min={1} />
-            {error && capacidad === 0 && <p className="text-red-500">La capacidad debe ser mayor a 0</p>}
+            <input
+              type="number"
+              id="capacidad"
+              name="capacidad"
+              value={capacidad}
+              onChange={onInputChange}
+              className="w-full bg-[#FDFCFB] dark:bg-[#1E1B18] border border-[#F5F0E1] dark:border-white/10 rounded-sm px-4 py-3 text-[#2D2926] dark:text-[#FDFCFB] focus:border-[#B59E6B] focus:ring-1 focus:ring-[#B59E6B] outline-none transition-all duration-300 font-serif"
+              placeholder="Personas"
+              min={1}
+            />
+            {error && capacidad === 0 && <p className="text-[10px] text-red-500 uppercase tracking-widest font-bold">La capacidad debe ser mayor a 0</p>}
           </div>
 
-          <div>
-            <label htmlFor="tipo" className="block text-sm font-medium mb-1">
-              Tipo
+          <div className="space-y-2">
+            <label className="text-[10px] uppercase tracking-widest font-bold text-[#2D2926]/40 dark:text-[#FDFCFB]/30" htmlFor="tipo">
+              Categoría de Alojamiento
             </label>
-            <select id="tipo" name="tipo" value={tipo} onChange={onInputChange} className="w-full border rounded-md px-3 py-2">
+            <select
+              id="tipo"
+              name="tipo"
+              value={tipo}
+              onChange={onInputChange}
+              className="w-full bg-[#FDFCFB] dark:bg-[#1E1B18] border border-[#F5F0E1] dark:border-white/10 rounded-sm px-4 py-3 text-[#2D2926] dark:text-[#FDFCFB] focus:border-[#B59E6B] focus:ring-1 focus:ring-[#B59E6B] outline-none transition-all duration-300 cursor-pointer appearance-none uppercase tracking-widest text-[10px] font-bold"
+            >
               <option value="individual">Individual</option>
               <option value="doble">Doble</option>
               <option value="triple">Triple</option>
@@ -106,64 +138,71 @@ const ModalHabitacion = () => {
             </select>
           </div>
 
-          <div>
-            <label htmlFor="descripcion" className="block text-sm font-medium mb-1">
-              Descripcion
+          <div className="md:col-span-2 space-y-2">
+            <label className="text-[10px] uppercase tracking-widest font-bold text-[#2D2926]/40 dark:text-[#FDFCFB]/30" htmlFor="descripcion">
+              Detalle y Atributos
             </label>
             <textarea
               name="descripcion"
-              id="decripcion"
-              className="w-full border rounded-md px-3 py-2 dark:bg-slate-800 dark:text-white"
+              id="descripcion"
+              rows={3}
+              className="w-full bg-[#FDFCFB] dark:bg-[#1E1B18] border border-[#F5F0E1] dark:border-white/10 rounded-sm px-4 py-3 text-[#2D2926] dark:text-[#FDFCFB] focus:border-[#B59E6B] focus:ring-1 focus:ring-[#B59E6B] outline-none transition-all duration-300 placeholder:text-[#2D2926]/20 dark:placeholder:text-[#FDFCFB]/10 leading-relaxed"
               value={descripcion}
               onChange={onInputChange}
-              placeholder="Ej: Descripcion"
-            >
-              {descripcion}
-            </textarea>
+              placeholder="Descripción detallada de la suite..."
+            />
           </div>
 
-          <div>
-            <label htmlFor="caracteristicas" className="block text-sm font-medium mb-1">
-              Características de la Habitación
-            </label>
-            <select onChange={handleCaracteristicasChange} name="caracteristicas" id="caracteristicas" className="w-full border rounded-md px-3 py-2">
-              <option value="">--- Seleccionar una opción ---</option>
+          <div className="md:col-span-2 space-y-4">
+            <div className="flex justify-between items-end border-b border-[#B59E6B]/10 pb-2">
+              <label className="text-[10px] uppercase tracking-widest font-bold text-[#B59E6B]" htmlFor="caracteristicas">
+                Características Especiales
+              </label>
+            </div>
+            <select
+              onChange={handleCaracteristicasChange}
+              name="caracteristicas"
+              id="caracteristicas"
+              className="w-full bg-transparent border border-[#B59E6B]/20 rounded-sm px-4 py-3 text-[10px] uppercase tracking-widest font-bold text-[#2D2926] dark:text-[#FDFCFB] outline-none transition-all cursor-pointer focus:border-[#B59E6B]"
+            >
+              <option value="" className="bg-[#FDFCFB] dark:bg-[#2D2926]">
+                --- Seleccionar Atributo ---
+              </option>
               {caracteristicas?.map((elem) => (
-                <option className="dark:bg-slate-800 dark:text-white" value={elem.id} key={elem.id}>
+                <option className="bg-[#FDFCFB] dark:bg-[#2D2926]" value={elem.id} key={elem.id}>
                   {elem.nombre.toUpperCase()}
                 </option>
               ))}
             </select>
+
+            <div className="flex flex-wrap gap-2 pt-2">
+              {caracterisitcasSeleccionadas.map((elemId) => (
+                <div
+                  key={elemId}
+                  className="inline-flex text-[9px] uppercase tracking-widest font-bold bg-[#B59E6B]/5 border border-[#B59E6B]/20 text-[#B59E6B] px-3 py-1.5 rounded-sm items-center gap-2 group/tag transition-all hover:bg-[#B59E6B]/10"
+                >
+                  <span>{caracteristicas?.find((c) => c.id === elemId)?.nombre.toUpperCase()}</span>
+                  <CgClose size={12} className="cursor-pointer opacity-40 group-hover/tag:opacity-100 transition-opacity" onClick={() => handleDeleteCaracteristica(elemId)} />
+                </div>
+              ))}
+            </div>
           </div>
 
-          <div className="flex flex-wrap gap-2 mt-2">
-            {caracterisitcasSeleccionadas.map((elemId) => (
-              <div key={elemId} className="inline-flex text-sm bg-gray-100 border border-gray-300 text-gray-700 px-3 py-1 rounded-full items-center gap-1">
-                <span>{caracteristicas?.find((caracteristica) => caracteristica.id === elemId)?.nombre.toUpperCase()}</span>
-                <CgClose size={15} className="cursor-pointer text-gray-500 hover:text-gray-800" onClick={() => handleDeleteCaracteristica(elemId)} />
-              </div>
-            ))}
-          </div>
-
-          <div className="flex justify-end gap-2 mt-auto">
+          <div className="flex justify-end md:col-span-2 pt-8 gap-6 border-t border-[#B59E6B]/10">
             <button
               type="button"
-              className="px-4 py-2 bg-gray-300 rounded hover:bg-green-300 cursor-pointer transition dark:bg-slate-700 dark:text-white dark:hover:bg-slate-600"
+              className="text-[10px] uppercase tracking-[0.2em] font-bold text-[#2D2926]/30 dark:text-[#FDFCFB]/30 hover:text-[#2D2926] dark:hover:text-[#FDFCFB] transition-colors duration-300"
               onClick={handleCloseModal}
             >
               Cancelar
             </button>
-            {!habitacionSeleccionado && (
-              <button type="submit" disabled={isPendingAgregar} className="px-4 py-2 bg-blue-700 text-white rounded hover:opacity-80 cursor-pointer transition">
-                {isPendingAgregar ? 'Guardando...' : 'Guardar'}
-              </button>
-            )}
-
-            {habitacionSeleccionado && (
-              <button type="submit" disabled={isPendingModificar} className="px-4 py-2 bg-blue-700 text-white rounded hover:opacity-80 cursor-pointer transition">
-                {isPendingModificar ? 'Modificando...' : 'Modificar'}
-              </button>
-            )}
+            <button
+              type="submit"
+              disabled={isPendingAgregar || isPendingModificar}
+              className="bg-[#2D2926] dark:bg-[#B59E6B] text-[#FDFCFB] dark:text-[#2D2926] px-12 py-3 rounded-sm text-xs uppercase tracking-[0.2em] font-medium hover:opacity-90 transition-opacity disabled:opacity-50 shadow-sm"
+            >
+              {isPendingAgregar || isPendingModificar ? 'Sincronizando...' : habitacionSeleccionado ? 'Confirmar Ajuste' : 'Guardar Suite'}
+            </button>
           </div>
         </form>
       </div>

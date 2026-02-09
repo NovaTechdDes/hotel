@@ -2,6 +2,7 @@ import { GoSearch } from 'react-icons/go';
 import { useReservas } from '../../hooks/reserva/useReservas';
 import { ReservaCard } from '../../components/dashboard/reserva/ReservaCard';
 import { DetallesReserva, Loading, ModalCalendario } from '../../components';
+import { IoDocumentTextOutline } from 'react-icons/io5';
 import { useReservaStore } from '../../store/reserva.store';
 import { useState } from 'react';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
@@ -22,47 +23,77 @@ export const Reserva = () => {
   const [buscador, setBuscador] = useState('');
 
   return (
-    <div className="text-black md:mx-10 mx-2 py-5 flex flex-col gap-5 h-full">
-      <div className="bg-white rounded-lg flex justify-between p-5 border border-gray-300 dark:bg-slate-800 dark:border-gray-600">
-        <div>
-          <h3 className="text-2xl font-semibold dark:text-white">Reservas</h3>
-          <span className="text-gray-500 dark:text-gray-400">Gestiona y visualiza todas las reservas del hotel</span>
-        </div>
-
-        <div className="flex gap-2 py-2 mx-5 items-center text-black font-bold">
-          <div onClick={handlePreviusMonth} className=" p-1 hover:bg-green-300 border border-gray-300 rounded-lg cursor-pointer dark:border-gray-600 dark:bg-gray-600 dark:hover:bg-gray-700">
-            <MdKeyboardArrowLeft size={20} className="dark:text-white" />
+    <div className="min-h-screen bg-[#FDFCFB] dark:bg-[#1E1B18] transition-colors duration-500">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <header className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12 border-b border-[#B59E6B]/20 pb-8 animate-in fade-in slide-in-from-top-4 duration-1000">
+          <div className="space-y-1">
+            <h1 className="text-4xl font-serif text-[#2D2926] dark:text-[#FDFCFB] tracking-tight">Libro de Huéspedes</h1>
+            <p className="text-[11px] uppercase tracking-[0.4em] text-[#B59E6B] font-bold">Registro de Estancias y Hospitalidad</p>
           </div>
-          <p className="text-xs dark:text-white">
-            {nombreMes(mesSeleccionado).toUpperCase().slice(0, 3)} {anioSeleccionado}
-          </p>
-          <div onClick={handleNextMonth} className=" p-1 hover:bg-green-300 border border-gray-300 rounded-lg cursor-pointer dark:border-gray-600 dark:bg-gray-600 dark:hover:bg-gray-700">
-            <MdKeyboardArrowRight size={20} className="dark:text-white" />
+
+          <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto items-center">
+            <div className="flex items-center bg-white dark:bg-[#B59E6B]/10 border border-[#B59E6B]/20 rounded-sm px-2 py-1.5 shadow-sm group transition-all duration-500 hover:border-[#B59E6B]/40">
+              <button onClick={handlePreviusMonth} className="p-2 text-[#2D2926]/40 dark:text-[#FDFCFB]/40 hover:text-[#B59E6B] transition-colors" title="Mes Anterior">
+                <MdKeyboardArrowLeft size={24} />
+              </button>
+
+              <div className="px-6 flex flex-col items-center min-w-[140px]">
+                <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-[#B59E6B] leading-none mb-1">Periodo Actual</p>
+                <p className="text-sm font-serif text-[#2D2926] dark:text-[#FDFCFB] tracking-widest font-medium">
+                  {nombreMes(mesSeleccionado).toUpperCase()} {anioSeleccionado}
+                </p>
+              </div>
+
+              <button onClick={handleNextMonth} className="p-2 text-[#2D2926]/40 dark:text-[#FDFCFB]/40 hover:text-[#B59E6B] transition-colors" title="Siguiente Mes">
+                <MdKeyboardArrowRight size={24} />
+              </button>
+            </div>
           </div>
-        </div>
-      </div>
+        </header>
 
-      <div className="p-5 bg-white rounded-lg border border-gray-300 dark:bg-slate-800 dark:border-gray-600">
-        <div className="relative w-full">
-          <GoSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-          <input
-            type="text"
-            name="buscador"
-            id="buscador"
-            value={buscador}
-            onChange={(e) => setBuscador(e.target.value)}
-            placeholder="Buscar por nombre de cliente o habitacion"
-            className="pl-10 w-full border border-gray-300 rounded-md px-3 py-2 dark:text-white dark:placeholder:text-gray-400 dark:border-gray-600"
-          />
-        </div>
-      </div>
+        <section className="mb-8 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-200">
+          <div className="relative group max-w-2xl">
+            <div className="absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-300 text-[#2D2926]/30 dark:text-[#FDFCFB]/20 group-focus-within:text-[#B59E6B]">
+              <GoSearch size={18} />
+            </div>
+            <input
+              type="text"
+              name="buscador"
+              id="buscador"
+              value={buscador}
+              onChange={(e) => setBuscador(e.target.value)}
+              placeholder="Buscar en el registro por nombre o suite..."
+              className="w-full bg-white dark:bg-[#2D2926] border border-[#B59E6B]/10 rounded-sm pl-12 pr-4 py-4 text-sm text-[#2D2926] dark:text-[#FDFCFB] placeholder:text-[#2D2926]/30 dark:placeholder:text-[#FDFCFB]/20 focus:border-[#B59E6B] focus:ring-1 focus:ring-[#B59E6B] outline-none transition-all duration-300 shadow-[var(--shadow-boutique)]"
+            />
+          </div>
+        </section>
 
-      <div className="p-5 bg-white rounded-lg border border-gray-300 dark:bg-slate-800 dark:border-gray-600 overflow-y-auto h-full">
-        {isLoading ? <Loading text="Cargando reservas" /> : reservas?.map((reserva) => <ReservaCard buscador={buscador} reserva={reserva} key={reserva.id} />)}
-      </div>
+        <section className="bg-white/50 dark:bg-black/5 rounded-sm overflow-hidden min-h-[500px] animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-300">
+          {isLoading ? (
+            <div className="flex items-center justify-center py-40">
+              <Loading text="Sincronizando Libro de Estancias..." />
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-1">
+              {reservas
+                ?.filter((r) => r.mostrar)
+                .map((reserva) => (
+                  <ReservaCard buscador={buscador} reserva={reserva} key={reserva.id} />
+                ))}
 
-      {isDetalleOpen && <DetallesReserva />}
-      {isModalOpen && <ModalCalendario />}
+              {reservas?.filter((r) => r.mostrar).length === 0 && (
+                <div className="py-40 flex flex-col items-center justify-center border-2 border-dashed border-[#B59E6B]/10 rounded-sm text-[#2D2926]/30 dark:text-[#FDFCFB]/20">
+                  <IoDocumentTextOutline size={48} className="mb-4 opacity-10" />
+                  <p className="text-xs uppercase tracking-[0.2em] font-bold">No se registran estancias en este periodo</p>
+                </div>
+              )}
+            </div>
+          )}
+        </section>
+
+        {isDetalleOpen && <DetallesReserva />}
+        {isModalOpen && <ModalCalendario />}
+      </div>
     </div>
   );
 };

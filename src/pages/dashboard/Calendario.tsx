@@ -44,10 +44,9 @@ export const Calendario = () => {
     setDays(traerDiasDelMes(year));
   }, [mesSeleccionado, anioSeleccionado]);
 
-  //Ejecutamos este useefect para mover el foco del scroll al dia actual
   useEffect(() => {
     if (todayRef.current) {
-      scrollContainerRef.current?.scrollTo({ left: todayRef.current.offsetLeft, behavior: 'smooth' });
+      scrollContainerRef.current?.scrollTo({ left: todayRef.current.offsetLeft - 200, behavior: 'smooth' });
     }
   }, [days]);
 
@@ -57,33 +56,34 @@ export const Calendario = () => {
     return <CalendarioMobile reservas={reservas} />;
   }
 
-  if (isLoading)
-    return (
-      <>
-        <HeaderCalendario />
-        <div className="flex justify-center items-center h-full">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500"></div>
-        </div>
-      </>
-    );
-
   return (
-    <>
+    <div className="min-h-screen bg-[#FDFCFB] dark:bg-[#1E1B18] transition-colors duration-500 overflow-hidden flex flex-col">
       <HeaderCalendario />
-      <div ref={scrollContainerRef} className="overflow-x-auto border mx-2 rounded-md text-black h-[calc(100vh-75px)] bg-white">
-        <table className="min-w-max border-collapse table-auto">
-          <thead>
-            <TrCalendario days={days || []} scrollContainerRef={scrollContainerRef} todayRef={todayRef} />
-          </thead>
-          <tbody className="h-full">
-            {habitaciones?.map((hab, index) => (
-              <TrHabitacionCalendario key={hab.id} clientes={clientes ?? []} days={days} habitacion={hab} index={index} reservas={reservas ?? []} handleReserva={handleReserva} />
-            ))}
-          </tbody>
-        </table>
-      </div>
+
+      <main className="flex-1 px-4 sm:px-6 lg:px-8 pb-10 overflow-hidden">
+        <div ref={scrollContainerRef} className="h-full bg-white dark:bg-[#2D2926] border border-[#B59E6B]/10 rounded-sm shadow-[var(--shadow-boutique)] overflow-auto scroll-smooth custom-scrollbar">
+          {isLoading ? (
+            <div className="h-full flex flex-col items-center justify-center space-y-4 py-40">
+              <div className="w-12 h-12 border-2 border-[#B59E6B] border-t-transparent animate-spin rounded-full" />
+              <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-[#B59E6B]">Sincronizando...</p>
+            </div>
+          ) : (
+            <table className="min-w-max border-separate border-spacing-0 table-auto w-full">
+              <thead className="sticky top-0 z-40">
+                <TrCalendario days={days || []} scrollContainerRef={scrollContainerRef} todayRef={todayRef} />
+              </thead>
+              <tbody className="divide-y divide-[#B59E6B]/5">
+                {habitaciones?.map((hab, index) => (
+                  <TrHabitacionCalendario key={hab.id} clientes={clientes ?? []} days={days} habitacion={hab} index={index} reservas={reservas ?? []} handleReserva={handleReserva} />
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
+      </main>
+
       {isDetalleOpen && <DetallesReserva />}
       {isModalOpen && <ModalCalendario />}
-    </>
+    </div>
   );
 };

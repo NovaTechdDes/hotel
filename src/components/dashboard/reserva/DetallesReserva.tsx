@@ -29,30 +29,27 @@ export const DetallesReserva = () => {
 
   const handleLink = async () => {
     const blob = await pdf(<PDF reserva={reservaSeleccionado!} />).toBlob();
-
     const { ok, msg } = await subirPDFReserva(blob, id);
-
     if (!ok) return;
-
     setUrl(msg);
     await navigator.clipboard.writeText(msg);
   };
 
   const handleDelete = async () => {
     const { isConfirmed, isDismissed, dismiss } = await Swal.fire({
-      title: `Quiere eliminar reserva de ${cliente?.nombre ? cliente?.nombre : reservaSeleccionado?.cliente_nombre}`,
+      title: '¿Retirar Estancia?',
+      text: `Se eliminará la reserva de "${(nombreHuesped || 'HUÉSPED SIN NOMBRE').toUpperCase()}".`,
+      icon: 'warning',
       showConfirmButton: true,
       showCancelButton: true,
       showDenyButton: true,
-
       confirmButtonText: 'Eliminar',
       cancelButtonText: 'Transitorio',
-      denyButtonText: 'Cancelar',
-
-      reverseButtons: true, // CLAVE 🔑
-
+      denyButtonText: 'Mantener',
+      reverseButtons: true,
+      background: '#FDFCFB',
+      color: '#2D2926',
       confirmButtonColor: '#B91C1C',
-      denyButtonColor: '#6B7280',
       cancelButtonColor: '#0EA5E9',
     });
 
@@ -92,101 +89,114 @@ export const DetallesReserva = () => {
     }, 3000);
   }, [url]);
 
+  const nombreHuesped = cliente?.nombre || reservaSeleccionado?.cliente_nombre;
+  const dias = calcularDias(checkin, checkout);
+  const total = importe * dias;
+
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/80 z-50">
-      <div className="bg-white rounded-lg shadow-lg w-2xl h-min-[50vh] p-8 text-black dark:bg-slate-800 dark:text-white">
-        <div>
-          <div className="flex flex-col justify-between items-center">
-            <div className="w-full">
-              <div className="flex justify-between w-full mb-10">
-                <h3 className="text-xl font-semibold">Detalles Reserva</h3>
-
-                <div className="flex gap-5">
-                  {url === '' ? <MdContentCopy className="hover:text-gray-600 dark:hover:text-gray-400 cursor-pointer" onClick={handleLink} /> : <IoCheckmarkDone className="text-green-500" />}
-
-                  <PDFDownloadLink document={<PDF reserva={reservaSeleccionado!} />} fileName={`Reserva-${reservaSeleccionado?.cliente_nombre}`}>
-                    {({ loading }) =>
-                      loading ? (
-                        <button className="cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-700 rounded-lg flex gap-2" disabled>
-                          <svg className="animate-spin h-5 w-5 mr-3 text-gray-600 dark:text-white" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                          </svg>
-                        </button>
-                      ) : (
-                        <button className="cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-700 rounded-lg">
-                          <FiPrinter size={20} className="cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg" />
-                        </button>
-                      )
-                    }
-                  </PDFDownloadLink>
-
-                  <CgClose size={20} className="cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-700 rounded-lg" onClick={handleCancel} />
-                </div>
-              </div>
-            </div>
-
-            <div className="flex gap-4 items-center justify-between w-full mb-5">
-              <span className="text-gray-500 dark:text-gray-300">Informacion de la reserva actual</span>
-            </div>
+    <div className="fixed inset-0 flex items-center justify-center bg-[#1E1B18]/90 backdrop-blur-sm z-50 animate-in fade-in duration-300 px-4" onClick={handleCancel}>
+      <div
+        className="bg-[#FDFCFB] dark:bg-[#2D2926] shadow-2xl w-full max-w-2xl rounded-sm p-10 border border-[#B59E6B]/20 transition-all duration-500 overflow-y-auto max-h-[90vh]"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex justify-between items-start mb-10">
+          <div className="space-y-1">
+            <h2 className="text-3xl font-serif text-[#2D2926] dark:text-[#FDFCFB] tracking-wide">Ficha de Estancia</h2>
+            <p className="text-[10px] uppercase tracking-[0.3em] text-[#B59E6B] font-bold">Documentación de Hospedaje</p>
           </div>
 
-          {/* Informacion de la reserva */}
-          <div className="border-gray-200 justify-around py-5 border rounded-lg flex gap-5 items-center">
-            <div className="w-15 h-15 rounded-lg flex justify-center items-center text-white capitalize" style={{ backgroundColor: '#3e3e3e' }}>
-              {reservaSeleccionado?.idcliente ? cliente?.nombre[0] : reservaSeleccionado?.cliente_nombre[0]}
-              {reservaSeleccionado?.idcliente
-                ? cliente?.nombre?.split(' ', 2)[1][0]
-                : reservaSeleccionado?.cliente_nombre !== ''
-                  ? reservaSeleccionado?.cliente_nombre[0]
-                  : reservaSeleccionado?.cliente_nombre}
-            </div>
-
-            <div>
-              <p className="capitalize">{reservaSeleccionado?.idcliente ? cliente?.nombre : reservaSeleccionado?.cliente_nombre}</p>
-              <span className="text-gray-500 dark:text-gray-300">
-                {habitacion?.nombre} - {habitacion?.tipo}
-              </span>
-            </div>
-
-            <div>
-              <p className="text-gray-500 dark:text-gray-300">Importe Total</p>
-              <p className="font-semibold">${importe * calcularDias(checkin, checkout)}</p>
-            </div>
-          </div>
-
-          {/* Checkin y checkout */}
-          <div className="justify-around flex mt-5">
-            <div>
-              <p className="text-gray-500 dark:text-gray-300">Check-In</p>
-              <p className="font-semibold">{reordenarFecha(checkin)}</p>
-            </div>
-
-            <div>
-              <p className="text-gray-500 dark:text-gray-300">Check-Out</p>
-              <p className="font-semibold">{reordenarFecha(checkout)}</p>
-            </div>
-          </div>
-
-          <div className="mt-2">
-            <p className="text-gray-500">Observaciones</p>
-            <p className="text-slate-900 text-md capitalize dark:text-white">{observaciones ?? 'Sin observaciones'}</p>
-          </div>
-
-          <div className="flex gap-3 justify-center mt-5 border-t pt-5 border-gray-300 dark:border-gray-700">
-            <button onClick={handleUpdate} disabled={isPending} className="w-full justify-center flex gap-2 items-center bg-blue-500 p-2 text-white rounded-lg cursor-pointer hover:bg-blue-400">
-              <HiOutlinePencil size={20} className="cursor-pointer hover:bg-gray-200 rounded-lg" />
-              Editar
-            </button>
-            {isPending ? (
-              <span className="text-red-500 text-sm">Eliminando...</span>
+          <div className="flex gap-4 items-center">
+            {url === '' ? (
+              <button onClick={handleLink} className="p-2.5 text-[#2D2926]/40 dark:text-[#FDFCFB]/40 hover:text-[#B59E6B] transition-colors" title="Copiar Enlace Digital">
+                <MdContentCopy size={20} />
+              </button>
             ) : (
-              rol === 'admin' && (
-                <button onClick={handleDelete} className=" w-full justify-center flex gap-2 items-center bg-red-500 p-2 text-white rounded-lg cursor-pointer hover:bg-red-400">
-                  <MdDeleteOutline className="cursor-pointer hover:bg-red-200 rounded-lg" color="white" size={20} />
-                  Eliminar
+              <div className="p-2.5 text-green-500 animate-in zoom-in duration-300">
+                <IoCheckmarkDone size={20} />
+              </div>
+            )}
+
+            <PDFDownloadLink document={<PDF reserva={reservaSeleccionado!} />} fileName={`Reserva-${nombreHuesped}`}>
+              {({ loading }) => (
+                <button className="p-2.5 text-[#2D2926]/40 dark:text-[#FDFCFB]/40 hover:text-[#B59E6B] transition-colors disabled:opacity-30" disabled={loading} title="Imprimir Comprobante">
+                  {loading ? <div className="w-5 h-5 border-2 border-[#B59E6B] border-t-transparent animate-spin rounded-full" /> : <FiPrinter size={20} />}
                 </button>
-              )
+              )}
+            </PDFDownloadLink>
+
+            <button onClick={handleCancel} className="p-2.5 text-[#2D2926]/40 dark:text-[#FDFCFB]/40 hover:text-[#B59E6B] transition-colors">
+              <CgClose size={22} />
+            </button>
+          </div>
+        </div>
+
+        <div className="space-y-8">
+          {/* Cabecera de la Ficha */}
+          <div className="bg-[#B59E6B]/5 border border-[#B59E6B]/10 p-6 rounded-sm flex gap-6 items-center">
+            <div className="w-16 h-16 rounded-sm text-[#FDFCFB] flex items-center justify-center font-serif text-2xl shadow-lg shrink-0" style={{ backgroundColor: '#2D2926' }}>
+              {nombreHuesped?.[0].toUpperCase()}
+            </div>
+            <div className="space-y-1">
+              <p className="text-[9px] uppercase tracking-[0.3em] text-[#B59E6B] font-bold leading-none mb-1">Identificación del Huésped</p>
+              <h4 className="text-xl font-serif text-[#2D2926] dark:text-[#FDFCFB] capitalize tracking-wide">{nombreHuesped}</h4>
+              <p className="text-[10px] items-center text-[#2D2926]/40 dark:text-[#FDFCFB]/30 uppercase tracking-widest font-bold">
+                Residencia {habitacion?.nombre} <span className="mx-2 opacity-30 text-xs">•</span> {habitacion?.tipo}
+              </p>
+            </div>
+          </div>
+
+          {/* Cronograma de Estancia */}
+          <div className="grid grid-cols-2 gap-12 bg-white/50 dark:bg-white/5 p-6 border border-[#B59E6B]/5">
+            <div className="space-y-2">
+              <p className="text-[9px] uppercase tracking-[0.2em] font-bold text-[#B59E6B]">Check-In (Ingreso)</p>
+              <p className="text-lg font-serif text-[#2D2926] dark:text-[#FDFCFB]">{reordenarFecha(checkin)}</p>
+            </div>
+            <div className="space-y-2 text-right">
+              <p className="text-[9px] uppercase tracking-[0.2em] font-bold text-[#B59E6B]">Check-Out (Egreso)</p>
+              <p className="text-lg font-serif text-[#2D2926] dark:text-[#FDFCFB]">{reordenarFecha(checkout)}</p>
+            </div>
+          </div>
+
+          {/* Valor de la Estancia */}
+          <div className="flex justify-between items-end border-b border-[#B59E6B]/10 pb-6 mb-2">
+            <div className="space-y-1">
+              <p className="text-[10px] uppercase tracking-widest font-bold text-[#2D2926]/40 dark:text-[#FDFCFB]/30">Liquidación de Servicio</p>
+              <p className="text-xs text-[#2D2926]/60 dark:text-[#FDFCFB]/50 font-medium">
+                {dias} Noches × <span className="font-serif italic">${importe}</span>
+              </p>
+            </div>
+            <div className="text-right">
+              <p className="text-[9px] uppercase tracking-[0.2em] font-bold text-[#B59E6B] leading-none mb-1">Monto Total</p>
+              <p className="text-3xl font-serif text-[#2D2926] dark:text-[#FDFCFB] tracking-tight">
+                <span className="text-base mr-1">$</span>
+                {total.toLocaleString('es-AR')}
+              </p>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <p className="text-[10px] uppercase tracking-widest font-bold text-[#B59E6B]">Observaciones de la Estancia</p>
+            <p className="text-sm text-[#2D2926]/70 dark:text-[#FDFCFB]/60 leading-relaxed italic">{observaciones || 'No se registran requerimientos especiales para esta estancia.'}</p>
+          </div>
+
+          <div className="flex gap-6 pt-10 mt-10 border-t border-[#B59E6B]/10">
+            <button
+              onClick={handleUpdate}
+              disabled={isPending}
+              className="flex-1 flex items-center justify-center gap-3 text-[10px] uppercase tracking-widest font-bold text-[#B59E6B] hover:text-[#2D2926] dark:hover:text-[#FDFCFB] border border-[#B59E6B]/20 py-4 rounded-sm hover:bg-[#B59E6B]/5 transition-all"
+            >
+              <HiOutlinePencil size={18} />
+              Ajustar Registro
+            </button>
+            {rol === 'admin' && (
+              <button
+                onClick={handleDelete}
+                disabled={isPending}
+                className="flex-1 flex items-center justify-center gap-3 text-[10px] uppercase tracking-widest font-bold text-red-400/60 hover:text-red-500 border border-red-500/10 py-4 rounded-sm hover:bg-red-500/5 transition-all"
+              >
+                {isPending ? <div className="w-4 h-4 border-2 border-red-400 border-t-transparent animate-spin rounded-full" /> : <MdDeleteOutline size={18} />}
+                Retirar Estancia
+              </button>
             )}
           </div>
         </div>

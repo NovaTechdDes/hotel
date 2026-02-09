@@ -20,56 +20,66 @@ export const ReservaCard = ({ buscador, reserva }: Props) => {
     openDetalle(reserva);
   };
 
-  if (
-    !cliente?.nombre.toUpperCase().startsWith(buscador.toUpperCase()) &&
-    !cliente_nombre.toUpperCase().startsWith(buscador.toUpperCase()) &&
-    !habitacion?.nombre.toUpperCase().startsWith(buscador.toUpperCase())
-  ) {
-    return;
+  const nombreFinal = cliente?.nombre || cliente_nombre;
+
+  if (!nombreFinal.toUpperCase().startsWith(buscador.toUpperCase()) && !habitacion?.nombre.toUpperCase().startsWith(buscador.toUpperCase())) {
+    return null;
   }
 
   if (!reserva.mostrar) {
-    return;
+    return null;
   }
 
   return (
-    <div className="flex flex-col md:flex-row gap-5 justify-between mb-5 border-b border-gray-400 pb-2">
-      <div className="flex gap-5 ">
-        <div className="md:w-15 md:h-15 w-10 h-10 text-white flex items-center justify-center rounded-lg" style={{ backgroundColor: color }}>
-          {reserva.idcliente ? cliente?.nombre[0] : reserva.cliente_nombre[0]}
-          {reserva.idcliente ? cliente?.nombre.split(' ', 2)?.[1]?.[0] : reserva.cliente_nombre.split(' ', 2)?.[1]?.[0]}
+    <div className="group bg-white dark:bg-[#2D2926] border-b border-[#B59E6B]/10 hover:bg-[#B59E6B]/5 transition-all duration-300 px-6 py-5 flex flex-col md:flex-row gap-6 items-center lg:px-10">
+      <div className="flex flex-1 gap-6 items-center w-full">
+        <div
+          className="w-12 h-12 rounded-full text-white flex items-center justify-center font-serif text-lg shadow-inner shrink-0 group-hover:scale-105 transition-transform"
+          style={{ backgroundColor: color || '#B59E6B' }}
+        >
+          {nombreFinal[0].toUpperCase()}
         </div>
 
-        <div>
-          <div className="flex items-center gap-2">
-            <p className="dark:text-white">{cliente?.nombre ? cliente.nombre : reserva.cliente_nombre}</p>
-            <p className="text-gray-500 dark:text-gray-200 dark:bg-gray-600 rounded-lg px-2 capitalize">{habitacion?.tipo}</p>
+        <div className="space-y-1 flex-1">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+            <h4 className="text-lg font-serif text-[#2D2926] dark:text-[#FDFCFB] tracking-wide capitalize group-hover:text-[#B59E6B] transition-colors">{nombreFinal}</h4>
+            <span className="text-[9px] uppercase tracking-widest px-2 py-0.5 rounded-sm border border-[#B59E6B]/20 text-[#B59E6B] font-bold bg-[#B59E6B]/5">{habitacion?.tipo}</span>
           </div>
-          <p className="flex items-center gap-5">
-            <LuBed className="hidden md:block dark:text-gray-200" />
-            <span className="text-gray-500 dark:text-gray-200">Habitacion {habitacion?.nombre}</span>
-          </p>
+
+          <div className="flex items-center gap-4 text-[#2D2926]/40 dark:text-[#FDFCFB]/30">
+            <div className="flex items-center gap-1.5">
+              <LuBed size={14} className="text-[#B59E6B]" />
+              <p className="text-[10px] items-center uppercase tracking-widest font-bold">Residencia {habitacion?.nombre}</p>
+            </div>
+            <div className="hidden sm:flex items-center gap-1.5">
+              <HiOutlineCalendar size={14} className="text-[#B59E6B]" />
+              <p className="text-[10px] items-center uppercase tracking-widest font-bold">
+                {reordenarFecha(checkin)} <span className="mx-1 opacity-40">→</span> {reordenarFecha(checkout)}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div className="flex items-end gap-2 justify-center text-gray-500">
-        <HiOutlineCalendar size={20} className="dark:text-gray-200" />
-        <p className="dark:text-gray-200">
-          {reordenarFecha(checkin)} - {reordenarFecha(checkout)}
-        </p>
-      </div>
-
-      <div className="flex gap-5 md:w-auto w-full items-center dark:text-gray-300">
-        <Link to={'https://fe.afip.gob.ar/rcel/jsp/index_bis.jsp'} target="_blank" className="cursor-pointer hover:bg-gray-200 rounded-lg px-2 dark:hover:bg-gray-600">
-          <IoDocumentTextOutline title="Realizar Factura" size={20} />
-        </Link>
+      <div className="flex items-center gap-8 w-full md:w-auto md:border-l border-[#B59E6B]/10 md:pl-8 pr-4">
+        <div className="hidden lg:flex flex-col items-center">
+          <p className="text-[8px] uppercase tracking-[0.2em] font-bold text-[#B59E6B] mb-1 leading-none">Vínculo AFIP</p>
+          <Link
+            to={'https://auth.afip.gob.ar/contribuyente_/loginClave.xhtml'}
+            target="_blank"
+            className="p-2 text-[#2D2926]/40 dark:text-[#FDFCFB]/40 hover:text-[#B59E6B] transition-colors"
+            title="Realizar Facturación"
+          >
+            <IoDocumentTextOutline size={22} />
+          </Link>
+        </div>
 
         <button
-          className="inline-flex w-full justify-center items-center text-xs md:text-base gap-2 cursor-pointer hover:bg-blue-700 bg-blue-600 text-white border border-gray-300 rounded-lg p-2  dark:border-gray-600"
           onClick={handleReserva}
+          className="flex-1 md:flex-none flex items-center justify-center gap-2 text-[10px] uppercase tracking-widest font-bold text-[#B59E6B] hover:text-[#2D2926] dark:hover:text-[#FDFCFB] border border-[#B59E6B]/20 px-8 py-3 rounded-sm hover:bg-[#B59E6B]/5 transition-all"
         >
-          <HiOutlinePencilSquare className="hidden md:block" />
-          Ver Detalles
+          <HiOutlinePencilSquare size={16} />
+          Ficha de Estancia
         </button>
       </div>
     </div>

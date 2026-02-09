@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { BiPencil } from 'react-icons/bi';
+import { RiPushpinLine } from 'react-icons/ri';
 import type { Habitacion } from '../../../interface/Habitacion';
 import { MdDeleteOutline } from 'react-icons/md';
 import { useMutateHabitacion } from '../../../hooks/habitacion/useMutateHabitacion';
@@ -23,20 +24,23 @@ const HabitacionCard = ({ habitacion }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleDeleteHabitacion = async () => {
-    setLoading(true);
     const { isConfirmed } = await Swal.fire({
-      text: `Quiere eliminar la habitacion ${nombre}`,
-      confirmButtonText: 'Aceptar',
+      title: '¿Retirar Suite?',
+      text: `Se eliminará la habitación "${nombre.toUpperCase()}" del catálogo.`,
+      icon: 'warning',
       showCancelButton: true,
+      confirmButtonText: 'Retirar',
+      cancelButtonText: 'Mantener',
+      background: '#FDFCFB',
+      color: '#2D2926',
+      confirmButtonColor: '#B59E6B',
     });
 
     if (isConfirmed && id) {
-      const result = await mutateAsync(id);
-      if (result) {
-        setLoading(false);
-      }
+      setLoading(true);
+      await mutateAsync(id);
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const handleUpdate = () => {
@@ -44,58 +48,77 @@ const HabitacionCard = ({ habitacion }: Props) => {
   };
 
   return (
-    <div className={`text-center border p-5 rounded-lg bg-white dark:bg-slate-800 border-gray-300 text-lg transition-all duration-200 ${loading ? 'bg-gray-300/70 opacity-70' : ''}`}>
-      <div className="flex justify-between px-2">
-        <div>
-          <h2 className="font-bold dark:text-white">{nombre}</h2>
-          <p className="text-gray-500 dark:text-slate-200 capitalize text-start text-sm">{tipo}</p>
+    <div
+      className={`group bg-white dark:bg-[#2D2926] p-8 rounded-sm border border-[#B59E6B]/10 shadow-[var(--shadow-boutique)] hover:border-[#B59E6B]/30 transition-all duration-500 relative flex flex-col h-full ${loading ? 'opacity-50 pointer-events-none' : ''}`}
+    >
+      <div className="flex justify-between items-start mb-6 border-b border-[#B59E6B]/10 pb-4">
+        <div className="space-y-1">
+          <p className="text-[9px] uppercase tracking-[0.3em] text-[#B59E6B] font-bold">Suite Residencial</p>
+          <h2 className="text-2xl font-serif text-[#2D2926] dark:text-[#FDFCFB] tracking-wide group-hover:text-[#B59E6B] transition-colors duration-300">{nombre}</h2>
+          <p className="text-[10px] uppercase tracking-widest text-[#2D2926]/40 dark:text-[#FDFCFB]/30 font-bold capitalize">{tipo}</p>
         </div>
-        <div>
-          <p className="text-green-700 bg-green-200 p-2 text-xs rounded-lg dark:text-white dark:bg-green-700">{disponible ?? 'Disponible'}</p>
-        </div>
-      </div>
-
-      <div className="mt-5 flex items-center gap-2 text-sm text-gray-700 dark:text-slate-200">
-        <IoPeopleOutline size={20} />
-        <p>Capacidad:</p>
-        <p>{capacidad} personas</p>
-      </div>
-
-      {observaciones && (
-        <div className="mt-2 flex items-center gap-2 text-md text-gray-700">
-          <IoPeopleOutline size={25} />
-          <p>Observaciones:</p>
-          <p>{observaciones}</p>
-        </div>
-      )}
-
-      <div className="grid grid-cols-2 items-center gap-5 mt-10 justify-center border-t border-gray-300 pt-5">
-        {loading ? (
-          <span className="flex items-center gap-1 text-gray-500">
-            <span className="w-4 h-4 border-2 border-gray-400 border-t-black rounded-full animate-spin"></span>
-            <span className="text-xs">Cargando...</span>
+        <div className="pt-2">
+          <span
+            className={`text-[8px] uppercase tracking-widest px-2.5 py-1 rounded-sm border font-bold transition-colors ${
+              disponible !== 'ocupado' ? 'text-[#B59E6B] border-[#B59E6B]/20 bg-[#B59E6B]/5' : 'text-red-400 border-red-400/20 bg-red-400/5'
+            }`}
+          >
+            {disponible ?? 'Disponible'}
           </span>
-        ) : (
-          <>
-            <button
-              className="flex  justify-center items-center gap-2 border border-gray-300 text-black bg-white rounded-lg py-1 px-1 hover:bg-gray-200 cursor-pointer dark:bg-slate-800 dark:text-white dark:border-gray-300 dark:hover:bg-gray-700"
-              onClick={handleUpdate}
-            >
-              <BiPencil size={20} className="cursor-pointe rounded-lg" />
-              <p>Editar</p>
-            </button>
-            {user && user?.rol === 'admin' && (
-              <button
-                className="flex  justify-center items-center gap-2 text-white bg-red-600 rounded-lg py-1 px-1 hover:bg-red-700 cursor-pointer dark:bg-slate-800 dark:text-red-500 dark:border-red-500 dark:border dark:hover:bg-slate-700"
-                onClick={handleDeleteHabitacion}
-              >
-                <MdDeleteOutline className=" cursor-pointer  rounded-lg" size={20} />
-                <p>Eliminar</p>
-              </button>
-            )}
-          </>
+        </div>
+      </div>
+
+      <div className="flex-1 space-y-4">
+        <div className="flex items-center gap-4 group/item">
+          <div className="w-8 h-8 rounded-full bg-[#B59E6B]/5 flex items-center justify-center border border-[#B59E6B]/10 group-hover/item:bg-[#B59E6B]/10 transition-colors">
+            <IoPeopleOutline className="text-[#B59E6B]" size={14} />
+          </div>
+          <div className="space-y-0.5">
+            <p className="text-[8px] uppercase tracking-widest text-[#2D2926]/40 dark:text-[#FDFCFB]/30 font-bold">Capacidad Máxima</p>
+            <p className="text-xs text-[#2D2926] dark:text-[#FDFCFB] font-medium tracking-wider">{capacidad} Huéspedes</p>
+          </div>
+        </div>
+
+        {Boolean(observaciones) && (
+          <div className="flex items-start gap-4 group/item">
+            <div className="w-8 h-8 rounded-full bg-[#B59E6B]/5 flex items-center justify-center border border-[#B59E6B]/10 group-hover/item:bg-[#B59E6B]/10 transition-colors shrink-0 mt-0.5">
+              <RiPushpinLine className="text-[#B59E6B]" size={14} />
+            </div>
+            <div className="space-y-0.5">
+              <p className="text-[8px] uppercase tracking-widest text-[#2D2926]/40 dark:text-[#FDFCFB]/30 font-bold">Observaciones del Servicio</p>
+              <p className="text-xs text-[#2D2926]/60 dark:text-[#FDFCFB]/50 leading-relaxed italic line-clamp-2">{observaciones}</p>
+            </div>
+          </div>
         )}
       </div>
+
+      <div className="mt-10 flex items-center gap-4 pt-6 border-t border-[#B59E6B]/10 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+        <button
+          onClick={handleUpdate}
+          className="flex-1 flex items-center justify-center gap-2 text-[10px] uppercase tracking-widest font-bold text-[#B59E6B] hover:text-[#2D2926] dark:hover:text-[#FDFCFB] border border-[#B59E6B]/20 py-2.5 rounded-sm hover:bg-[#B59E6B]/5 transition-all"
+        >
+          <BiPencil size={14} />
+          Ajustar Suite
+        </button>
+        {user && user?.rol === 'admin' && (
+          <button
+            onClick={handleDeleteHabitacion}
+            className="flex items-center justify-center p-2.5 text-red-400/60 hover:text-red-500 border border-red-500/10 hover:bg-red-500/5 rounded-sm transition-all"
+            title="Retirar Suite"
+          >
+            <MdDeleteOutline size={18} />
+          </button>
+        )}
+      </div>
+
+      {loading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-[#FDFCFB]/80 dark:bg-[#2D2926]/80 backdrop-blur-sm z-20">
+          <div className="flex flex-col items-center gap-3 animate-in zoom-in-95 duration-300">
+            <div className="w-8 h-8 border-2 border-[#B59E6B] border-t-transparent animate-spin rounded-full" />
+            <span className="text-[10px] uppercase tracking-widest font-bold text-[#B59E6B]">Sincronizando...</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

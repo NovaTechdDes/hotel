@@ -6,17 +6,11 @@ export const ListaTipoEgresos = () => {
   const { data: tipoEgresos, isLoading } = useTipoEgreso();
 
   if (isLoading) {
-    return <Loading text="Cargando Tipo de Egresos..." />;
+    return <Loading text="Cargando Tipos de Egreso..." />;
   }
 
   return (
-    <div
-      className="grid md:grid-cols-2 grid-cols-1 lg:grid-cols-3 bg-white mx-2 rounded-lg scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 dark:bg-slate-800 dark:border-gray-600"
-      style={{
-        scrollbarWidth: 'thin',
-        scrollbarColor: '#9ca3af #e5e7eb', // Thumb / Track (for Firefox)
-      }}
-    >
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-2">
       {tipoEgresos?.map((elem) => (
         <TipoEgresoCard key={elem.id} tipoEgreso={elem} />
       ))}

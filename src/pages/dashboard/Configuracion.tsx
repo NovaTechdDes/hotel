@@ -6,35 +6,39 @@ import { CaracteristicaLista } from '../../components/dashboard/caracteristica/C
 export const Configuracion = () => {
   const { data: user } = useRolAuth();
 
-  if (!user) {
-    return;
-  }
+  if (!user) return null;
 
   return (
-    <div className="text-black">
-      <div className="container m-7">
-        <h2 className="text-2xl font-bold dark:text-white">Configuracion</h2>
-        <p className="dark:text-white">Administra los precios y tipos de egresos del sistema</p>
-      </div>
+    <div className="min-h-screen bg-[#FDFCFB] dark:bg-[#1E1B18] transition-colors duration-500">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <header className="mb-12 border-b border-[#B59E6B]/10 pb-8">
+          <h2 className="text-4xl font-serif font-light tracking-tight text-[#2D2926] dark:text-[#FDFCFB]">Configuración</h2>
+          <p className="mt-2 text-[#2D2926]/60 dark:text-[#FDFCFB]/50 font-sans tracking-wide uppercase text-[10px] letter-spacing-[0.2em]">
+            Administración de activos, tarifas y parámetros del sistema
+          </p>
+        </header>
 
-      <div className="flex flex-col gap-5 overflow-y-auto h-[calc(100vh-180px)]">
-        {user?.rol === 'admin' && (
-          <div className="border border-gray-300 bg-white mx-5 rounded-lg dark:bg-slate-800 dark:border-gray-600">
-            <Precios />
-          </div>
-        )}
+        <div className="space-y-12">
+          {user?.rol === 'admin' && (
+            <section className="animate-in fade-in slide-in-from-bottom-4 duration-700">
+              <div className="bg-white dark:bg-[#2D2926] shadow-[var(--shadow-boutique-lg)] dark:shadow-none border border-[#B59E6B]/10 dark:border-[#B59E6B]/10 rounded-sm overflow-hidden transition-all duration-500">
+                <Precios />
+              </div>
+            </section>
+          )}
 
-        <div className="border border-gray-300 mx-5 bg-white rounded-lg dark:bg-slate-800 dark:border-gray-600">
-          <CaracteristicaLista />
+          <section className="animate-in fade-in slide-in-from-bottom-4 duration-700 delay-150">
+            <div className="bg-white dark:bg-[#2D2926] shadow-[var(--shadow-boutique-lg)] dark:shadow-none border border-[#B59E6B]/10 dark:border-[#B59E6B]/10 rounded-sm overflow-hidden transition-all duration-500">
+              <CaracteristicaLista />
+            </div>
+          </section>
+
+          <section className="animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300">
+            <div className="bg-white dark:bg-[#2D2926] shadow-[var(--shadow-boutique-lg)] dark:shadow-none border border-[#B59E6B]/10 dark:border-[#B59E6B]/10 rounded-sm overflow-hidden transition-all duration-500 p-6">
+              <TipoEgreso />
+            </div>
+          </section>
         </div>
-
-        <div className="border border-gray-300 mx-5 bg-white rounded-lg dark:bg-slate-800 dark:border-gray-600">
-          <TipoEgreso />
-        </div>
-
-        {/* <div className="border border-gray-300 mx-5 bg-white rounded-lg dark:bg-slate-800 dark:border-gray-600">
-          <Usuario />
-        </div> */}
       </div>
     </div>
   );
