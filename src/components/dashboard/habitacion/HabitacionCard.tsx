@@ -14,7 +14,7 @@ interface Props {
 }
 
 const HabitacionCard = ({ habitacion }: Props) => {
-  const { id, capacidad, nombre, tipo, disponible, observaciones } = habitacion;
+  const { id, capacidad, nombre, tipo, observaciones } = habitacion;
   const { openModal } = useHabitacionStore();
   const { data: user } = useRolAuth();
 
@@ -55,16 +55,7 @@ const HabitacionCard = ({ habitacion }: Props) => {
         <div className="space-y-1">
           <p className="text-[9px] uppercase tracking-[0.3em] text-[#B59E6B] font-bold">Suite Residencial</p>
           <h2 className="text-2xl font-serif text-[#2D2926] dark:text-[#FDFCFB] tracking-wide group-hover:text-[#B59E6B] transition-colors duration-300">{nombre}</h2>
-          <p className="text-[10px] uppercase tracking-widest text-[#2D2926]/40 dark:text-[#FDFCFB]/30 font-bold capitalize">{tipo}</p>
-        </div>
-        <div className="pt-2">
-          <span
-            className={`text-[8px] uppercase tracking-widest px-2.5 py-1 rounded-sm border font-bold transition-colors ${
-              disponible !== 'ocupado' ? 'text-[#B59E6B] border-[#B59E6B]/20 bg-[#B59E6B]/5' : 'text-red-400 border-red-400/20 bg-red-400/5'
-            }`}
-          >
-            {disponible ?? 'Disponible'}
-          </span>
+          <p className="text-[10px] uppercase tracking-widest text-[#2D2926]/40 dark:text-[#FDFCFB]/30 font-bold">{tipo}</p>
         </div>
       </div>
 

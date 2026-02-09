@@ -1,3 +1,4 @@
+import { IoDocumentTextOutline } from 'react-icons/io5';
 import { useEgresos } from '../../../hooks/egreso/useEgresos';
 import { Loading } from '../../ui/Loading';
 import { EgresoCard } from './EgresoCard';
