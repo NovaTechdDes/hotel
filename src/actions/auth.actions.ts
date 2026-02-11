@@ -19,6 +19,28 @@ export const loginSupabase = async (email: string, password: string) => {
       };
     }
 
+    // Verificar si el usuario está activo
+    const { data: usuarioData, error: usuarioError } = await supabase.from('usuarios').select('estado').eq('id', data.user?.id).single();
+
+    if (usuarioError) {
+      // Si hay error al leer el usuario (ej. RLS o no existe), por seguridad cerramos sesión
+      await supabase.auth.signOut();
+      return {
+        ok: false,
+        msg: 'Error verificando estado del usuario',
+        token: '',
+      };
+    }
+
+    if (usuarioData?.estado === false) {
+      await supabase.auth.signOut();
+      return {
+        ok: false,
+        msg: 'Usuario desactivado. Contacte al administrador.',
+        token: '',
+      };
+    }
+
     return {
       msg: '',
       token: data.session?.access_token as string,

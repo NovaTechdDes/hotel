@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { createUser } from '../../actions/users.actions';
+import { createUser, updateUserStatus } from '../../actions/users.actions';
 import type { Usuario } from '../../interface';
 
 export const useMutateUser = () => {
@@ -11,7 +11,15 @@ export const useMutateUser = () => {
     },
   });
 
+  const updateUserStatusMutation = useMutation({
+    mutationFn: ({ id, estado }: { id: string; estado: boolean }) => updateUserStatus(id, estado),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['users'] });
+    },
+  });
+
   return {
     createUserMutation,
+    updateUserStatusMutation,
   };
 };

@@ -3,9 +3,21 @@ import { Precios } from './Precios';
 import { useRolAuth } from '../../hooks/auth/useRolAuth';
 import { CaracteristicaLista } from '../../components/dashboard/caracteristica/CaracteristicaLista';
 import { Usuario } from './Usuario';
+import { verificarRol } from '../../actions/auth.actions';
+import { useEffect, useState } from 'react';
 
 export const Configuracion = () => {
   const { data: user } = useRolAuth();
+  const [rol, setRol] = useState<string>('');
+
+  const buscarRolUser = async () => {
+    const rol = await verificarRol();
+    setRol(rol);
+  };
+
+  useEffect(() => {
+    buscarRolUser();
+  }, [user]);
 
   if (!user) return null;
 
@@ -20,7 +32,7 @@ export const Configuracion = () => {
         </header>
 
         <div className="space-y-12">
-          {user?.rol === 'admin' && (
+          {rol === 'admin' && (
             <section className="animate-in fade-in slide-in-from-bottom-4 duration-700">
               <div className="bg-white dark:bg-[#2D2926] shadow-[var(--shadow-boutique-lg)] dark:shadow-none border border-[#B59E6B]/10 dark:border-[#B59E6B]/10 rounded-sm overflow-hidden transition-all duration-500">
                 <Precios />
@@ -40,11 +52,13 @@ export const Configuracion = () => {
             </div>
           </section>
 
-          <section className="animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300">
-            <div className="bg-white dark:bg-[#2D2926] shadow-[var(--shadow-boutique-lg)] dark:shadow-none border border-[#B59E6B]/10 dark:border-[#B59E6B]/10 rounded-sm overflow-hidden transition-all duration-500 p-6">
-              <Usuario />
-            </div>
-          </section>
+          {rol === 'admin' && (
+            <section className="animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300">
+              <div className="bg-white dark:bg-[#2D2926] shadow-[var(--shadow-boutique-lg)] dark:shadow-none border border-[#B59E6B]/10 dark:border-[#B59E6B]/10 rounded-sm overflow-hidden transition-all duration-500 p-6">
+                <Usuario />
+              </div>
+            </section>
+          )}
         </div>
       </div>
     </div>

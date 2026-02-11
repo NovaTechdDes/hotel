@@ -4,6 +4,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE, PATCH',
 };
 
 serve(async (req) => {
@@ -39,69 +40,88 @@ serve(async (req) => {
     }
 
     // ------------------------------------------------------------------
-    // GET: Listar usuarios con sus roles
+    // GET: Listar usuarios con sus roles y estado
     // ------------------------------------------------------------------
     if (req.method === 'GET') {
-      // 1. Obtener usuarios de auth
       const {
         data: { users },
         error: listError,
       } = await supabaseClient.auth.admin.listUsers();
       if (listError) throw listError;
 
-      // 2. Obtener roles de public.usuarios
-      // Obtenemos solo id y rol para ser eficientes
-      const { data: rolesData, error: rolesError } = await supabaseClient.from('usuarios').select('id, rol');
+      const { data: publicData, error: publicError } = await supabaseClient.from('usuarios').select('id, rol, estado');
 
-      if (rolesError) throw rolesError;
+      if (publicError) throw publicError;
 
-      // 3. Crear mapa de roles para búsqueda rápida
-      const rolesMap = new Map();
-      rolesData?.forEach((r: any) => rolesMap.set(r.id, r.rol));
+      const publicMap = new Map();
+      publicData?.forEach((r: any) => publicMap.set(r.id, { rol: r.rol, estado: r.estado }));
 
-      // 4. Combinar datos
-      const enrichedUsers = users.map((u) => ({
-        ...u,
-        rol: rolesMap.get(u.id) || 'empleado', // Default a empleado si no tiene rol asignado
-      }));
+      const enrichedUsers = users.map((u) => {
+        const publicInfo = publicMap.get(u.id);
+        return {
+          ...u,
+          rol: publicInfo?.rol || 'empleado',
+          estado: publicInfo?.estado !== false,
+        };
+      });
 
       return new Response(JSON.stringify(enrichedUsers), { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 });
     }
 
     // ------------------------------------------------------------------
-    // POST: Crear usuario y asignar rol
+    // POST: Crear usuario, asignar rol y estado
     // ------------------------------------------------------------------
     if (req.method === 'POST') {
-      const { email, password, rol } = await req.json();
+      const { email, password, rol, estado = true } = await req.json();
 
-      // Validaciones básicas
       if (!email || !password || !rol) {
         return new Response(JSON.stringify({ error: 'Email, password y rol son requeridos' }), { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
       }
 
-      // 1. Crear usuario en auth
       const { data: userData, error: createError } = await supabaseClient.auth.admin.createUser({
         email,
         password,
-        email_confirm: true, // Confirmar automáticamente
+        email_confirm: true,
       });
 
       if (createError) throw createError;
       if (!userData.user) throw new Error('No se pudo crear el usuario');
 
-      // 2. Insertar rol en public.usuarios
-      const { error: roleInsertError } = await supabaseClient.from('usuarios').insert({
+      const { error: publicInsertError } = await supabaseClient.from('usuarios').insert({
         id: userData.user.id,
         rol: rol,
+        estado: estado,
       });
 
-      if (roleInsertError) {
-        // Opcional: Podríamos borrar el usuario de auth si falla esto para mantener consistencia
-        // await supabaseClient.auth.admin.deleteUser(userData.user.id)
-        throw roleInsertError;
-      }
+      if (publicInsertError) throw publicInsertError;
 
       return new Response(JSON.stringify({ user: userData.user, message: 'Usuario creado exitosamente' }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 201 });
+    }
+
+    // ------------------------------------------------------------------
+    // PATCH: Actualizar usuario (rol, estado)
+    // ------------------------------------------------------------------
+    if (req.method === 'PATCH') {
+      const { id, rol, estado } = await req.json();
+
+      if (!id) {
+        return new Response(JSON.stringify({ error: 'ID es requerido' }), { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+      }
+
+      // Preparamos objeto con campos definidos
+      const updates: any = {};
+      if (rol !== undefined) updates.rol = rol;
+      if (estado !== undefined) updates.estado = estado;
+
+      if (Object.keys(updates).length === 0) {
+        return new Response(JSON.stringify({ message: 'Nada que actualizar' }), { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+      }
+
+      const { error: updateError } = await supabaseClient.from('usuarios').update(updates).eq('id', id);
+
+      if (updateError) throw updateError;
+
+      return new Response(JSON.stringify({ message: 'Usuario actualizado exitosamente' }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 });
     }
 
     return new Response(JSON.stringify({ error: 'Method not allowed' }), { status: 405, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });

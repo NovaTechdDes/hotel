@@ -6,4 +6,5 @@ export interface Usuario {
   id?: string;
   created_at: string;
   last_sign_in_at?: string;
+  estado?: boolean;
 }

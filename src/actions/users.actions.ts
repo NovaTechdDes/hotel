@@ -66,3 +66,36 @@ export const createUser = async (email: string, password: string = '', rol: stri
     return false;
   }
 };
+
+export const updateUserStatus = async (id: string, estado: boolean): Promise<boolean> => {
+  try {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    if (!session) {
+      await Swal.fire('Error', 'No hay sesión activa', 'error');
+      return false;
+    }
+
+    const { data } = await axios.patch(
+      `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/users-list`,
+      { id, estado },
+      {
+        headers: {
+          Authorization: `Bearer ${session.access_token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    console.log('Usuario actualizado:', data);
+
+    mensaje('Estado de usuario actualizado', 'success');
+    return true;
+  } catch (error: any) {
+    console.error('Error actualizando usuario:', error.response);
+    await Swal.fire('Error al actualizar usuario', error.response?.data?.error || error.message, 'error');
+    return false;
+  }
+};
