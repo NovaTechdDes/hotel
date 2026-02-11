@@ -51,33 +51,6 @@ export const getRolUser = async (): Promise<Usuario | false> => {
   return user;
 };
 
-export const createUser = async (email: string, password: string = '', rol: string): Promise<boolean> => {
-  try {
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
-
-    if (error) {
-      await Swal.fire('Error al cargar el ususario', error.message, 'error');
-      return false;
-    }
-
-    const { user } = data;
-    const { data: usuario, error: errorUsuario } = await supabase.from('usuarios').insert({ id: user?.id, rol }).select().single();
-
-    if (errorUsuario) {
-      await Swal.fire('Error al cargar el rol del usuario', errorUsuario.message, 'error');
-      return false;
-    }
-    console.log(usuario);
-    return true;
-  } catch (error) {
-    console.error(error);
-    return false;
-  }
-};
-
 export const recoveryPassword = async (email: string) => {
   try {
     const { error } = await supabase.auth.resetPasswordForEmail(email, {

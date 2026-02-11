@@ -2,6 +2,7 @@ import TipoEgreso from './TipoEgreso';
 import { Precios } from './Precios';
 import { useRolAuth } from '../../hooks/auth/useRolAuth';
 import { CaracteristicaLista } from '../../components/dashboard/caracteristica/CaracteristicaLista';
+import { Usuario } from './Usuario';
 
 export const Configuracion = () => {
   const { data: user } = useRolAuth();
@@ -36,6 +37,12 @@ export const Configuracion = () => {
           <section className="animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300">
             <div className="bg-white dark:bg-[#2D2926] shadow-[var(--shadow-boutique-lg)] dark:shadow-none border border-[#B59E6B]/10 dark:border-[#B59E6B]/10 rounded-sm overflow-hidden transition-all duration-500 p-6">
               <TipoEgreso />
+            </div>
+          </section>
+
+          <section className="animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300">
+            <div className="bg-white dark:bg-[#2D2926] shadow-[var(--shadow-boutique-lg)] dark:shadow-none border border-[#B59E6B]/10 dark:border-[#B59E6B]/10 rounded-sm overflow-hidden transition-all duration-500 p-6">
+              <Usuario />
             </div>
           </section>
         </div>

@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "users-list": {
+      "verify_jwt": true
+    }
+  }
+}

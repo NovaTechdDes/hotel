@@ -85,7 +85,7 @@ export const ReporteMensual = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <TarjetaReporte title="Reservas Confirmadas" Icon={HiOutlineCalendar} colorIcon="#B59E6B" numero={reservasMes.length.toString()} text="Volumen de Huéspedes" />
         <TarjetaReporte
-          title="Ingresos Devengados"
+          title="Ingresos Brutos"
           Icon={HiArrowTrendingUp}
           colorIcon="#B59E6B"
           numero={`$${totalIngresos.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
