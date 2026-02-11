@@ -53,7 +53,6 @@ const HabitacionCard = ({ habitacion }: Props) => {
     >
       <div className="flex justify-between items-start mb-6 border-b border-[#B59E6B]/10 pb-4">
         <div className="space-y-1">
-          <p className="text-[9px] uppercase tracking-[0.3em] text-[#B59E6B] font-bold">Suite Residencial</p>
           <h2 className="text-2xl font-serif text-[#2D2926] dark:text-[#FDFCFB] tracking-wide group-hover:text-[#B59E6B] transition-colors duration-300">{nombre}</h2>
           <p className="text-[10px] uppercase tracking-widest text-[#2D2926]/40 dark:text-[#FDFCFB]/30 font-bold">{tipo}</p>
         </div>

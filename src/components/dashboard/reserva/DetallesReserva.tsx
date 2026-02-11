@@ -101,7 +101,7 @@ export const DetallesReserva = () => {
       >
         <div className="flex justify-between items-start mb-10">
           <div className="space-y-1">
-            <h2 className="text-3xl font-serif text-[#2D2926] dark:text-[#FDFCFB] tracking-wide">Ficha de Estancia</h2>
+            <h2 className="text-3xl font-serif text-[#2D2926] dark:text-[#FDFCFB] tracking-wide">Ficha de Reserva</h2>
             <p className="text-[10px] uppercase tracking-[0.3em] text-[#B59E6B] font-bold">Documentación de Hospedaje</p>
           </div>
 
@@ -160,7 +160,7 @@ export const DetallesReserva = () => {
           {/* Valor de la Estancia */}
           <div className="flex justify-between items-end border-b border-[#B59E6B]/10 pb-6 mb-2">
             <div className="space-y-1">
-              <p className="text-[10px] uppercase tracking-widest font-bold text-[#2D2926]/40 dark:text-[#FDFCFB]/30">Liquidación de Servicio</p>
+              <p className="text-[10px] uppercase tracking-widest font-bold text-[#2D2926]/40 dark:text-[#FDFCFB]/30">Pago del Servicio</p>
               <p className="text-xs text-[#2D2926]/60 dark:text-[#FDFCFB]/50 font-medium">
                 {dias} Noches × <span className="font-serif italic">${importe}</span>
               </p>
@@ -175,8 +175,8 @@ export const DetallesReserva = () => {
           </div>
 
           <div className="space-y-2">
-            <p className="text-[10px] uppercase tracking-widest font-bold text-[#B59E6B]">Observaciones de la Estancia</p>
-            <p className="text-sm text-[#2D2926]/70 dark:text-[#FDFCFB]/60 leading-relaxed italic">{observaciones || 'No se registran requerimientos especiales para esta estancia.'}</p>
+            <p className="text-[10px] uppercase tracking-widest font-bold text-[#B59E6B]">Observaciones de la Reserva</p>
+            <p className="text-sm text-[#2D2926]/70 dark:text-[#FDFCFB]/60 leading-relaxed italic">{observaciones || 'No se registran requerimientos especiales para esta reserva.'}</p>
           </div>
 
           <div className="flex gap-6 pt-10 mt-10 border-t border-[#B59E6B]/10">
@@ -186,7 +186,7 @@ export const DetallesReserva = () => {
               className="flex-1 flex items-center justify-center gap-3 text-[10px] uppercase tracking-widest font-bold text-[#B59E6B] hover:text-[#2D2926] dark:hover:text-[#FDFCFB] border border-[#B59E6B]/20 py-4 rounded-sm hover:bg-[#B59E6B]/5 transition-all"
             >
               <HiOutlinePencil size={18} />
-              Ajustar Registro
+              Ajustar Reserva
             </button>
             {rol === 'admin' && (
               <button
@@ -195,7 +195,7 @@ export const DetallesReserva = () => {
                 className="flex-1 flex items-center justify-center gap-3 text-[10px] uppercase tracking-widest font-bold text-red-400/60 hover:text-red-500 border border-red-500/10 py-4 rounded-sm hover:bg-red-500/5 transition-all"
               >
                 {isPending ? <div className="w-4 h-4 border-2 border-red-400 border-t-transparent animate-spin rounded-full" /> : <MdDeleteOutline size={18} />}
-                Retirar Estancia
+                Retirar Reserva
               </button>
             )}
           </div>

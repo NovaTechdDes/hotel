@@ -1,6 +1,7 @@
 import Swal from 'sweetalert2';
 import type { Caracteristica } from '../interface';
 import { supabase } from '../lib/supababase';
+import { verError } from '../helpers/verError';
 
 export const getCaracteristicas = async (): Promise<Caracteristica[]> => {
   try {
@@ -46,7 +47,9 @@ export const deleteCaracteristica = async (id: string): Promise<boolean> => {
     return true;
   } catch (error: any) {
     console.error(error);
-    await Swal.fire('Error al eliminar caracteristica', error.message, 'error');
+    if (error && !verError(error?.code, 'No se puede eliminar la caracteristica porque contiene habitaciones con esta caracteristica')) {
+      return false;
+    }
     return false;
   }
 };

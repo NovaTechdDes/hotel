@@ -330,7 +330,7 @@ export const ModalCalendario = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               <div>
-                <label className="text-[10px] uppercase tracking-widest font-bold text-[#2D2926]/40 dark:text-[#FDFCFB]/30 block mb-4">Código Cromático de Estancia</label>
+                <label className="text-[10px] uppercase tracking-widest font-bold text-[#2D2926]/40 dark:text-[#FDFCFB]/30 block mb-4">Color De la reserva</label>
                 <div className="flex flex-wrap gap-3 p-4 bg-[#B59E6B]/5 rounded-sm border border-[#B59E6B]/10">
                   {COLORES_RESERVA.map((c) => (
                     <button
@@ -349,7 +349,7 @@ export const ModalCalendario = () => {
 
               <div className="space-y-2">
                 <label className="text-[10px] uppercase tracking-widest font-bold text-[#2D2926]/40 dark:text-[#FDFCFB]/30 block mb-2" htmlFor="observaciones">
-                  Protocolo y Notas
+                  Observaciones de la Reserva
                 </label>
                 <textarea
                   name="observaciones"

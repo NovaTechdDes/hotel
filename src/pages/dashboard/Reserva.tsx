@@ -27,8 +27,8 @@ export const Reserva = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <header className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12 border-b border-[#B59E6B]/20 pb-8 animate-in fade-in slide-in-from-top-4 duration-1000">
           <div className="space-y-1">
-            <h1 className="text-4xl font-serif text-[#2D2926] dark:text-[#FDFCFB] tracking-tight">Libro de Huéspedes</h1>
-            <p className="text-[11px] uppercase tracking-[0.4em] text-[#B59E6B] font-bold">Registro de Estancias y Hospitalidad</p>
+            <h1 className="text-4xl font-serif text-[#2D2926] dark:text-[#FDFCFB] tracking-tight">Listado de Reservas</h1>
+            {/* <p className="text-[11px] uppercase tracking-[0.4em] text-[#B59E6B] font-bold">Registro de Estancias y Hospitalidad</p> */}
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto items-center">
@@ -84,7 +84,7 @@ export const Reserva = () => {
               {reservas?.filter((r) => r.mostrar).length === 0 && (
                 <div className="py-40 flex flex-col items-center justify-center border-2 border-dashed border-[#B59E6B]/10 rounded-sm text-[#2D2926]/30 dark:text-[#FDFCFB]/20">
                   <IoDocumentTextOutline size={48} className="mb-4 opacity-10" />
-                  <p className="text-xs uppercase tracking-[0.2em] font-bold">No se registran estancias en este periodo</p>
+                  <p className="text-xs uppercase tracking-[0.2em] font-bold">No se registran reservas en este periodo</p>
                 </div>
               )}
             </div>

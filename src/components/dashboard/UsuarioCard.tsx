@@ -45,7 +45,7 @@ export const UsuarioCard = ({ usuario }: Props) => {
           {usuario.rol === 'admin' ? 'Administrador' : 'Empleado'}
         </span>
       </td>
-      <td className="text-white py-4 px-6 text-sm  font-mono">{usuario?.id?.substring(0, 8)}...</td>
+      {/* <td className="text-white py-4 px-6 text-sm  font-mono">{usuario?.id?.substring(0, 8)}...</td> */}
       <td className="text-white py-4 px-6 text-sm ">{new Date(usuario?.created_at).toLocaleDateString()}</td>
       <td className="text-white py-4 px-6 text-sm ">
         {usuario.last_sign_in_at ? new Date(usuario.last_sign_in_at).toLocaleDateString() : <span className="italic dark:text-white text-[#2D2926]/40">Nunca</span>}

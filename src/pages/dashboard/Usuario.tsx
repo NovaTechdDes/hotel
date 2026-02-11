@@ -53,7 +53,7 @@ export const Usuario = () => {
                 <tr className=" border-b border-[#F5F0E1]">
                   <th className="py-4 px-6 text-xs font-semibold text-white uppercase tracking-wider">Usuario</th>
                   <th className="py-4 px-6 text-xs font-semibold text-white uppercase tracking-wider">Rol</th>
-                  <th className="py-4 px-6 text-xs font-semibold text-white uppercase tracking-wider">ID de Sistema</th>
+                  {/* <th className="py-4 px-6 text-xs font-semibold text-white uppercase tracking-wider">ID de Sistema</th> */}
                   <th className="py-4 px-6 text-xs font-semibold text-white uppercase tracking-wider">Fecha de Registro</th>
                   <th className="py-4 px-6 text-xs font-semibold text-white uppercase tracking-wider">Último Acceso</th>
                   <th className="py-4 px-6 text-xs font-semibold text-white uppercase tracking-wider text-right">Estado</th>

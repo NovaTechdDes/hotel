@@ -60,8 +60,11 @@ export const Calendario = () => {
     <div className="min-h-screen bg-[#FDFCFB] dark:bg-[#1E1B18] transition-colors duration-500 overflow-hidden flex flex-col">
       <HeaderCalendario />
 
-      <main className="flex-1 px-4 sm:px-6 lg:px-8 pb-10 overflow-hidden">
-        <div ref={scrollContainerRef} className="h-full bg-white dark:bg-[#2D2926] border border-[#B59E6B]/10 rounded-sm shadow-[var(--shadow-boutique)] overflow-auto scroll-smooth custom-scrollbar">
+      <main className="flex-1 px-4 sm:px-6 lg:px-8 pb-10 overflow-y-auto">
+        <div
+          ref={scrollContainerRef}
+          className=" bg-white dark:bg-[#2D2926] border border-[#B59E6B]/10 rounded-sm shadow-[var(--shadow-boutique)] h-[calc(100vh-166px)] overflow-auto scroll-smooth custom-scrollbar"
+        >
           {isLoading ? (
             <div className="h-full flex flex-col items-center justify-center space-y-4 py-40">
               <div className="w-12 h-12 border-2 border-[#B59E6B] border-t-transparent animate-spin rounded-full" />
@@ -69,7 +72,7 @@ export const Calendario = () => {
             </div>
           ) : (
             <table className="min-w-max border-separate border-spacing-0 table-auto w-full">
-              <thead className="sticky top-0 z-40">
+              <thead className="sticky top-0 z-40 bg-[#FDFCFB] dark:bg-[#1E1B18]">
                 <TrCalendario days={days || []} scrollContainerRef={scrollContainerRef} todayRef={todayRef} />
               </thead>
               <tbody className="divide-y divide-[#B59E6B]/5">

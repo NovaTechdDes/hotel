@@ -1,15 +1,9 @@
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
-import { useReservaStore } from '../../../store/reserva.store';
 import { useCalendarioStore } from '../../../store/calendario.store';
 import { nombreMes } from '../../../helpers/nombreMes';
 
 export const HeaderCalendario = () => {
-  const { openModal } = useReservaStore();
   const { setMesSeleccionado, anioSeleccionado, mesSeleccionado } = useCalendarioStore();
-
-  const handleModalReserva = () => {
-    openModal();
-  };
 
   const handlePreviusMonth = () => {
     setMesSeleccionado(mesSeleccionado - 1);
@@ -45,12 +39,12 @@ export const HeaderCalendario = () => {
           </button>
         </div>
 
-        <button
+        {/* <button
           onClick={handleModalReserva}
           className="w-full sm:w-auto bg-[#2D2926] dark:bg-[#B59E6B] text-[#FDFCFB] dark:text-[#2D2926] px-8 py-3.5 rounded-sm text-[10px] uppercase tracking-[0.2em] font-bold hover:opacity-90 transition-all shadow-sm active:scale-95"
         >
           Nueva Reserva
-        </button>
+        </button> */}
       </div>
     </header>
   );

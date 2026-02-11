@@ -79,7 +79,7 @@ export const ReservaCard = ({ buscador, reserva }: Props) => {
           className="flex-1 md:flex-none flex items-center justify-center gap-2 text-[10px] uppercase tracking-widest font-bold text-[#B59E6B] hover:text-[#2D2926] dark:hover:text-[#FDFCFB] border border-[#B59E6B]/20 px-8 py-3 rounded-sm hover:bg-[#B59E6B]/5 transition-all"
         >
           <HiOutlinePencilSquare size={16} />
-          Ficha de Estancia
+          Ficha de Reserva
         </button>
       </div>
     </div>
