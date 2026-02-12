@@ -17,7 +17,7 @@ export const HeaderCalendario = () => {
     <header className="px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 animate-in fade-in slide-in-from-top-4 duration-1000">
       <div className="space-y-1">
         <h1 className="text-4xl font-serif text-[#2D2926] dark:text-[#FDFCFB] tracking-tight">Calendario</h1>
-        <p className="text-[11px] uppercase tracking-[0.4em] text-[#B59E6B] font-bold">Gestión de Ocupación y Disponibilidad</p>
+        <p className="text-[11px] uppercase tracking-[0.4em] text-[#88754e] font-bold">Gestión de Ocupación y Disponibilidad</p>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-6 w-full md:w-auto items-center">

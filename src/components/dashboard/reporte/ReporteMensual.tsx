@@ -32,17 +32,17 @@ export const ReporteMensual = () => {
 
   return (
     <div className="space-y-10">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b border-[#B59E6B]/10 pb-6">
+      <div className="flex flex-col md:flex-row  justify-between items-start md:items-end gap-6 border-b border-[#B59E6B]/10 pb-6">
         <div>
           <h3 className="text-2xl font-serif text-[#2D2926] dark:text-[#FDFCFB]">Ingresos Mensuales</h3>
-          <p className="text-[10px] uppercase tracking-[0.2em] text-[#B59E6B] mt-1 font-bold">Rendimiento Operativo</p>
+          <p className="text-[10px] uppercase tracking-[0.2em] text-[#2D2926] dark:text-[#B59E6B] mt-1 font-bold">Rendimiento Operativo</p>
         </div>
 
         <div className="flex flex-wrap gap-4">
           <div className="space-y-1.5 flex flex-col">
             <span className="text-[9px] uppercase tracking-widest text-[#2D2926]/40 dark:text-[#FDFCFB]/30 font-bold ml-1">Periodo</span>
             <select
-              className="bg-transparent border border-[#B59E6B]/20 rounded-sm px-4 py-2 text-xs uppercase tracking-widest text-[#2D2926] dark:text-[#FDFCFB] focus:border-[#B59E6B] outline-none transition-all cursor-pointer"
+              className="bg-transparent border border-black dark:border-[#B59E6B]/20 rounded-sm px-4 py-2 text-xs uppercase tracking-widest text-[#2D2926] dark:text-[#FDFCFB] focus:border-[#B59E6B] outline-none transition-all cursor-pointer"
               onChange={(e) => setMes(e.target.value)}
               name="mes"
               value={mes}
@@ -59,7 +59,7 @@ export const ReporteMensual = () => {
           <div className="space-y-1.5 flex flex-col">
             <span className="text-[9px] uppercase tracking-widest text-[#2D2926]/40 dark:text-[#FDFCFB]/30 font-bold ml-1">Año Fiscal</span>
             <select
-              className="bg-transparent border border-[#B59E6B]/20 rounded-sm px-4 py-2 text-xs uppercase tracking-widest text-[#2D2926] dark:text-[#FDFCFB] focus:border-[#B59E6B] outline-none transition-all cursor-pointer"
+              className="bg-transparent border border-black dark:border-[#B59E6B]/20 rounded-sm px-4 py-2 text-xs uppercase tracking-widest text-[#2D2926] dark:text-[#FDFCFB] focus:border-[#B59E6B] outline-none transition-all cursor-pointer"
               name="anio"
               onChange={(e) => setAnio(e.target.value)}
               value={anio}

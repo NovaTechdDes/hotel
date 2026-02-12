@@ -26,14 +26,14 @@ export const ReporteOcupacion = () => {
           <div className="flex gap-3 items-center mb-1">
             <h2 className="text-2xl font-serif text-[#2D2926] dark:text-[#FDFCFB]">Análisis de Ocupación</h2>
           </div>
-          <p className="text-[10px] uppercase tracking-[0.2em] text-[#B59E6B] font-bold">Frecuencia de Huéspedes por Temporada</p>
+          <p className="text-[10px] uppercase tracking-[0.2em] text-[#2D2926] dark:text-[#B59E6B] font-bold">Frecuencia de Huéspedes por Temporada</p>
         </div>
 
         <div className="flex flex-col space-y-1.5 min-w-[140px]">
           <span className="text-[9px] uppercase tracking-widest text-[#2D2926]/40 dark:text-[#FDFCFB]/30 font-bold ml-1">Ejercicio</span>
           <select
             name="year"
-            className="bg-transparent border border-[#B59E6B]/20 rounded-sm px-4 py-2 text-xs uppercase tracking-widest text-[#2D2926] dark:text-[#FDFCFB] focus:border-[#B59E6B] outline-none transition-all cursor-pointer"
+            className="bg-transparent border border-black dark:border-[#B59E6B]/20 rounded-sm px-4 py-2 text-xs uppercase tracking-widest text-[#2D2926] dark:text-[#FDFCFB] focus:border-[#B59E6B] outline-none transition-all cursor-pointer"
             id="year"
             onChange={(e) => setYear(e.target.value)}
             value={year}

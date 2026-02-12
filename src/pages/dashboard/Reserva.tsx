@@ -23,7 +23,7 @@ export const Reserva = () => {
   const [buscador, setBuscador] = useState('');
 
   return (
-    <div className="min-h-screen bg-[#FDFCFB] dark:bg-[#1E1B18] transition-colors duration-500">
+    <div className="min-h-screen bg-[#adadad] dark:bg-[#1E1B18] transition-colors duration-500">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <header className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12 border-b border-[#B59E6B]/20 pb-8 animate-in fade-in slide-in-from-top-4 duration-1000">
           <div className="space-y-1">

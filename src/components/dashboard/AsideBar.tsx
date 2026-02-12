@@ -33,7 +33,7 @@ export const AsideBar = () => {
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     `group flex items-center gap-3 px-4 py-3 rounded-sm transition-all duration-500 relative overflow-hidden ${
-      isActive ? 'text-[#B59E6B] bg-[#B59E6B]/10 font-medium' : 'text-[#2D2926]/60 dark:text-[#FDFCFB]/60 hover:text-[#2D2926] dark:hover:text-[#FDFCFB] hover:bg-[#B59E6B]/5'
+      isActive ? 'text-[#88754e] bg-[#88754e]/10 font-medium' : 'text-[#2D2926] dark:text-[#FDFCFB]/60 hover:text-[#2D2926] dark:hover:text-[#FDFCFB] hover:bg-[#B59E6B]/5'
     }`;
 
   const iconClass = 'text-lg transition-colors duration-500';
@@ -41,11 +41,11 @@ export const AsideBar = () => {
   return (
     <>
       <aside
-        className={`bg-[#FDFCFB] dark:bg-[#2D2926] text-[#2D2926] dark:text-[#FDFCFB] h-screen fixed top-0 left-0 z-50 w-64 flex flex-col border-r border-[#B59E6B]/10 dark:border-[#FDFCFB]/5 transition-all duration-500 ${open ? 'translate-x-0' : '-translate-x-full'} sm:translate-x-0 shadow-2xl`}
+        className={`bg-[#adadad] dark:bg-[#2D2926] text-[#88754e] dark:text-[#FDFCFB] h-screen fixed top-0 left-0 z-50 w-64 flex flex-col border-r border-[#B59E6B]/10 dark:border-[#FDFCFB]/5 transition-all duration-500 ${open ? 'translate-x-0' : '-translate-x-full'} sm:translate-x-0 shadow-2xl`}
       >
         <div className="p-8 mb-4">
-          <h3 className="text-xl font-serif font-light tracking-widest text-[#B59E6B] border-b border-[#B59E6B]/20 pb-4">HOTEL MIS CASITAS</h3>
-          <p className="text-[10px] uppercase tracking-[0.4em] mt-2 opacity-40 dark:opacity-40">Gestión Interna</p>
+          <h3 className="text-xl font-serif font-light tracking-widest text-[#88754e] border-b border-[#B59E6B]/20 pb-4">HOTEL MIS CASITAS</h3>
+          <p className="text-[10px] uppercase tracking-[0.4em] text-black dark:text-[#FDFCFB] font-medium mt-2 opacity-40 dark:opacity-40">Gestión Interna</p>
         </div>
 
         <nav className="flex-1 px-3 space-y-1">
@@ -93,7 +93,7 @@ export const AsideBar = () => {
         <div className="mt-auto px-4 pb-8 space-y-4">
           <button
             onClick={toggleTheme}
-            className="w-full flex items-center gap-3 px-4 py-3 text-xs uppercase tracking-widest text-[#2D2926]/40 dark:text-[#FDFCFB]/40 hover:text-[#B59E6B] transition-colors duration-500"
+            className="w-full flex items-center gap-3 px-4 py-3 text-xs uppercase tracking-widest text-[#2D2926] dark:text-[#FDFCFB]/40 hover:text-[#4d4430] dark:hover:text-[#B59E6B] transition-colors duration-500"
           >
             {theme === 'light' ? <IoMoonOutline className="text-lg" /> : <IoSunnyOutline className="text-lg" />}
             Modo {theme === 'light' ? 'Oscuro' : 'Claro'}
@@ -102,7 +102,7 @@ export const AsideBar = () => {
           <NavLink
             className={({ isActive }) =>
               `flex items-center gap-3 px-4 py-2 rounded-sm text-xs uppercase tracking-widest transition-all duration-500 ${
-                isActive ? 'text-[#B59E6B] border border-[#B59E6B]/30' : 'text-[#2D2926]/40 dark:text-[#FDFCFB]/40 hover:text-[#2D2926] dark:hover:text-[#FDFCFB]'
+                isActive ? 'text-[#B59E6B] border border-[#B59E6B]/30' : 'text-[#2D2926] dark:text-[#FDFCFB]/40 hover:text-[#4d4430] dark:hover:text-[#B59E6B]'
               }`
             }
             to="/configuracion"
@@ -114,7 +114,7 @@ export const AsideBar = () => {
 
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-4 py-2 text-xs uppercase tracking-widest text-red-400/70 hover:text-red-400 hover:bg-red-400/5 transition-all duration-500 rounded-sm"
+            className="w-full flex items-center gap-3 px-4 py-2 text-xs uppercase tracking-widest text-red-400 hover:text-red-400 hover:bg-red-400/5 transition-all duration-500 rounded-sm"
           >
             <LuLogOut className="text-base" />
             Cerrar Sesión

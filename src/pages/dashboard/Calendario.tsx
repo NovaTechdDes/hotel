@@ -57,7 +57,7 @@ export const Calendario = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#FDFCFB] dark:bg-[#1E1B18] transition-colors duration-500 overflow-hidden flex flex-col">
+    <div className="min-h-screen bg-[#adadad] dark:bg-[#1E1B18] transition-colors duration-500 overflow-hidden flex flex-col">
       <HeaderCalendario />
 
       <main className="flex-1 px-4 sm:px-6 lg:px-8 pb-10 overflow-y-auto">

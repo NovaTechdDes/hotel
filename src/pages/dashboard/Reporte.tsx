@@ -3,7 +3,7 @@ import { ReporteOcupacion } from '../../components/dashboard/reporte/ReporteOcup
 
 export const Reporte = () => {
   return (
-    <div className="min-h-screen bg-[#FDFCFB] dark:bg-[#1E1B18] transition-colors duration-500">
+    <div className="min-h-screen bg-[#adadad] dark:bg-[#1E1B18] transition-colors duration-500">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <header className="mb-12 border-b border-[#B59E6B]/10 pb-8">
           <h2 className="text-4xl font-serif font-light tracking-tight text-[#2D2926] dark:text-[#FDFCFB]">Analítica de Negocio</h2>
