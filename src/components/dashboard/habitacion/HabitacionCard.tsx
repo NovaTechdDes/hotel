@@ -25,12 +25,12 @@ const HabitacionCard = ({ habitacion }: Props) => {
 
   const handleDeleteHabitacion = async () => {
     const { isConfirmed } = await Swal.fire({
-      title: '¿Retirar Suite?',
+      title: 'Eliminar Suite?',
       text: `Se eliminará la habitación "${nombre.toUpperCase()}" del catálogo.`,
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Retirar',
-      cancelButtonText: 'Mantener',
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar',
       background: '#FDFCFB',
       color: '#2D2926',
       confirmButtonColor: '#B59E6B',
@@ -82,7 +82,7 @@ const HabitacionCard = ({ habitacion }: Props) => {
         )}
       </div>
 
-      <div className="mt-10 flex items-center gap-4 pt-6 border-t border-[#B59E6B]/10 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+      <div className="mt-10 flex items-center gap-4 pt-6 border-t border-[#B59E6B]/10  transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
         <button
           onClick={handleUpdate}
           className="flex-1 flex items-center justify-center gap-2 text-[10px] uppercase tracking-widest font-bold text-[#B59E6B] hover:text-[#2D2926] dark:hover:text-[#FDFCFB] border border-[#B59E6B]/20 py-2.5 rounded-sm hover:bg-[#B59E6B]/5 transition-all"

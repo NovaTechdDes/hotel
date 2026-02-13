@@ -6,6 +6,7 @@ import { HiOutlineCalendar, HiOutlinePencilSquare } from 'react-icons/hi2';
 import { LuBed } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
 import { IoDocumentTextOutline } from 'react-icons/io5';
+import { useCalendarioStore } from '../../../store/calendario.store';
 
 interface Props {
   reserva: Reserva;
@@ -15,8 +16,10 @@ interface Props {
 export const ReservaCard = ({ buscador, reserva }: Props) => {
   const { cliente, color, habitacion, checkin, checkout, cliente_nombre } = reserva;
   const { openDetalle } = useReservaStore();
+  const { setModalListaCalendario } = useCalendarioStore();
 
   const handleReserva = () => {
+    setModalListaCalendario(false);
     openDetalle(reserva);
   };
 

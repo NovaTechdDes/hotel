@@ -27,7 +27,7 @@ const initialState: Reserva = {
 };
 
 export const ModalCalendario = () => {
-  const { closeModal, reservaSeleccionado, fechaSeleccionada, habitacionSeleccionada } = useReservaStore();
+  const { closeModal, closeDetalle, reservaSeleccionado, fechaSeleccionada, habitacionSeleccionada } = useReservaStore();
   const { idcliente, color, importe, cliente_dni, cliente_nombre, habitacionid, checkin, observaciones, checkout, cant_personas, onInputChange, onResetForm, formState } = useForm(
     reservaSeleccionado ?? initialState
   );
@@ -85,7 +85,7 @@ export const ModalCalendario = () => {
 
   const handleCloseModal = () => {
     onResetForm();
-    closeModal();
+    closeDetalle();
   };
 
   const handleCliente = (e: React.ChangeEvent<HTMLInputElement>) => {
