@@ -86,6 +86,7 @@ export const ModalCalendario = () => {
   const handleCloseModal = () => {
     onResetForm();
     closeDetalle();
+    closeModal();
   };
 
   const handleCliente = (e: React.ChangeEvent<HTMLInputElement>) => {
